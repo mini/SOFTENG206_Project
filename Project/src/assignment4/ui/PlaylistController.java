@@ -17,6 +17,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PlaylistController implements Initializable {
@@ -57,7 +59,7 @@ public class PlaylistController implements Initializable {
         });
 
         // Testing function
-        createCombinedNameFile("Hello my name is vee");
+        createCombinedNameFile("Catherine Watson");
     }
 
     public void setPrimaryStage(Stage primaryStage) {
@@ -79,7 +81,8 @@ public class PlaylistController implements Initializable {
 
             // Separates the string with spaces only
             for (String word: disjointName.split(" ")) {
-                writer.write("file './"+word+".wav'");
+                String fileName = searchFileWithName(word);
+                writer.write("file './"+fileName+".wav'");
                 ((BufferedWriter) writer).newLine();
             }
 
@@ -92,6 +95,39 @@ public class PlaylistController implements Initializable {
 
 
     }
+
+    /**
+     * // MOVE INTO NEW CLASS?
+     * Searches the names Database for the corresponding name to add the exact file name into the concatenation file
+     * @param searchName
+     * @return
+     */
+    public String searchFileWithName(String searchName) {
+        File file = new File("./src/resources/names");
+        System.out.println(file.isDirectory());
+        System.out.println(file.isFile());
+
+        List<String> fileNames = new ArrayList<String>();
+
+        String[] files = file.list();
+        for (String recordingName : files) {
+            if (recordingName.contains(searchName+".wav")) {
+                fileNames.add(recordingName);
+            }
+        }
+
+        if (fileNames == null) {
+            System.out.println("ERROR!!! NO FILE FOUND");
+        } else if (fileNames.size() == 1) {
+            return fileNames.get(0);
+        }
+
+        // Check for good quality file
+        // TBD!!!
+
+        return fileNames.get(0);
+    }
+
 
     /**
      * Switches scene back to the main menu

@@ -120,6 +120,7 @@ public class Name implements Comparable<Name> {
 		}
 	}
 
+
 	public String getName() {
 		return name;
 	}

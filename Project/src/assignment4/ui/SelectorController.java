@@ -126,8 +126,8 @@ public class SelectorController extends BaseController {
 	}
 	
 	/*--------------------------------------------------------------------------------------------------------------------------*/
-	
-	 // REMEMBER TO CREATE FUNCTION TO DELETE THIS FILE AFTER USER IS DONE
+
+    // REMEMBER TO CREATE FUNCTION TO DELETE THIS FILE AFTER USER IS DONE
     public void concatenateNames(String name) {
 
         // Create a thread to ensure that the GUI does not freeze for concurrency
@@ -144,7 +144,6 @@ public class SelectorController extends BaseController {
 
                 // Use a process to concatenate the separate wav files into one file
                 String concat = ("ffmpeg -f concat -i " + mergedName + ".txt -c copy " + mergedName + ".wav");
-                System.out.println(concat);
 
                 File textConcat = new File("./src/resources/names/"+mergedName+".txt");
 
@@ -168,7 +167,7 @@ public class SelectorController extends BaseController {
                 return null;
             }
 
-            };
+        };
 
         Thread thread = new Thread(task);
         thread.setDaemon(true);
@@ -194,7 +193,7 @@ public class SelectorController extends BaseController {
      */
     public void createCombinedNameFile(String disjointName) {
 
-       String mergedName = disjointName.replaceAll("\\s","");
+        String mergedName = disjointName.replaceAll("\\s","");
 
 
 
@@ -207,10 +206,15 @@ public class SelectorController extends BaseController {
             for (String word: disjointName.split(" ")) {
                 String fileName = searchFileWithName(word);
                 System.out.println(fileName);
-                equaliseVolume(fileName);
-                writer.write("file 'EQ_"+fileName+"'");
+                removeSilence(fileName);
+                equaliseVolume("S_"+fileName);
+                writer.write("file 'EQ_S_"+fileName+"'");
                 ((BufferedWriter) writer).newLine();
-                System.out.println("Written");
+
+                // Delete silenced file
+                File silenced = new File("./src/resources/names/S_"+fileName);
+                System.out.println(silenced);
+                silenced.delete();
             }
 
             writer.close();
@@ -223,6 +227,24 @@ public class SelectorController extends BaseController {
 
     }
 
+    public void removeSilence(String fileName) {
+
+        String silence = ("ffmpeg -hide_banner -i "+fileName+" -af silenceremove=1:0:-35dB:1:5:-35dB:0:peak S_"+fileName);
+
+        try {
+            File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
+            ProcessBuilder remove = new ProcessBuilder("bash", "-c", silence);
+            remove.directory(directory);
+            Process pro = remove.start();
+            pro.waitFor();
+
+        } catch (IOException e) {
+            System.out.println("COULD NOT REMOVE SILENCE FROM FILE");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public void equaliseVolume(String fileName) {
 
@@ -231,17 +253,17 @@ public class SelectorController extends BaseController {
         String eq = ("ffmpeg -i "+fileName+" -filter:a loudnorm EQ_"+fileName);
 
         try {
-                    File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
-                    ProcessBuilder volume = new ProcessBuilder("bash", "-c", eq);
-                    volume.directory(directory);
-                    Process pro = volume.start();
-                    pro.waitFor();
+            File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
+            ProcessBuilder volume = new ProcessBuilder("bash", "-c", eq);
+            volume.directory(directory);
+            Process pro = volume.start();
+            pro.waitFor();
 
-                } catch (IOException e) {
-                    System.out.println("COULD NOT CONCATENATE FILE");
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+        } catch (IOException e) {
+            System.out.println("COULD NOT CONCATENATE FILE");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
     }
@@ -254,14 +276,12 @@ public class SelectorController extends BaseController {
      */
     public String searchFileWithName(String searchName) {
         File file = new File("./src/resources/names");
-        System.out.println(file.isDirectory());
-        System.out.println(file.isFile());
 
         List<String> fileNames = new ArrayList<String>();
 
         String[] files = file.list();
         for (String recordingName : files) {
-            if (recordingName.contains(searchName+".wav")) {
+            if (recordingName.contains("_"+searchName+".wav")) {
                 fileNames.add(recordingName);
             }
         }

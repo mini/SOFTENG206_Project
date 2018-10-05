@@ -12,8 +12,8 @@ import static assignment4.NameSayerApp.ROOT_DIR;
 /**
  * -- NamesDB Class --
  *
- * NamesDB is a class to handle loading and fetching name objects that are populated within the lists of the
- * NameSayer application.
+ * NamesDB is a class to handle loading and fetching name objects that are
+ * populated within the lists of the NameSayer application.
  *
  */
 public class NamesDB {
@@ -61,8 +61,18 @@ public class NamesDB {
 		return filtered;
 	}
 
+	public Name getName(String name) {
+		for (Name n : names) {
+			if (n.getName().equals(name)) {
+				return n;
+			}
+		}
+		return null;
+	}
+	
 	/**
-	 * Grabs the next selected name in the list after the given name. Will loop back to the top if none were found below.
+	 * Grabs the next selected name in the list after the given name. Will loop back
+	 * to the top if none were found below.
 	 * 
 	 * @param after
 	 *            the current name
@@ -118,7 +128,8 @@ public class NamesDB {
 	}
 
 	/**
-	 * Loads all the pre-made names, marks any bad files and load any existing user attempts of a name.
+	 * Loads all the pre-made names, marks any bad files and load any existing user
+	 * attempts of a name.
 	 */
 	private void populateDB() throws IOException {
 		List<String> badQualityFiles = null;
@@ -181,7 +192,8 @@ public class NamesDB {
 /**
  * -- WavFileFilter Class --
  *
- * WavFileFilter filters the wav file directory listings for iteration of file names.
+ * WavFileFilter filters the wav file directory listings for iteration of file
+ * names.
  *
  */
 class WavFileFilter implements FilenameFilter {

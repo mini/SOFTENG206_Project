@@ -1,5 +1,25 @@
 package assignment4.ui;
 
+import static assignment4.NameSayerApp.ROOT_DIR;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.sound.sampled.AudioFileFormat;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.TargetDataLine;
+
+import assignment4.model.Name;
+import assignment4.model.Version;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
@@ -8,28 +28,22 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import assignment4.model.Name;
-import assignment4.model.NamesDB;
-import assignment4.model.Version;
-
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import static assignment4.NameSayerApp.ROOT_DIR;
 
 /**
  * -- PractiseController Class --
@@ -46,11 +60,9 @@ import static assignment4.NameSayerApp.ROOT_DIR;
  * recording as well as the original pronunciation.
  *
  */
-public class PractiseController implements Initializable {
+public class PractiseController extends BaseController {
 	private static final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 	private static final SimpleDateFormat labelDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-
-	private Stage primaryStage;
 
 	//@formatter:off
 	@FXML private TextField searchTextField;
@@ -78,21 +90,14 @@ public class PractiseController implements Initializable {
 	@FXML private Button nextButton;
 	//@formatter:on
 
-	private NamesDB namesDB;
-
 	private Name current;
 	private int numSelected = 0;
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		namesDB = new NamesDB();
-		setupTables();
-	}
 
 	/**
 	 * Sets up the left names table and the right attempts table to ensure that all names from the database are included, as well as configuring listeners for user selection and access.
 	 */
-	private void setupTables() {
+	@Override
+	protected void init() {
 
 		// Left names table
 
@@ -250,23 +255,7 @@ public class PractiseController implements Initializable {
 	 */
 	@FXML
 	private void mainMenuPressed() {
-		try {
-
-			// Load the scene of the Main Menu fxml file
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/MainMenu.fxml"));
-			Parent root = loader.load();
-
-			MainMenuController controller = (MainMenuController) loader.getController();
-
-			// Set the stage to use the current stage in order to switch scenes with the same stage
-			controller.setPrimaryStage(primaryStage);
-
-			primaryStage.setScene(new Scene(root));
-			primaryStage.show();
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		showScene("/resources/MainMenu.fxml", false);
 	}
 
 	/**

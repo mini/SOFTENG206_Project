@@ -61,13 +61,14 @@ public class PlaylistController implements Initializable {
         });
 
         // Testing function
-        concatenateNames("Catherine Watson");
+        concatenateNames("Junyan Zhao");
     }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
+    // REMEMBER TO CREATE FUNCTION TO DELETE THIS FILE AFTER USER IS DONE
     public void concatenateNames(String name) {
 
         // Create a thread to ensure that the GUI does not freeze for concurrency
@@ -88,20 +89,16 @@ public class PlaylistController implements Initializable {
 
                 File textConcat = new File("./src/resources/names/"+mergedName+".txt");
 
+
                 try {
                     File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
                     ProcessBuilder merge = new ProcessBuilder("bash", "-c", concat);
                     merge.directory(directory);
                     Process pro = merge.start();
-                    textConcat.delete();
                     pro.waitFor();
 
-//            File file = new File(System.getProperty("user.dir")+"/FileDirectory/creation.mp4");
-//
-//            // Once the files are merged, delete the creation.mp4 file for future use
-//            if (file.exists()) {
-//                file.delete();
-//            }
+                    textConcat.delete();
+                    deleteEqualisedFile(name);
 
                 } catch (IOException e) {
                     System.out.println("COULD NOT CONCATENATE FILE");
@@ -120,6 +117,16 @@ public class PlaylistController implements Initializable {
     }
 
 
+    public void deleteEqualisedFile(String name) {
+
+        // Separates the string with spaces only
+        for (String word: name.split(" ")) {
+            String eqName = searchFileWithName(word);
+            File eqFile = new File("./src/resources/names/"+eqName);
+            System.out.println(eqFile);
+            eqFile.delete();
+        }
+    }
 
     /**
      * Separates the line of the text file to obtain the separate name files to concatenate by creating a
@@ -140,8 +147,11 @@ public class PlaylistController implements Initializable {
             // Separates the string with spaces only
             for (String word: disjointName.split(" ")) {
                 String fileName = searchFileWithName(word);
-                writer.write("file '"+fileName+"'");
+                System.out.println(fileName);
+                equaliseVolume(fileName);
+                writer.write("file 'EQ_"+fileName+"'");
                 ((BufferedWriter) writer).newLine();
+                System.out.println("Written");
             }
 
             writer.close();
@@ -150,6 +160,29 @@ public class PlaylistController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+
+    public void equaliseVolume(String fileName) {
+
+
+        // Use a process to concatenate the separate wav files into one file
+        String eq = ("ffmpeg -i "+fileName+" -filter:a loudnorm EQ_"+fileName);
+
+        try {
+                    File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
+                    ProcessBuilder volume = new ProcessBuilder("bash", "-c", eq);
+                    volume.directory(directory);
+                    Process pro = volume.start();
+                    pro.waitFor();
+
+                } catch (IOException e) {
+                    System.out.println("COULD NOT CONCATENATE FILE");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 
     }

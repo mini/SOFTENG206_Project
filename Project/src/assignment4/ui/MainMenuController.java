@@ -70,10 +70,10 @@ public class MainMenuController implements Initializable {
 		try {
 
 			// Load the scene of the Player fxml file
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/MainPlayer.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/Playlist.fxml"));
 			Parent root = loader.load();
 
-			PlayController controller = loader.getController();
+			PlaylistController controller = loader.getController();
 
 			// Set the stage to use the current stage in order to switch scenes with the same stage
 			controller.setPrimaryStage(primaryStage);
@@ -100,7 +100,7 @@ public class MainMenuController implements Initializable {
 		try {
 
 			// Load the scene of the Player fxml file
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/Player.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/Practise.fxml"));
 			Parent root = loader.load();
 
 			PractiseController controller = (PractiseController) loader.getController();

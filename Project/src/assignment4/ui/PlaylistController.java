@@ -4,6 +4,7 @@ import assignment4.model.Name;
 import assignment4.model.Version;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
@@ -59,12 +61,64 @@ public class PlaylistController implements Initializable {
         });
 
         // Testing function
-        createCombinedNameFile("Catherine Watson");
+        concatenateNames("Catherine Watson");
     }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
+
+    public void concatenateNames(String name) {
+
+        // Create a thread to ensure that the GUI does not freeze for concurrency
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+
+                // Create the text file to concatenate all the names in the string
+                createCombinedNameFile(name);
+
+                String mergedName = name.replaceAll("\\s", "");
+
+                // Use a process to concatenate the separate wav files into one file
+                String concat = ("ffmpeg -f concat -i " + mergedName + ".txt -c copy " + mergedName + ".wav");
+                System.out.println(concat);
+
+                File textConcat = new File("./src/resources/names/"+mergedName+".txt");
+
+                try {
+                    File directory = new File(System.getProperty("user.dir") + "/src/resources/names");
+                    ProcessBuilder merge = new ProcessBuilder("bash", "-c", concat);
+                    merge.directory(directory);
+                    Process pro = merge.start();
+                    textConcat.delete();
+                    pro.waitFor();
+
+//            File file = new File(System.getProperty("user.dir")+"/FileDirectory/creation.mp4");
+//
+//            // Once the files are merged, delete the creation.mp4 file for future use
+//            if (file.exists()) {
+//                file.delete();
+//            }
+
+                } catch (IOException e) {
+                    System.out.println("COULD NOT CONCATENATE FILE");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            };
+
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
 
 
     /**
@@ -74,15 +128,19 @@ public class PlaylistController implements Initializable {
      */
     public void createCombinedNameFile(String disjointName) {
 
+       String mergedName = disjointName.replaceAll("\\s","");
+
+
+
         try {
             Writer writer = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(disjointName+".txt"), "utf-8")
+                    new FileOutputStream("./src/resources/names/"+mergedName+".txt"), "utf-8")
             );
 
             // Separates the string with spaces only
             for (String word: disjointName.split(" ")) {
                 String fileName = searchFileWithName(word);
-                writer.write("file './"+fileName+".wav'");
+                writer.write("file '"+fileName+"'");
                 ((BufferedWriter) writer).newLine();
             }
 

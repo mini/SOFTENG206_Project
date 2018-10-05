@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.MainMenuController">
+   <children>
+      <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4d5d75;">
+         <children>
+            <Text fill="WHITE" layoutX="120.0" layoutY="104.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome to NameSayer" textAlignment="CENTER" wrappingWidth="355.21875">
+               <font>
+                  <Font name="System Font" size="23.0" />
+               </font>
+            </Text>
+            <Separator layoutX="147.0" layoutY="120.0" prefHeight="4.0" prefWidth="310.0" />
+            <Button fx:id="startButton" contentDisplay="CENTER" layoutX="129.0" layoutY="173.0" mnemonicParsing="false" onAction="#startPressed" onMouseClicked="#startPressed" prefHeight="54.0" prefWidth="160.0" stylesheets="@stylesheets/Button.css" text="Start" textFill="#3f3f3f">
+               <font>
+                  <Font name="System Font" size="17.0" />
+               </font>
+            </Button>
+            <Button fx:id="testMicButton" layoutX="209.0" layoutY="345.0" mnemonicParsing="false" onAction="#testMic" prefHeight="41.0" prefWidth="187.0" stylesheets="@stylesheets/Button.css" text="Test Microphone" textFill="#3f3f3f" />
+            <Separator layoutX="48.0" layoutY="324.0" prefHeight="4.0" prefWidth="498.0" />
+            <ImageView fitHeight="54.0" fitWidth="56.0" layoutX="273.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/microphone.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="practiseButton" contentDisplay="CENTER" layoutX="316.0" layoutY="173.0" mnemonicParsing="false" onAction="#practisePressed" onMouseClicked="#practisePressed" prefHeight="54.0" prefWidth="160.0" stylesheets="@stylesheets/Button.css" text="Practise" textFill="#3f3f3f">
+               <font>
+                  <Font name="System Font" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -315,10 +315,10 @@ public class PractiseController extends BaseController {
 		current.removeTemp();
 
 		// Ensure the name's directory exists
-		new File(ROOT_DIR + "/attempts/" + current.getName() + "/").mkdirs();
+		new File(ROOT_DIR + "attempts/" + current.getName() + "/").mkdirs();
 
 		// Define temp file for this recording
-		File tempFile = new File(ROOT_DIR + "/attempts/" + current.getName() + "/temp.wav");
+		File tempFile = new File(ROOT_DIR + "attempts/" + current.getName() + "/temp.wav");
 		tempFile.deleteOnExit();
 
 		RecordTask recordTask = new RecordTask(tempFile);
@@ -403,14 +403,14 @@ public class PractiseController extends BaseController {
 		String filename = timestamp + "-" + current.getName() + ".wav";
 
 		// Rename file from temp.wav to the corresponding name with the timestamp
-		String nameFolder = ROOT_DIR + "/attempts/" + current.getName() + "/";
+		String nameFolder = ROOT_DIR + "attempts/" + current.getName() + "/";
 		new File(nameFolder + "temp.wav").renameTo(new File(nameFolder + filename));
 
 		// Remove the temporary file (temp.wav)
 		current.removeTemp();
 
 		// Save the new filename to the list
-		current.addAttempt(new File(ROOT_DIR + "/attempts/" + current.getName() + "/" + filename), labelDateFormat.format(now));
+		current.addAttempt(new File(ROOT_DIR + "attempts/" + current.getName() + "/" + filename), labelDateFormat.format(now));
 	}
 
 	/**

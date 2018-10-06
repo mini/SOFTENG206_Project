@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import assignment4.NameSayerApp;
+
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
 
@@ -36,7 +38,7 @@ public class Version {
 	 */
 	public Version(String audioFile, boolean badQuality) {
 		this.audioFile = audioFile;
-		this.path = getClass().getResource("/resources/names/" + audioFile).toExternalForm();
+		this.path = new File(NameSayerApp.ROOT_DIR + "names/" + audioFile).toURI().toString();
 		this.badQuality = badQuality;
 	}
 
@@ -112,6 +114,10 @@ public class Version {
 			player = new MediaPlayer(new Media(path));
 		}
 		return player;
+	}
+	
+	public String getPath() {
+		return path;
 	}
 
 	public String getLabel() {

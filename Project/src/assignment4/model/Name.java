@@ -56,9 +56,7 @@ public class Name implements Comparable<Name> {
 		if(lastVersion == null) {
 			lastVersion = versions.get(random.nextInt(versions.size()));
 		}
-		
-		System.out.println(lastVersion);
-		
+				
 		return lastVersion;
 	}
 

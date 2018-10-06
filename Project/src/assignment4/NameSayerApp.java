@@ -1,7 +1,12 @@
 package assignment4;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import assignment4.model.NamesDB;
 import assignment4.ui.BaseController;
@@ -32,7 +37,7 @@ import javafx.stage.Stage;
  *
  */
 public class NameSayerApp extends Application {
-	public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "NameSayer";
+	public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "NameSayer/";
 
 	/**
 	 * The main entry point to the NameSayer application
@@ -40,10 +45,15 @@ public class NameSayerApp extends Application {
 	public static void main(String[] args) {
 
 		// Create the initial directory for all attempts to be put under
-		new File(ROOT_DIR + "/attempts/").mkdirs();
+		new File(ROOT_DIR + "attempts/").mkdirs();
+		try {
+			unzip("/resources/nameFiles.zip", ROOT_DIR);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 
 		// Starts the application
-		launch(args);
+		 launch(args);
 	}
 
 	/**
@@ -51,7 +61,7 @@ public class NameSayerApp extends Application {
 	 */
 	public void start(Stage primaryStage) throws IOException {
 		NamesDB namesDB = new NamesDB();
-	
+
 		primaryStage.setTitle("NameSayer");
 		// Prevent the stage from being resized by the user
 		primaryStage.setResizable(false);
@@ -74,4 +84,37 @@ public class NameSayerApp extends Application {
 
 	}
 
+	private static void unzip(String zipFilePath, String destDirectory) throws IOException {
+		File destDir = new File(destDirectory);
+		if (!destDir.exists()) {
+			destDir.mkdir();
+		}
+		ZipInputStream zipIn = new ZipInputStream(NameSayerApp.class.getResourceAsStream(zipFilePath));
+
+		ZipEntry entry = zipIn.getNextEntry();
+		// iterates over entries in the zip file
+		while (entry != null) {
+			String filePath = destDirectory + entry.getName();
+			if (!entry.isDirectory()) {
+				new File(filePath).getParentFile().mkdirs();
+				extractFile(zipIn, filePath);
+			} else {
+				File dir = new File(filePath);
+				dir.mkdirs();
+			}
+			zipIn.closeEntry();
+			entry = zipIn.getNextEntry();
+		}
+		zipIn.close();
+	}
+
+	private static void extractFile(ZipInputStream zipIn, String filePath) throws IOException {
+		BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(filePath));
+		byte[] bytesIn = new byte[4 * 1024];
+		int read = 0;
+		while ((read = zipIn.read(bytesIn)) != -1) {
+			bos.write(bytesIn, 0, read);
+		}
+		bos.close();
+	}
 }

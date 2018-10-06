@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
 
+import assignment4.NameSayerApp;
+
 import static assignment4.NameSayerApp.ROOT_DIR;
 
 /**
@@ -17,8 +19,8 @@ import static assignment4.NameSayerApp.ROOT_DIR;
  *
  */
 public class NamesDB {
-	public static final URI BQ_FILE = new File(ROOT_DIR + "/bad_quality.txt").toURI();
-	public static final URI TEMP_BQ_FILE = new File(ROOT_DIR + "/bad_quality.tmp.txt").toURI();
+	public static final URI BQ_FILE = new File(ROOT_DIR + "bad_quality.txt").toURI();
+	public static final URI TEMP_BQ_FILE = new File(ROOT_DIR + "bad_quality.tmp.txt").toURI();
 
 	private Random random;
 
@@ -139,12 +141,12 @@ public class NamesDB {
 			System.out.println("BQ file does not exist");
 		}
 
+		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles();
 		Map<String, Name> names = new HashMap<String, Name>();
-		InputStream list = getClass().getResourceAsStream("/resources/names/list.txt");
-		BufferedReader files = new BufferedReader(new InputStreamReader(list));
 
-		for (String filename = files.readLine(); filename != null; filename = files.readLine()) {
+		for (File file : files) {
 			// Check if any versions are bad
+			String filename = file.getName();
 			boolean badQuality = false;
 
 			if (badQualityFiles != null) {
@@ -171,7 +173,7 @@ public class NamesDB {
 			}
 
 			// Add any user attempts to name object
-			File nameDir = new File(ROOT_DIR + "/attempts/" + name);
+			File nameDir = new File(ROOT_DIR + "attempts/" + name);
 			if (nameDir.exists() && nameDir.isDirectory()) {
 				for (File attempt : nameDir.listFiles(new WavFileFilter())) {
 					String attemptName = attempt.getName();

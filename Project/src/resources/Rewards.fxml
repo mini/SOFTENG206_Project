@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.MainMenuController">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4d5d75;">
+            <children>
+            <ImageView fx:id="rewardButton25" fitHeight="210.0" layoutX="194.0" layoutY="102.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/cabinet.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rewardButton251" fitHeight="210.0" layoutX="383.0" layoutY="102.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/cabinet.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rewardButton252" fitHeight="210.0" layoutY="102.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/cabinet.png" />
+               </image>
+            </ImageView>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="25.0" layoutY="114.0" stroke="#d1aeae00" strokeType="INSIDE" width="161.0" />
+                <Text fill="WHITE" layoutX="119.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trophy Case" textAlignment="CENTER" wrappingWidth="355.21875">
+                    <font>
+                        <Font name="System Font" size="23.0" />
+                    </font>
+                </Text>
+                <Separator layoutX="217.0" layoutY="59.0" prefHeight="4.0" prefWidth="160.0" />
+                <Button fx:id="backButton" contentDisplay="CENTER" layoutX="33.0" layoutY="333.0" mnemonicParsing="false" onAction="#backPressed" onMouseClicked="#startPressed" prefHeight="47.0" prefWidth="106.0" stylesheets="@stylesheets/Button.css" text="Main Menu" textFill="#3f3f3f">
+                    <font>
+                        <Font name="System Font" size="17.0" />
+                    </font>
+                </Button>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="408.0" layoutY="113.0" stroke="#d1aeae00" strokeType="INSIDE" width="160.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="217.0" layoutY="113.0" stroke="#d1aeae00" strokeType="INSIDE" width="164.0" />
+                  <ImageView fx:id="rewardButton" fitHeight="54.0" fitWidth="56.0" layoutX="155.0" layoutY="28.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@icons/trophy.png" />
+                      </image>
+                  </ImageView>
+            <ImageView fx:id="rewardButton1" fitHeight="54.0" fitWidth="56.0" layoutX="383.0" layoutY="28.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/trophy.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="217.0" layoutY="57.0" prefHeight="4.0" prefWidth="160.0" />
+            <ImageView fx:id="rewardButton2" fitHeight="96.0" fitWidth="106.0" layoutX="57.0" layoutY="150.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rewardButton21" fitHeight="96.0" fitWidth="106.0" layoutX="252.0" layoutY="150.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="rewardButton24" fitHeight="96.0" fitWidth="106.0" layoutX="440.0" layoutY="150.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

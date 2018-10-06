@@ -35,6 +35,7 @@ public class SelectorController extends BaseController {
 	@FXML private Button playButton;
 	@FXML private Button loadButton;
 	@FXML private Button saveButton;
+
 	
 	@FXML private Button helpButton;
 	//@formatter:on
@@ -128,6 +129,8 @@ public class SelectorController extends BaseController {
             BufferedReader reader = new BufferedReader(new FileReader("./src/resources/playlist/tempPlaylist.txt"));
                 String line;
                 while ((line = reader.readLine()) != null) {
+
+                    //Function to add to the listview of the play Scene goes here
 
                     // Create the concatenated wav file
                     concatenateNames(line);

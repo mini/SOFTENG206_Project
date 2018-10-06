@@ -16,8 +16,8 @@
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>
          <children>
-            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0" />
             <TextField fx:id="searchTextField" layoutX="50.0" layoutY="30.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="241.0" layoutY="389.0" prefHeight="39.0" prefWidth="340.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="250.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="389.0">

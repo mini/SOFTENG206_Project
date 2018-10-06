@@ -10,9 +10,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -20,9 +19,7 @@ public class ComboPlayerController extends BaseController {
 	private static final Random random = new Random();
 
 	//@formatter:off
-	@FXML private TableView<Combination> namesTable;
-	@FXML private TableColumn<Combination, String> nameColumn;
-	@FXML private TableColumn<Combination, String> playingColumn;
+	@FXML private ListView<Combination> namesList;
 	
 	@FXML private Button playButton;
 	@FXML private Button badQualityButton;
@@ -38,18 +35,32 @@ public class ComboPlayerController extends BaseController {
 	//@formatter:on
 
 	Combination[] playlist;
-	private int current;
+	private int current = 0;
 
 	@Override
 	protected void init() {
-		nameColumn.setCellValueFactory(new PropertyValueFactory<Combination, String>("combinedName"));
-		playingColumn.setCellValueFactory(new PropertyValueFactory<Combination, String>("name"));
+		namesList.setCellFactory(value -> new ListCell<Combination>() {
+			@Override
+			protected void updateItem(Combination item, boolean empty) {
+				super.updateItem(item, empty);
+				if (empty || item == null) {
+					setText(null);
+				} else {
+					setText(item.getCombinedName());
+				}
+			}
+		});
 
-		namesTable.widthProperty().addListener(new HideHeader(namesTable));
-		namesTable.setStyle("-fx-table-cell-border-color: transparent;");
-		namesTable.getItems().addAll(playlist);
+		namesList.getSelectionModel().selectedIndexProperty().addListener((observer, oldVal, newVal) -> {
+			if (oldVal != newVal) {
+				current = (int) newVal;
+				nextCombination();
+			}
+		});
 
-		nextCombination(playlist[0]);
+		namesList.getItems().addAll(playlist);
+
+		nextCombination();
 	}
 
 	@FXML
@@ -93,10 +104,10 @@ public class ComboPlayerController extends BaseController {
 	@FXML
 	private void previousPressed() {
 		current--;
-		if (current <= 0) {
+		if (current < 0) {
 			current = playlist.length - 1;
 		}
-		nextCombination(playlist[current]);
+		nextCombination();
 	}
 
 	@FXML
@@ -106,15 +117,20 @@ public class ComboPlayerController extends BaseController {
 		} else {
 			current = (current + 1) % playlist.length;
 		}
-		nextCombination(playlist[current]);
+		nextCombination();
 	}
 
-	private void nextCombination(Combination combination) {
+	private void nextCombination() {
 		currentLabel.setText(playlist[current].getCombinedName());
 
 		if (new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav").exists()) {
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
+		} else {
+			listenButton.setDisable(true);
+			compareButton.setDisable(true);
 		}
+
+		namesList.getSelectionModel().select(current);
 	}
 }

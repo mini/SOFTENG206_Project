@@ -1,12 +1,6 @@
 package assignment4.ui;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
@@ -71,7 +65,7 @@ public class SelectorController extends BaseController {
 				new FileChooser.ExtensionFilter("All", "*.*")
 		);
 		
-		
+		// testing function
         concatenateNames("Junyan Zhao");
 	}
 
@@ -116,6 +110,32 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void playPressed() {
+
+        new File("./src/resources/names/playlist").mkdirs();
+
+	    // Write the user input into a temporary text file
+        try {
+            Writer writer = new BufferedWriter(new OutputStreamWriter(
+                    new FileOutputStream("./src/resources/names/playlist/tempPlaylist.txt"), "utf-8")
+            );
+
+            writer.write(textInput.getText());
+            ((BufferedWriter) writer).newLine();
+            writer.close();
+
+
+            // Read each line from the text file and create a concatenated file for further practice
+            BufferedReader reader = new BufferedReader(new FileReader("./src/resources/playlist/tempPlaylist.txt"));
+                String line;
+                while ((line = reader.readLine()) != null) {
+
+                    // Create the concatenated wav file
+                    concatenateNames(line);
+                }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		
 	}
 	
@@ -143,7 +163,7 @@ public class SelectorController extends BaseController {
                 String mergedName = name.replaceAll("\\s", "");
 
                 // Use a process to concatenate the separate wav files into one file
-                String concat = ("ffmpeg -f concat -i " + mergedName + ".txt -c copy " + mergedName + ".wav");
+                String concat = ("ffmpeg -f concat -i " + mergedName + ".txt -c copy ./playlist/" + mergedName + ".wav");
 
                 File textConcat = new File("./src/resources/names/"+mergedName+".txt");
 
@@ -227,6 +247,11 @@ public class SelectorController extends BaseController {
 
     }
 
+
+    /**
+     * Removes any silences before the audio starts and after the audio finishes using 35dB as the scale.
+     * @param fileName
+     */
     public void removeSilence(String fileName) {
 
         String silence = ("ffmpeg -hide_banner -i "+fileName+" -af silenceremove=1:0:-35dB:1:5:-35dB:0:peak S_"+fileName);
@@ -246,6 +271,10 @@ public class SelectorController extends BaseController {
 
     }
 
+    /**
+     * Ensures that all files being concatenated are of equal volume by adjusting to the norm.
+     * @param fileName
+     */
     public void equaliseVolume(String fileName) {
 
 

@@ -2,6 +2,7 @@ package assignment4.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tooltip;
 import javafx.scene.shape.Line;
 
 /**
@@ -18,13 +19,22 @@ import javafx.scene.shape.Line;
 public class TestMicrophoneController extends BaseController {
 
 	@FXML
-	Button backButton;
+	Button backButton, helpButton;
 
 	@FXML
 	Line soundAmp, leftAmp1, leftAmp2, rightAmp1, rightAmp2;
 
 	protected void init() {
+
 		new TestMicrophone().setController(this);
+
+		Tooltip tooltip = new Tooltip();
+		tooltip.setText("Test Microphone: \n\n" +
+				"* This module allows you to test your microphone levels. \n" +
+				"* As you speak, the levels should rise up and down according to your microphone levels. \n" +
+				"* Flat levels or no movement mean your microphone is not working/disconnected. \n" +
+				"* Click the MAIN MENU button to go back");
+		helpButton.setTooltip(tooltip);
 	}
 	
 	

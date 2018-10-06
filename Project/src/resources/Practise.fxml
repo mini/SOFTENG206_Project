@@ -8,12 +8,14 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" style="-fx-background-color: #4d5d75;" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.PractiseController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="900.0" style="-fx-background-color: #4d5d75;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.PractiseController">
    <left>
       <AnchorPane BorderPane.alignment="CENTER">
          <BorderPane.margin>
@@ -58,6 +60,15 @@
                   <Button fx:id="listenButton" disable="true" layoutX="40.0" layoutY="65.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Listen" />
                   <Button fx:id="compareButton" disable="true" layoutX="95.0" layoutY="115.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Compare" />
                   <Button fx:id="deleteButton" disable="true" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Delete" />
+                  <Button fx:id="helpButton" layoutX="233.0" layoutY="105.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="68.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/TransparentButton.css">
+                     <graphic>
+                        <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/info.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </AnchorPane>
             <Separator prefWidth="200.0" />

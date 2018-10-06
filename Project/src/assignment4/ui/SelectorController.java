@@ -1,8 +1,10 @@
 package assignment4.ui;
 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
@@ -62,8 +64,10 @@ public class SelectorController extends BaseController {
 		namesList.getItems().addAll(namesDB.getAllNames());
 
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-		fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"), new FileChooser.ExtensionFilter("All", "*.*"));
-
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("Text", "*.txt"),
+				new FileChooser.ExtensionFilter("All", "*.*")
+		);
 	}
 
 	@FXML
@@ -153,6 +157,6 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void helpPressed() {
-		// show help popup
+		//TODO show help popup
 	}
 }

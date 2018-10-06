@@ -7,25 +7,12 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import javax.sound.sampled.AudioFileFormat;
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.TargetDataLine;
 
 import assignment4.model.Name;
 import assignment4.model.Version;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -40,7 +27,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -48,16 +34,15 @@ import javafx.util.Duration;
 /**
  * -- PractiseController Class --
  *
- * PractiseController acts as the controller for the Player GUI, where events are listened and handled
- * appropriately with this class. It ensures that the numerous buttons link to its corresponding event
- * handler methods as listed below. This is the main screen where the majority of functionality of the
- * application is handled, where each user event is handled accordingly.
+ * PractiseController acts as the controller for the Player GUI, where events are listened and handled appropriately
+ * with this class. It ensures that the numerous buttons link to its corresponding event handler methods as listed
+ * below. This is the main screen where the majority of functionality of the application is handled, where each user
+ * event is handled accordingly.
  *
- * The names database is populated into a list, and after user selection of any number of names to be
- * practiced, the attempts of each selected name is also populated. The class allows the user to play
- * the pronunciation, mark any file as bad quality if necessary, record, listen and delete their own
- * recordings and attempts. Furthermore, the controller also allows the comparison of their own
- * recording as well as the original pronunciation.
+ * The names database is populated into a list, and after user selection of any number of names to be practiced, the
+ * attempts of each selected name is also populated. The class allows the user to play the pronunciation, mark any file
+ * as bad quality if necessary, record, listen and delete their own recordings and attempts. Furthermore, the controller
+ * also allows the comparison of their own recording as well as the original pronunciation.
  *
  */
 public class PractiseController extends BaseController {
@@ -94,7 +79,8 @@ public class PractiseController extends BaseController {
 	private int numSelected = 0;
 
 	/**
-	 * Sets up the left names table and the right attempts table to ensure that all names from the database are included, as well as configuring listeners for user selection and access.
+	 * Sets up the left names table and the right attempts table to ensure that all names from the database are included, as
+	 * well as configuring listeners for user selection and access.
 	 */
 	@Override
 	protected void init() {
@@ -164,41 +150,6 @@ public class PractiseController extends BaseController {
 		attemptsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 			deleteButton.setDisable(newValue == null);
 		});
-
-	}
-
-	/**
-	 * Hides the header of provided tables
-	 */
-	private class HideHeader implements ChangeListener<Number> {
-		private TableView<? extends Object> table;
-
-		private HideHeader(TableView<? extends Object> table) {
-			this.table = table;
-		}
-
-		@Override
-		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-			Pane header = (Pane) table.lookup("TableHeaderRow");
-			// Hide the headers of the tables
-			if (header != null && header.isVisible()) {
-				header.setMaxHeight(0);
-				header.setMinHeight(0);
-				header.setPrefHeight(0);
-				header.setVisible(false);
-				header.setManaged(false);
-			}
-		}
-	}
-
-	/**
-	 * Sets the current Stage to be linked to the previous stage that was used in the previous menu
-	 * 
-	 * @param primaryStage
-	 *            the main stage being used to switch scenes
-	 */
-	public void setPrimaryStage(Stage primaryStage) {
-		this.primaryStage = primaryStage;
 	}
 
 	/**
@@ -278,7 +229,8 @@ public class PractiseController extends BaseController {
 	}
 
 	/**
-	 * Selects and de-selects all names. If there are any selected it will deselect all first. If none are selected then it will select all.
+	 * Selects and de-selects all names. If there are any selected it will deselect all first. If none are selected then it
+	 * will select all.
 	 */
 	@FXML
 	private void selectAllPressed() {
@@ -310,86 +262,30 @@ public class PractiseController extends BaseController {
 	 */
 	@FXML
 	private void recordPressed() {
-
 		// Remove any temporary files that are unsaved before starting
 		current.removeTemp();
-
-		// Ensure the name's directory exists
-		new File(ROOT_DIR + "attempts/" + current.getName() + "/").mkdirs();
 
 		// Define temp file for this recording
 		File tempFile = new File(ROOT_DIR + "attempts/" + current.getName() + "/temp.wav");
 		tempFile.deleteOnExit();
 
-		RecordTask recordTask = new RecordTask(tempFile);
-		Thread thread = new Thread(recordTask);
-		thread.setDaemon(true);
-
-		new Timer().schedule(new TimerTask() {
-			@Override
-			public void run() {
-				recordTask.stop();
-			}
-		}, 5000);
-
-		// Pop up a window to show recording for 5 seconds to allow the user to record
-		showPopUp("Recording Now...", 5);
-
-		thread.start();
-	}
-
-	/**
-	 * Task for capturing microphone and saving it to a wav file
-	 */
-	private class RecordTask extends Task<Void> {
-		TargetDataLine line;
-
-		private File file;
-
-		private RecordTask(File file) {
-			this.file = file;
-		}
-
-		@Override
-		protected Void call() throws Exception {
-			try {
-				// 44100Hz 16bit 1 channel signed le
-				AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
-				DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
-
-				if (!AudioSystem.isLineSupported(info)) {
-					System.out.println("Line not supported");
-					return null;
-				}
-				line = (TargetDataLine) AudioSystem.getLine(info);
-				line.open(format);
-				line.start();
-
-				AudioInputStream input = new AudioInputStream(line);
-				AudioSystem.write(input, AudioFileFormat.Type.WAVE, file);
-
-			} catch (LineUnavailableException | IOException ex) {
-				ex.printStackTrace();
-			}
-			return null;
-		}
-
-		private void stop() {
-			line.stop();
-			line.close();
-
+		RecordTask recordTask = new RecordTask(tempFile, 5000, () -> {
 			// Can enable these since we have something to play
 			saveButton.setDisable(false);
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
-
+			
 			// Label temp file as an Unsaved Attempt in the list
-			current.addAttempt(file, "Unsaved Attempt");
+			current.addAttempt(tempFile, "Unsaved Attempt");
 			attemptsTable.getSelectionModel().clearAndSelect(0);
+		});
 
-		}
+		// Pop up a window to show recording for 5 seconds to allow the user to record
+		showPopUp("Recording Now...", 5);
+
+		recordTask.start();
 	}
-
+	
 	/**
 	 * Saves the temporary attempt and adds it to the table
 	 */
@@ -414,7 +310,8 @@ public class PractiseController extends BaseController {
 	}
 
 	/**
-	 * Plays the selected attempt, if nothing is selected it will play the first one on the list (will play the temporary attempt if it exists).
+	 * Plays the selected attempt, if nothing is selected it will play the first one on the list (will play the temporary
+	 * attempt if it exists).
 	 * 
 	 * @return attemptPlayer the attempt's media player
 	 */
@@ -453,10 +350,10 @@ public class PractiseController extends BaseController {
 		attemptPlayer.setOnEndOfMedia(() -> {
 			MediaPlayer mp = current.getLastVersion().getMediaPlayer();
 			mp.setOnReady(() -> {
-				showPopUp("Playing Pronunciation...", (int)mp.getMedia().getDuration().toSeconds());
+				showPopUp("Playing Pronunciation...", (int) mp.getMedia().getDuration().toSeconds());
 				playPressed();
 			});
-			
+
 			attemptPlayer.setOnEndOfMedia(null);
 		});
 	}
@@ -491,10 +388,8 @@ public class PractiseController extends BaseController {
 	/**
 	 * Shows a new window with the specified text for the designated duration.
 	 * 
-	 * @param text
-	 *            text to show
-	 * @param seconds
-	 *            how long should it be visible
+	 * @param text    text to show
+	 * @param seconds how long should it be visible
 	 */
 	private void showPopUp(String text, int seconds) {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/PopUp.fxml"));

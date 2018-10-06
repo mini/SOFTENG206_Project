@@ -17,7 +17,7 @@ public class Combination {
 	private String combinedName;
 	private String mergedName;
 	
-	private File media;
+	private String path;
 
 	public Combination() {
 		this.names = new ArrayList<Name>();		
@@ -31,8 +31,12 @@ public class Combination {
 		return combinedName;
 	}
 	
-	public File getMedia() {
-		return media;
+	public String getMergedName() {
+		return mergedName;
+	}
+	
+	public String getPath() {
+		return path;
 	}
 
 	public void process() {
@@ -50,14 +54,13 @@ public class Combination {
 				createCombinedNameFile();
 
 				// Use a process to concatenate the separate wav files into one file
-				String concat = ("pwd;ffmpeg -y -f concat -safe 0 -i " + mergedName + ".txt -c copy ./merged/" + mergedName + ".wav");
-
+				String concat = ("ffmpeg -y -f concat -safe 0 -i " + mergedName + ".txt -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
 				File directory = new File(NameSayerApp.ROOT_DIR + "temp/");
 				ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);
 				merge.directory(directory);
 				Process pro = merge.start();
 				if(pro.waitFor() == 0) {
-					media = new File(NameSayerApp.ROOT_DIR + "temp/combined/" + mergedName + ".wav");
+					path = new File(NameSayerApp.ROOT_DIR + "temp/merged/" + mergedName + ".wav").toURI().toString();
 				}
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();

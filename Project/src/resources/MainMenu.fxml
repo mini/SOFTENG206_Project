@@ -31,9 +31,9 @@
                   <Font name="System Font" size="17.0" />
                </font>
             </Button>
-            <Button layoutX="492.0" layoutY="41.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="57.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/SmallButton.css">
+            <Button fx:id="rewardButton" layoutX="492.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#rewardPressed" prefHeight="68.0" prefWidth="57.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/SmallButton.css">
                <graphic>
-                  <ImageView fx:id="rewardButton" fitHeight="54.0" fitWidth="56.0" onMouseClicked="#rewardPressed" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="54.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@icons/trophy.png" />
                      </image>

@@ -295,6 +295,8 @@ public class PractiseController extends BaseController {
 		showPopUp("Recording Now...", 5);
 
 		recordTask.start();
+
+		RewardsController.records++;
 	}
 	
 	/**
@@ -318,6 +320,8 @@ public class PractiseController extends BaseController {
 
 		// Save the new filename to the list
 		current.addAttempt(new File(ROOT_DIR + "attempts/" + current.getName() + "/" + filename), labelDateFormat.format(now));
+
+		RewardsController.saves++;
 	}
 
 	/**

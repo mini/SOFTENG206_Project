@@ -83,6 +83,8 @@ public class ComboPlayerController extends BaseController {
 			compareButton.setDisable(false);
 		});
 		recordTask.start();
+
+		RewardsController.records++;
 	}
 
 	@FXML

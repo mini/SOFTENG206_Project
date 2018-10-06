@@ -1,6 +1,5 @@
 package assignment4.ui;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -66,13 +65,12 @@ public class SelectorController extends BaseController {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
-				new FileChooser.ExtensionFilter("All", "*.*")
-		);
+				new FileChooser.ExtensionFilter("All", "*.*"));
 	}
 
 	@FXML
 	private void backPressed() {
-		showScene("/resources/MainMenu.fxml", false);
+		showScene("/resources/MainMenu.fxml", false, false);
 	}
 
 	@FXML
@@ -119,13 +117,12 @@ public class SelectorController extends BaseController {
 		input = input.replace("-", " ");
 		String[] lines = input.split("\n");
 
-		outer: 
-		for (String line : lines) {
+		outer: for (String line : lines) {
 			line = line.trim();
 			if (line.isEmpty()) {
 				continue;
 			}
-			
+
 			String[] names = line.split(" ");
 			Combination combination = new Combination();
 			for (String name : names) {
@@ -147,8 +144,8 @@ public class SelectorController extends BaseController {
 		for (Combination combination : playlist) {
 			combination.process();
 		}
-		
-		showScene("/resources/ComboPlayer.fxml", true, c -> {
+
+		showScene("/resources/ComboPlayer.fxml", true, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
 		});
@@ -157,6 +154,6 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void helpPressed() {
-		//TODO show help popup
+		// TODO show help popup
 	}
 }

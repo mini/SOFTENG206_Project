@@ -21,11 +21,11 @@ public abstract class BaseController {
 		// Empty
 	}
 
-	protected void showScene(String path, boolean asPopUp) {
-		showScene(path, asPopUp, null);
+	protected void showScene(String path, boolean asPopUp, boolean resizeable) {
+		showScene(path, asPopUp, resizeable, null);
 	}
-	
-	protected void showScene(String path, boolean asPopUp, ExtraSetup extra) {
+
+	protected void showScene(String path, boolean asPopUp, boolean resizeable, ExtraSetup extra) {
 		Stage nextStage = primaryStage;
 		try {
 
@@ -44,7 +44,8 @@ public abstract class BaseController {
 			controller.primaryStage = nextStage;
 			controller.namesDB = namesDB;
 			nextStage.setScene(scene);
-			if(extra != null) {
+			nextStage.setResizable(resizeable);
+			if (extra != null) {
 				extra.call(controller);
 			}
 			controller.init();

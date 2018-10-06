@@ -12,6 +12,8 @@ import assignment4.model.Name;
 import assignment4.model.Version;
 import javafx.animation.PauseTransition;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,6 +29,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -153,6 +156,31 @@ public class PractiseController extends BaseController {
 	}
 
 	/**
+	 * Hides the header of provided tables
+	 */
+	private class HideHeader implements ChangeListener<Number> {
+		private TableView<? extends Object> table;
+
+		private HideHeader(TableView<? extends Object> table) {
+			this.table = table;
+		}
+
+		@Override
+		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+			Pane header = (Pane) table.lookup("TableHeaderRow");
+			System.out.println(header);
+			// Hide the headers of the tables
+			if (header != null && header.isVisible()) {
+				header.setMaxHeight(0);
+				header.setMinHeight(0);
+				header.setPrefHeight(0);
+				header.setVisible(false);
+				header.setManaged(false);
+			}
+		}
+	}
+
+	/**
 	 * Plays the currently selected name
 	 */
 	@FXML
@@ -206,7 +234,7 @@ public class PractiseController extends BaseController {
 	 */
 	@FXML
 	private void mainMenuPressed() {
-		showScene("/resources/MainMenu.fxml", false);
+		showScene("/resources/MainMenu.fxml", false, false);
 	}
 
 	/**
@@ -274,7 +302,7 @@ public class PractiseController extends BaseController {
 			saveButton.setDisable(false);
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
-			
+
 			// Label temp file as an Unsaved Attempt in the list
 			current.addAttempt(tempFile, "Unsaved Attempt");
 			attemptsTable.getSelectionModel().clearAndSelect(0);
@@ -285,7 +313,7 @@ public class PractiseController extends BaseController {
 
 		recordTask.start();
 	}
-	
+
 	/**
 	 * Saves the temporary attempt and adds it to the table
 	 */

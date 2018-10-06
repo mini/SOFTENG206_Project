@@ -15,7 +15,7 @@ public class MainMenuController extends BaseController {
 
 	@FXML
 	private void startPressed() {
-		showScene("/resources/NameSelector.fxml", false);
+		showScene("/resources/NameSelector.fxml", false, true);
 	}
 
 	/**
@@ -23,7 +23,7 @@ public class MainMenuController extends BaseController {
 	 */
 	@FXML
 	private void practisePressed() {
-		showScene("/resources/Practise.fxml", false);
+		showScene("/resources/Practise.fxml", false, true);
 	}
 
 	/**
@@ -31,6 +31,6 @@ public class MainMenuController extends BaseController {
 	 */
 	@FXML
 	private void testMic() {
-		showScene("/resources/TestMicrophone.fxml", false);
+		showScene("/resources/TestMicrophone.fxml", false, false);
 	}
 }

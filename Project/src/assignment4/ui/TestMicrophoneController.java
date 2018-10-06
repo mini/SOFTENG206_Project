@@ -33,7 +33,7 @@ public class TestMicrophoneController extends BaseController {
 	 */
 	@FXML
 	private void handleBack() {
-		showScene("/resources/MainMenu.fxml", false);
+		showScene("/resources/MainMenu.fxml", false, false);
 	}
 
 	/**

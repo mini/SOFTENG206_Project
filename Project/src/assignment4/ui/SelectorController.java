@@ -158,7 +158,7 @@ public class SelectorController extends BaseController {
 		
 		showScene("/resources/ComboPlayer.fxml", true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
-			controller.playlist = playlist;
+			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
 		});
 
 	}

@@ -201,6 +201,6 @@ public class NamesDB {
 class WavFileFilter implements FilenameFilter {
 	@Override
 	public boolean accept(File dir, String name) {
-		return name.endsWith(".wav") && !name.equals("temp.wav");
+		return name.endsWith(".wav") && !name.equals("temp.wav") && !name.equals("latest.wav");
 	}
 }

@@ -49,7 +49,7 @@ public class SelectorController extends BaseController {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});
 
-		namesList.setCellFactory(Value -> new ListCell<Name>() {
+		namesList.setCellFactory(value -> new ListCell<Name>() {
 			@Override
 			protected void updateItem(Name item, boolean empty) {
 				super.updateItem(item, empty);

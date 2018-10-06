@@ -19,15 +19,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.MediaPlayer;
@@ -73,6 +66,7 @@ public class PractiseController extends BaseController {
 	@FXML private Button listenButton;
 	@FXML private Button compareButton;
 	@FXML private Button deleteButton;
+	@FXML private Button helpButton;
 	
 	@FXML private Button mainMenuButton;
 	@FXML private Button nextButton;
@@ -86,7 +80,24 @@ public class PractiseController extends BaseController {
 	 * well as configuring listeners for user selection and access.
 	 */
 	@Override
-	protected void init() {
+	public void init() {
+
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Practice Module: \n\n" +
+                "* Select name(s) to practise and click play. \n" +
+                "* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT. \n" +
+                "* The names database is shown on the left, while your attempts of each name are shown on the right list \n" +
+                "* For each name: \n" +
+                "-- PLAY to listen to the pronunciation from the database \n" +
+                "-- BAD QUALITY to mark the recording as bad quality \n" +
+                "-- RECORD to record your own pronunciation (up to 5 seconds) " +
+                "-- SAVE to permanently save your latest attempt \n" +
+                "-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
+                "-- DELETE to delete your selected recording \n" +
+                "-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
+                "* Click the MAIN MENU button to go back");
+        helpButton.setTooltip(tooltip);
+
 
 		// Left names table
 
@@ -312,6 +323,8 @@ public class PractiseController extends BaseController {
 		showPopUp("Recording Now...", 5);
 
 		recordTask.start();
+
+		RewardsController.records++;
 	}
 
 	/**
@@ -335,6 +348,8 @@ public class PractiseController extends BaseController {
 
 		// Save the new filename to the list
 		current.addAttempt(new File(ROOT_DIR + "attempts/" + current.getName() + "/" + filename), labelDateFormat.format(now));
+
+		RewardsController.saves++;
 	}
 
 	/**

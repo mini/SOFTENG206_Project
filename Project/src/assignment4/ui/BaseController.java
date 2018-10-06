@@ -17,7 +17,7 @@ public abstract class BaseController {
 		this.namesDB = namesDB;
 	}
 
-	protected void init() {
+	public void init() {
 		// Empty
 	}
 

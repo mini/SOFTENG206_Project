@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.RewardsController">
+    <children>
+        <Pane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #4d5d75;">
+            <children>
+                <Text fill="WHITE" layoutX="119.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trophy Case" textAlignment="CENTER" wrappingWidth="355.21875">
+                    <font>
+                        <Font name="System Font" size="23.0" />
+                    </font>
+                </Text>
+                <Separator layoutX="217.0" layoutY="59.0" prefHeight="4.0" prefWidth="160.0" />
+            <Circle fill="#00000092" layoutX="119.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
+            <Circle fill="#00000092" layoutX="300.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
+            <Circle fill="#00000092" layoutX="488.0" layoutY="247.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
+                <Button fx:id="backButton" contentDisplay="CENTER" layoutX="245.0" layoutY="70.0" mnemonicParsing="false" onAction="#backPressed" prefHeight="27.0" prefWidth="104.0" stylesheets="@stylesheets/Button.css" text="Main Menu" textFill="#3f3f3f">
+                    <font>
+                        <Font name="System Font" size="17.0" />
+                    </font>
+                </Button>
+                  <ImageView fitHeight="54.0" fitWidth="56.0" layoutX="155.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+                      <image>
+                          <Image url="@icons/trophy.png" />
+                      </image>
+                  </ImageView>
+            <ImageView fitHeight="54.0" fitWidth="56.0" layoutX="383.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/trophy.png" />
+               </image>
+            </ImageView>
+            <Separator layoutX="217.0" layoutY="57.0" prefHeight="4.0" prefWidth="160.0" />
+            <ImageView fx:id="prize1" fitHeight="96.0" fitWidth="106.0" layoutX="71.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="prize2" fitHeight="96.0" fitWidth="106.0" layoutX="252.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="prize3" fitHeight="96.0" fitWidth="106.0" layoutX="440.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons/lock.png" />
+               </image>
+            </ImageView>
+            <Text fx:id="rewardCount" fill="WHITE" layoutX="122.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0/3" textAlignment="CENTER" wrappingWidth="355.21875">
+               <font>
+                  <Font name="System Font" size="23.0" />
+               </font>
+            </Text>
+            <Text fill="#ffffffcf" layoutX="68.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record 10 Times" />
+            <Text fill="#ffffffcf" layoutX="249.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save 5 Attempts" />
+            <Text fill="#ffffffcf" layoutX="478.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
+            </children>
+        </Pane>
+    </children>
+</AnchorPane>

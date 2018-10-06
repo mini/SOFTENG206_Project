@@ -38,7 +38,7 @@ public class ComboPlayerController extends BaseController {
 	private int current = 0;
 
 	@Override
-	protected void init() {
+	public void init() {
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
 			@Override
 			protected void updateItem(Combination item, boolean empty) {
@@ -83,6 +83,8 @@ public class ComboPlayerController extends BaseController {
 			compareButton.setDisable(false);
 		});
 		recordTask.start();
+
+		RewardsController.records++;
 	}
 
 	@FXML

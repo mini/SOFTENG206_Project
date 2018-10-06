@@ -26,15 +26,28 @@
             </Button>
             <Button fx:id="testMicButton" layoutX="209.0" layoutY="345.0" mnemonicParsing="false" onAction="#testMic" prefHeight="41.0" prefWidth="187.0" stylesheets="@stylesheets/Button.css" text="Test Microphone" textFill="#3f3f3f" />
             <Separator layoutX="48.0" layoutY="324.0" prefHeight="4.0" prefWidth="498.0" />
-            <ImageView fitHeight="54.0" fitWidth="56.0" layoutX="273.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@icons/microphone.png" />
-               </image>
-            </ImageView>
             <Button fx:id="practiseButton" contentDisplay="CENTER" layoutX="316.0" layoutY="173.0" mnemonicParsing="false" onAction="#practisePressed" onMouseClicked="#practisePressed" prefHeight="54.0" prefWidth="160.0" stylesheets="@stylesheets/Button.css" text="Practise" textFill="#3f3f3f">
                <font>
                   <Font name="System Font" size="17.0" />
                </font>
+            </Button>
+            <Button fx:id="rewardButton" layoutX="492.0" layoutY="41.0" mnemonicParsing="false" onMouseClicked="#rewardPressed" prefHeight="68.0" prefWidth="57.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/SmallButton.css">
+               <graphic>
+                  <ImageView fitHeight="54.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/trophy.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="helpButton" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="72.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/TransparentButton.css">
+               <graphic>
+                  <ImageView fitHeight="42.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons/info.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
          </children>
       </Pane>

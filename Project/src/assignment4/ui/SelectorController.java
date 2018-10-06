@@ -16,11 +16,7 @@ import assignment4.model.Combination;
 import assignment4.model.Name;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.FileChooser;
 
 public class SelectorController extends BaseController {
@@ -38,12 +34,24 @@ public class SelectorController extends BaseController {
 	@FXML private Button playButton;
 	@FXML private Button loadButton;
 	@FXML private Button saveButton;
+
 	
 	@FXML private Button helpButton;
 	//@formatter:on
 
 	@Override
 	public void init() {
+
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Selection Menu:  \n\n" +
+                "* Select your list of names to practice." +
+                "* Add each name that you would like to practice in the text area above. \n" +
+                "* Multiple names on one line will be concatenated into one merged name. \n" +
+                "* To practise multiple separate names, type each full name on separate lines. \n" +
+                "* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
+                "* Click the MAIN MENU button to go back to the main screen.");
+        helpButton.setTooltip(tooltip);
+
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});

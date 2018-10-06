@@ -79,6 +79,7 @@ public class NameSayerApp extends Application {
 		// Passes in the current stage to be used as the main stage for all following
 		// windows
 		controller.setup(primaryStage, namesDB);
+		controller.init();
 
 		// Add the scene of the main menu
 		Scene menuScene = new Scene(menuPane);

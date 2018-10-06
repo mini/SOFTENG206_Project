@@ -2,7 +2,6 @@ package assignment4;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
@@ -44,8 +43,12 @@ public class NameSayerApp extends Application {
 	 */
 	public static void main(String[] args) {
 
-		// Create the initial directory for all attempts to be put under
+		// Create the required directorys
 		new File(ROOT_DIR + "attempts/").mkdirs();
+		new File(ROOT_DIR + "temp/silenced/").mkdirs();
+		new File(ROOT_DIR + "temp/equalised/").mkdirs();
+		new File(ROOT_DIR + "temp/merged/").mkdirs();
+		
 		try {
 			unzip("/resources/nameFiles.zip", ROOT_DIR);
 		} catch (IOException e) {

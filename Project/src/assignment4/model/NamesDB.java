@@ -65,7 +65,7 @@ public class NamesDB {
 
 	public Name getName(String name) {
 		for (Name n : names) {
-			if (n.getName().equals(name)) {
+			if (n.getName().equalsIgnoreCase(name)) {
 				return n;
 			}
 		}
@@ -141,7 +141,7 @@ public class NamesDB {
 			System.out.println("BQ file does not exist");
 		}
 
-		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles();
+		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles(new WavFileFilter());
 		Map<String, Name> names = new HashMap<String, Name>();
 
 		for (File file : files) {

@@ -29,7 +29,7 @@
             <Button fx:id="playButton" layoutX="180.0" layoutY="21.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="25.0" prefWidth="65.0" stylesheets="@stylesheets/SmallButton.css" text="Play" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="216.0" />
          </children>
       </AnchorPane>
-      <TextArea fx:id="textInput" layoutX="249.0" layoutY="7.0" promptText="[Draft text] Type your chosen names into this text area. Start each new name on a new line. Multiple names can be on one line." AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
+      <TextArea fx:id="textInput" layoutX="249.0" layoutY="7.0" promptText="[Draft text] Type your chosen names into this text area. Start each new name on a new line. Multiple names can be on one line." text="Aiguo Ahn Bruce&#10;Burgess-CHen&#10;Deepika" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0">
          <padding>
             <Insets bottom="1.0" left="1.0" right="1.0" top="1.0" />
          </padding>

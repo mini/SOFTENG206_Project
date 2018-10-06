@@ -22,7 +22,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
  *
  */
 public class Version {
-	private String audioFile;
+	private String audioFileName;
 	private String path;
 	private boolean badQuality;
 	private String label;
@@ -37,7 +37,7 @@ public class Version {
 	 *            whether it was marked previously
 	 */
 	public Version(String audioFile, boolean badQuality) {
-		this.audioFile = audioFile;
+		this.audioFileName = audioFile;
 		this.path = new File(NameSayerApp.ROOT_DIR + "names/" + audioFile).toURI().toString();
 		this.badQuality = badQuality;
 	}
@@ -51,7 +51,7 @@ public class Version {
 	 *            shown on the list
 	 */
 	public Version(File audioFile, String label) {
-		this.audioFile = audioFile.getName();
+		this.audioFileName = audioFile.getName();
 		this.path = audioFile.toURI().toString();
 		this.label = label;
 	}
@@ -65,7 +65,7 @@ public class Version {
 		try {
 			if(badQuality) {
 				// Append to file
-				Files.write(Paths.get(NamesDB.BQ_FILE), (audioFile + " - bad quality" + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
+				Files.write(Paths.get(NamesDB.BQ_FILE), (audioFileName + " - bad quality" + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
 			} else {
 				// Makes a new file with all entries except this one
 				File bqFile = new File(NamesDB.BQ_FILE);
@@ -75,7 +75,7 @@ public class Version {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(tmpFile));
 				String line;
 				while((line = reader.readLine()) != null) {
-					if(line.trim().contains(audioFile)) {
+					if(line.trim().contains(audioFileName)) {
 						continue;
 					}
 				    writer.write(line + System.getProperty("line.separator"));
@@ -120,6 +120,10 @@ public class Version {
 		return path;
 	}
 
+	public String getAudioFileName() {
+		return audioFileName;
+	}
+	
 	public String getLabel() {
 		return label;
 	}
@@ -137,7 +141,7 @@ public class Version {
 
 	@Override
 	public String toString() {
-		return "Version(" + audioFile + ") isBadQuality: " + badQuality;
+		return "Version(" + audioFileName + ") isBadQuality: " + badQuality;
 	}
 
 }

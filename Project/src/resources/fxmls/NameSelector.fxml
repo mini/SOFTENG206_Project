@@ -4,21 +4,23 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="428.0" prefWidth="590.0" style="-fx-background-color: #4d5d75;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.SelectorController">
    <children>
-      <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="202.0" prefWidth="249.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane layoutX="14.0" layoutY="64.0" prefHeight="374.0" prefWidth="249.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="64.0">
          <padding>
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>
          <children>
-            <TextField fx:id="searchTextField" layoutX="50.0" layoutY="30.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+            <TextField fx:id="searchTextField" layoutX="14.0" layoutY="13.0" prefHeight="28.0" prefWidth="235.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="235.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
             	<placeholder>
                 	<Label text="No names in database" />
             	</placeholder>
@@ -45,6 +47,12 @@
             </Button>
          </children>
       </AnchorPane>
-      <TextArea fx:id="textInput" layoutX="249.0" layoutY="7.0" prefHeight="387.0" prefWidth="340.0" promptText="[Draft text] Type your chosen names into this text area. Start each new name on a new line. Multiple names can be on one line." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="7.0" />
+      <TextArea fx:id="textInput" layoutX="249.0" layoutY="70.0" prefHeight="318.0" prefWidth="334.0" promptText="Add to your playlist here by typing the name or double-clicking names on the left list. For more information, hover over the (?) below." AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="70.0" />
+      <Separator layoutX="8.0" layoutY="54.0" prefHeight="3.0" prefWidth="574.0" />
+      <Label fx:id="currentLabel" alignment="CENTER" layoutX="174.0" layoutY="14.0" prefHeight="23.0" prefWidth="242.0" text="Select Playlist" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

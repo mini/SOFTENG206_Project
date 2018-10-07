@@ -118,8 +118,7 @@ public class Combination {
 	/**
 	 * Separates the line of the text file to obtain the separate name files to concatenate by creating a new text file with
 	 * the correct format to concatenate the wav files
-	 * 
-	 * @param disjointName
+	 *
 	 * @throws InterruptedException
 	 * @throws IOException
 	 */
@@ -136,19 +135,34 @@ public class Combination {
 		writer.close();
 	}
 
+	/**
+	 * Removes any silences before and after the audio of the clip to shorten the file for smooth concatenation
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void removeSilence(String fileName) throws IOException, InterruptedException {
 		String silence = ("ffmpeg -n -hide_banner -i " + fileName + " -af silenceremove=1:0:-35dB:1:5:-35dB:0:peak ../temp/silenced/" + fileName);
 
 		File directory = new File(NameSayerApp.ROOT_DIR + "names/");
+
+		// Use a process to perform the silence removing
 		ProcessBuilder remove = new ProcessBuilder("bash", "-lc", silence);
 		remove.directory(directory);
 		Process pro = remove.start();
 		pro.waitFor();
 	}
 
+	/**
+	 * Equalises the volume of each audio clip to match a norm/standard to prevent some files
+	 * being too quiet or too loud - promotes consistency for volume
+	 * @throws IOException
+	 * @throws InterruptedException
+	 */
 	public void equaliseVolume(String fileName) throws IOException, InterruptedException {
 		String eq = ("ffmpeg -n -i " + fileName + " -filter:a loudnorm ../equalised/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");
+
+		// Use a process to perform the volume equalising
 		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);
 		volume.directory(directory);
 		Process pro = volume.start();

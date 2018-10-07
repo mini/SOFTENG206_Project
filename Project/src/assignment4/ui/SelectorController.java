@@ -171,8 +171,4 @@ public class SelectorController extends BaseController {
 
 	}
 
-	@FXML
-	private void helpPressed() {
-		// TODO show help popup
-	}
 }

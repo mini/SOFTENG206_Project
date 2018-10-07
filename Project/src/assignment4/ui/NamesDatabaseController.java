@@ -115,7 +115,7 @@ public class NamesDatabaseController extends BaseController {
         File tempFile = new File(ROOT_DIR + "names/temp.wav");
         tempFile.deleteOnExit();
 
-        RecordTask recordTask = new RecordTask(tempFile, 5000, () -> {
+        RecordTask recordTask = new RecordTask(tempFile, () -> {
             // Can enable these since we have something to play
             saveButton.setDisable(false);
             listenButton.setDisable(false);

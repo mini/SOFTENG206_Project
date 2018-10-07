@@ -1,11 +1,19 @@
 package assignment4.model;
 
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
+
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,39 +22,72 @@ import assignment4.NameSayerApp;
 public class Combination {
 
 	private List<Name> names;
-	private String combinedName;
+	private String displayName;
 	private String mergedName;
-	
 	private String path;
+	private boolean badQuality;
 
-	public Combination() {
-		this.names = new ArrayList<Name>();		
+	public Combination(String displayName) {
+		this.names = new ArrayList<Name>();
+		this.displayName = displayName;
 	}
 
 	public void addName(Name name) {
 		names.add(name);
 	}
-	
-	public String getCombinedName() {
-		return combinedName;
+
+	public String getDisplayName() {
+		return displayName;
 	}
-	
+
 	public String getMergedName() {
 		return mergedName;
 	}
-	
+
 	public String getPath() {
 		return path;
 	}
 
-	public void process() {
-		combinedName = "";
-		for (Name name : names) {
-			combinedName += name.getName() + " ";
+	public boolean isBadQuality() {
+		return badQuality;
+	}
+	
+	public void toggleBadQuality() {
+		badQuality = !badQuality;
+		try {
+			if (badQuality) {
+				// Append to file
+				Files.write(Paths.get(NamesDB.BQ_FILE), ("Combo-" + mergedName + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
+
+			} else {
+				// Makes a new file with all entries except this one
+				File bqFile = new File(NamesDB.BQ_FILE);
+				File tmpFile = new File(NamesDB.TEMP_BQ_FILE);
+
+				BufferedReader reader = new BufferedReader(new FileReader(bqFile));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(tmpFile));
+				String line;
+				while ((line = reader.readLine()) != null) {
+					if (line.contains("Combo-" + mergedName)) {
+						continue;
+					}
+					writer.write(line + System.getProperty("line.separator"));
+				}
+				tmpFile.renameTo(bqFile);
+
+				reader.close();
+				writer.close();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		combinedName.trim();
-		final String mergedName = combinedName.replaceAll("\\s","");
+	}
+
+	public void process(NamesDB db) {
+		final String mergedName = displayName.replaceAll("\\s|-", "").toLowerCase();
 		this.mergedName = mergedName;
+
+		badQuality = db.checkBadCombo(this);
 		
 		Thread thread = new Thread(() -> {
 			try {
@@ -59,7 +100,7 @@ public class Combination {
 				ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);
 				merge.directory(directory);
 				Process pro = merge.start();
-				if(pro.waitFor() == 0) {
+				if (pro.waitFor() == 0) {
 					path = new File(NameSayerApp.ROOT_DIR + "temp/merged/" + mergedName + ".wav").toURI().toString();
 				}
 			} catch (IOException | InterruptedException e) {

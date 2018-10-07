@@ -48,6 +48,7 @@ public class NameSayerApp extends Application {
 		new File(ROOT_DIR + "temp/silenced/").mkdirs();
 		new File(ROOT_DIR + "temp/equalised/").mkdirs();
 		new File(ROOT_DIR + "temp/merged/").mkdirs();
+//		new File(ROOT_DIR + "temp/").deleteOnExit();
 		
 		try {
 			unzip("/resources/nameFiles.zip", ROOT_DIR);

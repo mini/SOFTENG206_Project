@@ -40,20 +40,19 @@ public class ComboPlayerController extends BaseController {
 	@Override
 	public void init() {
 
-        Tooltip tooltip = new Tooltip();
-        tooltip.setText("Player: \n\n" +
-                "* Select name(s) to practise and click play. \n" +
-                "* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT or PREVIOUS. \n" +
-                "* The names database is shown on the left list. \n" +
-                "* For each name: \n" +
-                "-- PLAY to listen to the pronunciation from the database \n" +
-                "-- BAD QUALITY to mark the recording as bad quality \n" +
-                "-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
-                "-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
-                "-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
-                "* Exit this screen to go back to the main menu");
-        helpButton.setTooltip(tooltip);
-
+		Tooltip tooltip = new Tooltip();
+		tooltip.setText("Player: \n\n" +
+				"* Select name(s) to practise and click play. \n" +
+				"* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT or PREVIOUS. \n" +
+				"* The names database is shown on the left list. \n" +
+				"* For each name: \n" +
+				"-- PLAY to listen to the pronunciation from the database \n" +
+				"-- BAD QUALITY to mark the recording as bad quality \n" +
+				"-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
+				"-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
+				"-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
+				"* Exit this screen to go back to the main menu");
+		helpButton.setTooltip(tooltip);
 
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
 			@Override
@@ -62,7 +61,7 @@ public class ComboPlayerController extends BaseController {
 				if (empty || item == null) {
 					setText(null);
 				} else {
-					setText(item.getCombinedName());
+					setText(item.getDisplayName());
 				}
 			}
 		});
@@ -92,22 +91,25 @@ public class ComboPlayerController extends BaseController {
 	private void playPressed() {
 		MediaPlayer player = new MediaPlayer(new Media(playlist[current].getPath()));
 		player.setAutoPlay(true);
+		badQualityButton.setDisable(false);
 	}
 
 	@FXML
 	private void badQualityPressed() {
-
+		namesDB.toggleBadCombo(playlist[current]);
+		playlist[current].toggleBadQuality();
+		badQualityButton.setText(playlist[current].isBadQuality() ? "Good Quality" : "Bad Quality");
 	}
 
 	@FXML
 	private void recordPressed() {
-		if(recordButton.getText().equals("Record")) {
+		if (recordButton.getText().equals("Record")) {
 			File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav");
 			recordButton.setText("Stop");
-			
+
 			listenButton.setDisable(true);
 			compareButton.setDisable(true);
-			
+
 			recordTask = new RecordTask(file, () -> {
 				Platform.runLater(() -> {
 					recordButton.setText("Record");
@@ -115,7 +117,7 @@ public class ComboPlayerController extends BaseController {
 					compareButton.setDisable(false);
 				});
 			});
-						
+
 			recordTask.start();
 		} else {
 			recordTask.stop();
@@ -157,10 +159,18 @@ public class ComboPlayerController extends BaseController {
 		nextCombination();
 	}
 
-	private void nextCombination() {
-		currentLabel.setText(playlist[current].getCombinedName());
+	@FXML
+	private void backPressed() {
+		showScene("/resources/NameSelector.fxml", false, true);
+	}
 
-		if (new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav").exists()) {
+	private void nextCombination() {
+		Combination currentCombo = playlist[current];
+		currentLabel.setText(currentCombo.getDisplayName());
+		badQualityButton.setText(currentCombo.isBadQuality() ? "Good Quality" : "Bad Quality");
+		badQualityButton.setDisable(!currentCombo.isBadQuality());
+
+		if (new File(ROOT_DIR + "attempts/" + currentCombo.getMergedName() + "/latest.wav").exists()) {
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
 		} else {

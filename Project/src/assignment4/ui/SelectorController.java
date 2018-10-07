@@ -149,7 +149,6 @@ public class SelectorController extends BaseController {
 		List<String> invalid = new ArrayList<String>();
 
 		String input = textInput.getText();
-		input = input.replace("-", " ");
 		String[] lines = input.split("\n");
 
 		for (String line : lines) {
@@ -158,8 +157,8 @@ public class SelectorController extends BaseController {
 				continue;
 			}
 
-			String[] names = line.split(" ");
-			Combination combination = new Combination();
+			String[] names = line.replace("-", " ").split(" ");
+			Combination combination = new Combination(line);
 			for (String name : names) {
 				Name existing = namesDB.getName(name);
 				if (existing == null) {
@@ -181,13 +180,12 @@ public class SelectorController extends BaseController {
 		}
 
 		for (Combination combination : playlist) {
-			combination.process();
+			combination.process(namesDB);
 		}
 
-		showScene("/resources/ComboPlayer.fxml", true, true, c -> {
+		showScene("/resources/ComboPlayer.fxml", false, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
-			controller.primaryStage.initModality(Modality.NONE);
 		});
 	}
 }

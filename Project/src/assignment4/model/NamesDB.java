@@ -25,6 +25,7 @@ public class NamesDB {
 	private Random random;
 
 	private ArrayList<Name> names;
+	private ArrayList<String> badCombos;
 
 	/**
 	 * Create a new database, will automatically load existing names
@@ -132,13 +133,29 @@ public class NamesDB {
 		}
 	}
 
+	public void toggleBadCombo(Combination combo) {
+		if(!badCombos.remove(combo.getMergedName())) {
+			badCombos.add(combo.getMergedName());
+		}
+	}
+	
+	public boolean checkBadCombo(Combination combo) {
+		return badCombos.contains(combo.getMergedName());
+	}
+
 	/**
 	 * Loads all the pre-made names, marks any bad files and load any existing user attempts of a name.
 	 */
 	private void populateDB() throws IOException {
 		List<String> badQualityFiles = null;
+		badCombos = new ArrayList<String>();
 		try {
 			badQualityFiles = Files.readAllLines(Paths.get(BQ_FILE), Charset.forName("UTF8"));
+			for (String bad : badQualityFiles) {
+				if (bad.startsWith("Combo-")) {
+					badCombos.add(bad.split("-")[1]);
+				}
+			}
 		} catch (IOException e) {
 			System.out.println("BQ file does not exist");
 		}

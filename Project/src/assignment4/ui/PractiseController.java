@@ -250,7 +250,9 @@ public class PractiseController extends BaseController {
 	@FXML
 	private void mainMenuPressed() {
 		namesDB.setSelectedAll(false);
-		current.getPlayingProperty().set(" ");
+		if(current != null) {
+			current.getPlayingProperty().set(" ");
+		}
 		showScene("/resources/MainMenu.fxml", false, false);
 	}
 

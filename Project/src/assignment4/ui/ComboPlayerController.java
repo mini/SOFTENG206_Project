@@ -4,11 +4,15 @@ import java.io.File;
 import java.util.Random;
 
 import assignment4.model.Combination;
+import com.sun.javafx.scene.control.skin.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.text.Font;
+
+import javax.rmi.CORBA.Util;
 
 public class ComboPlayerController extends BaseController {
 	private static final Random random = new Random();
@@ -38,6 +42,12 @@ public class ComboPlayerController extends BaseController {
 	@Override
 	public void init() {
 
+	    // Prevented Truncating
+            currentLabel.setMaxWidth(250);
+            currentLabel.setMaxHeight(60);
+            currentLabel.setTextOverrun(OverrunStyle.CLIP);
+            currentLabel.setWrapText(true);
+
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText("Player: \n\n" +
 				"* Select name(s) to practise and click play. \n" +
@@ -51,6 +61,8 @@ public class ComboPlayerController extends BaseController {
 				"-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
 				"* Exit this screen to go back to the main menu");
 		helpButton.setTooltip(tooltip);
+
+
 
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
 			@Override
@@ -72,6 +84,7 @@ public class ComboPlayerController extends BaseController {
 		});
 
 		namesList.getItems().addAll(playlist);
+
 
 		// Disable next/previous buttons if only one name is selected
 		if (playlist.length == 1) {
@@ -155,7 +168,8 @@ public class ComboPlayerController extends BaseController {
 			current = (current + 1) % playlist.length;
 		}
 		nextCombination();
-	}
+
+    }
 
 	@FXML
 	private void backPressed() {

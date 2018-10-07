@@ -31,14 +31,14 @@ public class Version {
 	/**
 	 * For existing names
 	 * 
-	 * @param audioFile
+	 * @param audioFileName
 	 *            media source
 	 * @param badQuality
 	 *            whether it was marked previously
 	 */
-	public Version(String audioFile, boolean badQuality) {
-		this.audioFileName = audioFile;
-		this.path = new File(NameSayerApp.ROOT_DIR + "names/" + audioFile).toURI().toString();
+	public Version(String audioFileName, boolean badQuality) {
+		this.audioFileName = audioFileName;
+		this.path = new File(NameSayerApp.ROOT_DIR + "names/" + audioFileName).toURI().toString();
 		this.badQuality = badQuality;
 	}
 

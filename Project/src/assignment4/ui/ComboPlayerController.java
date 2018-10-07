@@ -1,7 +1,5 @@
 package assignment4.ui;
 
-import static assignment4.NameSayerApp.ROOT_DIR;
-
 import java.io.File;
 import java.util.Random;
 

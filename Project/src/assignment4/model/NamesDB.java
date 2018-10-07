@@ -32,12 +32,23 @@ public class NamesDB {
 	 */
 	public NamesDB() {
 		random = new Random();
+		badCombos = new ArrayList<String>();
 		try {
 			populateDB();
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
 		}
+	}
+
+	public void addName(Name name) {
+		names.add(name);
+		Collections.sort(names);
+	}
+
+	public void deleteName(Name name) {
+		name.deleteAll();
+		names.remove(name);
 	}
 
 	/**
@@ -134,11 +145,11 @@ public class NamesDB {
 	}
 
 	public void toggleBadCombo(Combination combo) {
-		if(!badCombos.remove(combo.getMergedName())) {
+		if (!badCombos.remove(combo.getMergedName())) {
 			badCombos.add(combo.getMergedName());
 		}
 	}
-	
+
 	public boolean checkBadCombo(Combination combo) {
 		return badCombos.contains(combo.getMergedName());
 	}
@@ -148,7 +159,6 @@ public class NamesDB {
 	 */
 	private void populateDB() throws IOException {
 		List<String> badQualityFiles = null;
-		badCombos = new ArrayList<String>();
 		try {
 			badQualityFiles = Files.readAllLines(Paths.get(BQ_FILE), Charset.forName("UTF8"));
 			for (String bad : badQualityFiles) {
@@ -178,8 +188,10 @@ public class NamesDB {
 			}
 
 			// Grab name from filename
-			String[] sections = filename.split("_"); // TODO Switch to regex matcher
-			String name = sections[3].split("\\.")[0];
+			String name;
+			int front = filename.lastIndexOf("_") + 1;
+			int back = filename.lastIndexOf(".wav");
+			name = filename.substring(front, back);
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 
 			// Add versions to name object

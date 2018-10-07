@@ -1,7 +1,5 @@
 package assignment4.ui;
 
-import static assignment4.NameSayerApp.ROOT_DIR;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -219,8 +217,12 @@ public class PractiseController extends BaseController {
 			current = namesDB.getNextSelected(current);
 		}
 
-		if (current == null && old != null) {
-			current = old;
+		if (current == null) {
+			if(old != null) {
+				current = old;
+			} else {
+				return;
+			}
 		}
 
 		// Configure buttons
@@ -296,7 +298,7 @@ public class PractiseController extends BaseController {
 			selectAllButton.setText("Select All");
 		}
 
-		nextButton.setDisable(!next);
+		nextButton.setDisable(!next || current == null);
 		numSelected = next ? names.size() : 0;
 		namesTable.refresh();
 	}

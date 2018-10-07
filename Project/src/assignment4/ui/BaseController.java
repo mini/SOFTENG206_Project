@@ -2,6 +2,7 @@ package assignment4.ui;
 
 import java.io.IOException;
 
+import assignment4.NameSayerApp;
 import assignment4.model.NamesDB;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +10,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public abstract class BaseController {
+	public static final String ROOT_DIR = NameSayerApp.ROOT_DIR;
+	
 	protected Stage primaryStage;
 	protected NamesDB namesDB;
 

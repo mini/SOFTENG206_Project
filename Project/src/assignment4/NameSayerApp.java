@@ -18,21 +18,18 @@ import javafx.stage.Stage;
 /**
  * -- NameSayerApp Class --
  *
- * NameSayerApp is the main entry point of the NameSayer application, containing
- * the main method as well as the hook start method that first initialises the
- * MainMenu scene on entry.
+ * NameSayerApp is the main entry point of the NameSayer application, containing the main method as well as the hook
+ * start method that first initialises the MainMenu scene on entry.
  *
- * The microphone icon in the main menu GUI was made by
- * https://www.flaticon.com/authors/prosymbols from www.flaticon.com.
+ * The microphone icon in the main menu GUI was made by https://www.flaticon.com/authors/prosymbols from
+ * www.flaticon.com.
  *
- * NameSayer is an application that allows the user to choose from a provided
- * database of names to practice. The user may select any number of names, and
- * for each name the user can choose to play the pronunciation, then record
- * their own recording and save. With their attempts, they can further compare
- * the two files to perfect their pronunciation of the names. Furthermore, files
- * in the database can be marked as 'Bad Quality' to allow a different version
- * to play. Other than the effective tool of practicing names, a microphone
- * testing tool is also featured for convenient access for the user.
+ * NameSayer is an application that allows the user to choose from a provided database of names to practice. The user
+ * may select any number of names, and for each name the user can choose to play the pronunciation, then record their
+ * own recording and save. With their attempts, they can further compare the two files to perfect their pronunciation of
+ * the names. Furthermore, files in the database can be marked as 'Bad Quality' to allow a different version to play.
+ * Other than the effective tool of practicing names, a microphone testing tool is also featured for convenient access
+ * for the user.
  *
  */
 public class NameSayerApp extends Application {
@@ -48,16 +45,18 @@ public class NameSayerApp extends Application {
 		new File(ROOT_DIR + "temp/silenced/").mkdirs();
 		new File(ROOT_DIR + "temp/equalised/").mkdirs();
 		new File(ROOT_DIR + "temp/merged/").mkdirs();
-//		new File(ROOT_DIR + "temp/").deleteOnExit();
+		// new File(ROOT_DIR + "temp/").deleteOnExit();
 		
-		try {
-			unzip("/resources/nameFiles.zip", ROOT_DIR);
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!new File(ROOT_DIR + "names/").exists()) {
+			try {
+				unzip("/resources/nameFiles.zip", ROOT_DIR);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		// Starts the application
-		 launch(args);
+		launch(args);
 	}
 
 	/**

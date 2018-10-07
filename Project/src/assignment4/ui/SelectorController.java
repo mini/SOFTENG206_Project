@@ -26,7 +26,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 
 public class SelectorController extends BaseController {
 	private static final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");

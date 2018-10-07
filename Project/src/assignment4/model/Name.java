@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import assignment4.NameSayerApp;
+
 /**
  * -- Name Class --
  *
@@ -70,14 +72,14 @@ public class Name implements Comparable<Name> {
 	/**
 	 * Adds a version to this name.
 	 * 
-	 * @param audioFile
+	 * @param audioFileName
 	 *            source media file
 	 * @param badQuality
 	 *            if version was already marked bad
 	 * @return this for chaining
 	 */
-	public Name addVersion(String audioFile, boolean badQuality) {
-		versions.add(new Version(audioFile, badQuality));
+	public Name addVersion(String audioFileName, boolean badQuality) {
+		versions.add(new Version(audioFileName, badQuality));
 		return this;
 	}
 
@@ -114,6 +116,13 @@ public class Name implements Comparable<Name> {
 	 */
 	public void removeAttempt(Version version) {
 		if (attempts.remove(version)) {
+			version.deleteFile();
+		}
+	}
+	
+	public void deleteAll() {
+		new File(NameSayerApp.ROOT_DIR + "attempts/" + name).delete();
+		for(Version version: versions) {
 			version.deleteFile();
 		}
 	}

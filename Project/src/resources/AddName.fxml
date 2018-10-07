@@ -33,9 +33,9 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                  <Button fx:id="deleteButton" layoutX="161.0" layoutY="89.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Delete" />
+                  <Button fx:id="deleteButton" disable="true" layoutX="161.0" layoutY="89.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Delete" />
                       <Separator layoutY="141.0" prefHeight="3.0" prefWidth="310.0" />
-                  <Label fx:id="currentLabel1" alignment="CENTER" layoutX="23.0" layoutY="152.0" prefHeight="23.0" prefWidth="242.0" text="Create New Name" textAlignment="CENTER" textFill="#fffffff1">
+                  <Label alignment="CENTER" layoutX="23.0" layoutY="152.0" prefHeight="23.0" prefWidth="242.0" text="Create New Name" textAlignment="CENTER" textFill="#fffffff1">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
@@ -49,7 +49,7 @@
                         <Button fx:id="saveButton" disable="true" layoutX="74.0" layoutY="134.0" mnemonicParsing="false" onAction="#savePressed" prefHeight="35.0" prefWidth="146.0" stylesheets="@stylesheets/SmallButton.css" text="Save to Database" />
                         <Separator layoutY="189.0" prefHeight="3.0" prefWidth="310.0" />
                   <TextField fx:id="textInput" layoutX="15.0" layoutY="34.0" prefHeight="27.0" prefWidth="170.0" />
-                  <Label fx:id="currentLabel11" alignment="CENTER" layoutX="-17.0" layoutY="14.0" prefHeight="23.0" prefWidth="103.0" text="Name:" textFill="#fffffff1">
+                  <Label alignment="CENTER" layoutX="-17.0" layoutY="14.0" prefHeight="23.0" prefWidth="103.0" text="Name:" textFill="#fffffff1">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
@@ -75,7 +75,11 @@
          </padding>
          <children>
             <TextField fx:id="searchTextField" layoutX="50.0" layoutY="30.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
+            <ListView fx:id="namesList" layoutX="14.0" layoutY="169.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0">
+            	<placeholder>
+                	<Label text="No names in database" />
+            	</placeholder>
+            </ListView>
          </children>
       </AnchorPane>
     </children>

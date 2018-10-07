@@ -39,7 +39,6 @@ public class MainMenuController extends BaseController{
 	 */
 	@FXML
 	private void practisePressed() {
-        PractiseController.addName = false;
 		showScene("/resources/Practise.fxml", false, true);
 	}
 
@@ -64,7 +63,6 @@ public class MainMenuController extends BaseController{
 	 */
 	@FXML
 	private void addNamePressed() {
-        PractiseController.addName = true;
 		showScene("/resources/AddName.fxml", false, false);
 	}
 

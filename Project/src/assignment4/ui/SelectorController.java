@@ -153,10 +153,21 @@ public class SelectorController extends BaseController {
 			combination.process();
 		}
 
-		showScene("/resources/ComboPlayer.fxml", true, true, c -> {
-			ComboPlayerController controller = (ComboPlayerController) c;
-			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
-		});
+		// If the playlist is empty, then show an error message
+		if (playlist.isEmpty()) {
+			System.out.println("No selection");
+			Alert error = new Alert(Alert.AlertType.ERROR);
+			error.setTitle("ERROR");
+			error.setHeaderText("Playlist is empty!");
+			error.setContentText("Please enter valid names into the playlist to continue.");
+			error.showAndWait();
+		} else {
+			// Change scenes to the main player
+			showScene("/resources/ComboPlayer.fxml", true, true, c -> {
+				ComboPlayerController controller = (ComboPlayerController) c;
+				controller.playlist = playlist.toArray(new Combination[playlist.size()]);
+			});
+		}
 
 	}
 

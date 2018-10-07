@@ -20,10 +20,10 @@
                     </font>
                 </Text>
                 <Separator layoutX="217.0" layoutY="59.0" prefHeight="4.0" prefWidth="160.0" />
-            <Circle fill="#00000092" layoutX="119.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
+            <Circle fill="#00000092" layoutX="111.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
             <Circle fill="#00000092" layoutX="300.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
-            <Circle fill="#00000092" layoutX="488.0" layoutY="247.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
-                <Button fx:id="backButton" contentDisplay="CENTER" layoutX="245.0" layoutY="70.0" mnemonicParsing="false" onAction="#backPressed" prefHeight="27.0" prefWidth="104.0" stylesheets="@stylesheets/Button.css" text="Main Menu" textFill="#3f3f3f">
+            <Circle fill="#00000092" layoutX="488.0" layoutY="238.0" radius="84.0" stroke="#1e1e1ea1" strokeType="INSIDE" />
+                <Button fx:id="backButton" contentDisplay="CENTER" layoutX="245.0" layoutY="70.0" mnemonicParsing="false" onAction="#backPressed" prefHeight="27.0" prefWidth="104.0" stylesheets="@stylesheets/SmallButton.css" text="Main Menu" textFill="#3f3f3f">
                     <font>
                         <Font name="System Font" size="17.0" />
                     </font>
@@ -39,7 +39,7 @@
                </image>
             </ImageView>
             <Separator layoutX="217.0" layoutY="57.0" prefHeight="4.0" prefWidth="160.0" />
-            <ImageView fx:id="prize1" fitHeight="96.0" fitWidth="106.0" layoutX="71.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="prize1" fitHeight="96.0" fitWidth="106.0" layoutX="63.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/lock.png" />
                </image>
@@ -49,7 +49,7 @@
                   <Image url="@icons/lock.png" />
                </image>
             </ImageView>
-            <ImageView fx:id="prize3" fitHeight="96.0" fitWidth="106.0" layoutX="440.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="prize3" fitHeight="96.0" fitWidth="106.0" layoutX="440.0" layoutY="181.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@icons/lock.png" />
                </image>
@@ -59,8 +59,8 @@
                   <Font name="System Font" size="23.0" />
                </font>
             </Text>
-            <Text fill="#ffffffcf" layoutX="68.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record 10 Times" />
-            <Text fill="#ffffffcf" layoutX="249.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save 5 Attempts" />
+            <Text fill="#ffffffcf" layoutX="60.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record 10 Times" />
+            <Text fill="#ffffffcf" layoutX="252.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save 5 Attempts" />
             <Text fill="#ffffffcf" layoutX="478.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
             </children>
         </Pane>

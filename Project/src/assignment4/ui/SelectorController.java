@@ -165,7 +165,6 @@ public class SelectorController extends BaseController {
 				Name existing = namesDB.getName(name);
 				if (existing == null) {
 					invalid.add(name);
-					break outer;
 				}
 				combination.addName(existing);
 			}

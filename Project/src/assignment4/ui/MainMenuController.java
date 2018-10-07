@@ -39,6 +39,7 @@ public class MainMenuController extends BaseController{
 	 */
 	@FXML
 	private void practisePressed() {
+        PractiseController.addName = false;
 		showScene("/resources/Practise.fxml", false, true);
 	}
 
@@ -56,6 +57,15 @@ public class MainMenuController extends BaseController{
 	@FXML
 	private void rewardPressed() {
 		showScene("/resources/Rewards.fxml", false, false);
+	}
+
+	/**
+	 * Switches scene to the Add Names GUI
+	 */
+	@FXML
+	private void addNamePressed() {
+        PractiseController.addName = true;
+		showScene("/resources/AddName.fxml", false, false);
 	}
 
 }

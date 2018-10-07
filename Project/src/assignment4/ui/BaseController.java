@@ -9,6 +9,9 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * BaseController for all other controllers to inherit that require access to the name database 
+ */
 public abstract class BaseController {
 	public static final String ROOT_DIR = NameSayerApp.ROOT_DIR;
 	
@@ -20,10 +23,17 @@ public abstract class BaseController {
 		this.namesDB = namesDB;
 	}
 
+	/**
+	 * Called before new scene is visible.
+	 * Equivalent to Initializable interface.
+	 */
 	public void init() {
 		// Empty
 	}
 
+	/**
+	 * @see #showScene(String, boolean, boolean, ExtraSetup) 
+	 */
 	protected void showScene(String filename, boolean asPopUp, boolean resizeable) {
 		showScene(filename, asPopUp, resizeable, null);
 	}
@@ -43,7 +53,7 @@ public abstract class BaseController {
 				nextStage.initOwner(primaryStage);
 				nextStage.initModality(Modality.APPLICATION_MODAL);
 			}
-
+			// Pass data to child controllers
 			controller.primaryStage = nextStage;
 			controller.namesDB = namesDB;
 			nextStage.setScene(scene);
@@ -64,6 +74,9 @@ public abstract class BaseController {
 	}
 
 	interface ExtraSetup {
+		/**
+		 * Callback to enable passing extra data
+		 */
 		void call(BaseController controller);
 	}
 }

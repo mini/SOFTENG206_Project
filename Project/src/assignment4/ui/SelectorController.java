@@ -59,20 +59,22 @@ public class SelectorController extends BaseController {
 				"* Click the BACK button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
 
+		// Name filtering on listview
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});
 
-		namesList.setOnKeyPressed(event -> {
-			if (event.getCode() == KeyCode.ENTER) {
-				textInput.appendText("\n");
-			}
-		});
-
+		// Append clicked name to text area
 		namesList.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				Name selected = namesList.getSelectionModel().getSelectedItem();
 				textInput.appendText(selected.getName() + " ");
+			}
+		});
+		
+		namesList.setOnKeyPressed(event -> {
+			if (event.getCode() == KeyCode.ENTER) {
+				textInput.appendText("\n");
 			}
 		});
 
@@ -99,7 +101,8 @@ public class SelectorController extends BaseController {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
-				new FileChooser.ExtensionFilter("All", "*.*"));
+				new FileChooser.ExtensionFilter("All", "*.*")
+		);
 	}
 
 	@FXML
@@ -107,12 +110,15 @@ public class SelectorController extends BaseController {
 		showScene("MainMenu.fxml", false, false);
 	}
 
+	/**
+	 * Loads the selected file into the text area
+	 */
 	@FXML
 	private void loadPressed() {
 		fileChooser.setTitle("Select playlist file");
 		File file = fileChooser.showOpenDialog(primaryStage);
 		if (file != null) {
-			try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) {
+			try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) { // Reads whole file
 				textInput.setText(scanner.next());
 				lastSelected = file;
 				fileChooser.setInitialDirectory(lastSelected.getParentFile());
@@ -122,6 +128,9 @@ public class SelectorController extends BaseController {
 		}
 	}
 
+	/**
+	 * Saves the contents of the textarea to a file
+	 */
 	@FXML
 	private void savePressed() {
 		fileChooser.setTitle("Save playlist to");
@@ -142,21 +151,25 @@ public class SelectorController extends BaseController {
 		}
 	}
 
+	/**
+	 * Parses textarea content and switches to player view
+	 */
 	@FXML
 	private void playPressed() {
 		List<Combination> playlist = new ArrayList<Combination>();
 		List<String> invalid = new ArrayList<String>();
 
+		// Parsing
 		String input = textInput.getText();
 		String[] lines = input.split("\n");
 
 		for (String line : lines) {
 			line = line.trim();
-			if (line.isEmpty()) {
+			if (line.isEmpty()) { // Skip empty lines
 				continue;
 			}
 
-			String[] names = line.replace("-", " ").split(" ");
+			String[] names = line.replace("-", " ").split(" "); // Split names, treat '-' as a space
 			Combination combination = new Combination(line);
 			for (String name : names) {
 				Name existing = namesDB.getName(name);
@@ -168,10 +181,12 @@ public class SelectorController extends BaseController {
 			playlist.add(combination);
 		}
 
+		// Error message
 		if (!invalid.isEmpty()) {
 			boolean plural = invalid.size() != 1;
 			String errorText = String.format("The name%s %s do%s not exist.", plural ? "s" : "", invalid, plural ? "" : "es");
 			errorText = errorText.replaceAll("\\[|\\]", "\"").replaceAll(", ", "\", \"");
+			
 			Alert alert = new Alert(AlertType.WARNING, errorText, ButtonType.OK);
 			alert.initOwner(primaryStage);
 			alert.showAndWait();
@@ -182,7 +197,7 @@ public class SelectorController extends BaseController {
 			combination.process(namesDB);
 		}
 
-		showScene("ComboPlayer.fxml", false, true, c -> {
+		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
 		});

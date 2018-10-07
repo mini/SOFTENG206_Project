@@ -21,7 +21,7 @@ import javafx.concurrent.Task;
 public class RecordTask extends Task<Void> {
 	// 44100Hz 16bit 1 channel signed le
 	private static final AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
-	private static final int MAX_TIME_MILI = 10*1000;
+	private static final int MAX_TIME_MILI = 10_000;
 	
 	private TargetDataLine line;
 
@@ -30,6 +30,10 @@ public class RecordTask extends Task<Void> {
 	private Thread thread;
 	private OnEnd onEnd;
 
+	/**
+	 * @param file where to save recording
+	 * @param onEnd optional callback when recording stoped
+	 */
 	public RecordTask(File file, OnEnd onEnd) {
 		this.file = file;
 		this.onEnd = onEnd;
@@ -41,7 +45,7 @@ public class RecordTask extends Task<Void> {
 	
 	public void start() {
 		thread.start();
-		timer.schedule(new TimerTask() {
+		timer.schedule(new TimerTask() { // Time limit in case user forgets
 			@Override
 			public void run() {
 				stop();

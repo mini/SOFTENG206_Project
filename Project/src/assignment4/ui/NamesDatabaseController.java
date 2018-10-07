@@ -42,10 +42,10 @@ public class NamesDatabaseController extends BaseController {
 	
 	@Override
 	public void init() {
-
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText("Names Database:  \n\n" +
-				"* Select a name from the database on the left to LISTEN or DELETE. \n\n" +
+				"* Select a name from the database on the left to LISTEN or DELETE. \n" + 
+				"* NOTE: To get deleted defualt names back, delete the name folder in the app's directory\n\n" +
 				"* To add a new name to the database: \n" +
 				"\t* Type the name being added and click RECORD to start the recording.\n" +
 				"\t* Click STOP to end the recording.\n" +
@@ -55,6 +55,7 @@ public class NamesDatabaseController extends BaseController {
 				"* Click the MAIN MENU button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
 
+		// Name filtering
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});
@@ -78,13 +79,15 @@ public class NamesDatabaseController extends BaseController {
 		namesList.setItems(FXCollections.observableArrayList(namesDB.getAllNames()));
 
 		textInput.textProperty().addListener((observable, oldVal, newVal) -> {
-			validName = newVal.length() >= 2 && namesDB.getName(newVal) == null;
+			validName = newVal.length() >= 2 && namesDB.getName(newVal) == null; // Must not already exist
 			updateSaveButton();
 		});
 
 	}
 
-
+	/**
+	 * Set the current name and configures UI elements 
+	 */
 	private void switchCurrent(Name newVal) {
 		current = newVal;
 		if (current != null) {
@@ -110,7 +113,7 @@ public class NamesDatabaseController extends BaseController {
 			saveButton.setDisable(true);
 
 			recordTask = new RecordTask(TEMP_RECORDING, () -> {
-				Platform.runLater(() -> {
+				Platform.runLater(() -> { // OnStop
 					recordButton.setText("Record");
 					listenButton.setDisable(false);
 					hasRecording = true;
@@ -127,20 +130,22 @@ public class NamesDatabaseController extends BaseController {
 		saveButton.setDisable(!hasRecording || !validName);
 	}
 
-
 	/**
 	 * Saves the temporary attempt and adds it to the table
 	 */
 	@FXML
 	private void savePressed() {
+		// Move file
 		String name = textInput.getText().substring(0, 1).toUpperCase() + textInput.getText().substring(1);
 		File saved = new File(ROOT_DIR + "names/" + name + ".wav");
 		TEMP_RECORDING.renameTo(saved);
 
+		// Add name to db, refresh listview
 		namesDB.addName(new Name(name).addVersion(saved.getName(), false));
 		namesList.setItems(FXCollections.observableArrayList(namesDB.getAllNames()));
 		namesList.refresh();
 		
+		// Reset UI
 		saveButton.setDisable(true);
 		listenButton.setDisable(true);
 		validName = false;
@@ -152,10 +157,7 @@ public class NamesDatabaseController extends BaseController {
 	}
 
 	/**
-	 * Plays the selected attempt, if nothing is selected it will play the first one on the list (will play the temporary
-	 * attempt if it exists).
-	 *
-	 * @return attemptPlayer the attempt's media player
+	 * Plays the selected attempt, if nothing is selected it will play the first one on the list 
 	 */
 	@FXML
 	private void playPressed() {
@@ -171,6 +173,9 @@ public class NamesDatabaseController extends BaseController {
 		mp.setAutoPlay(true);
 	}
 
+	/**
+	 * Plays the users recording
+	 */
 	@FXML
 	private void listenPressed() {
 		String URI = TEMP_RECORDING.toURI().toString();
@@ -178,6 +183,9 @@ public class NamesDatabaseController extends BaseController {
 		mp.setAutoPlay(true);
 	}
 
+	/**
+	 * Deletes the name and all related files.
+	 */
 	@FXML
 	private void deletePressed() {
 		current = namesList.getSelectionModel().getSelectedItem();
@@ -187,6 +195,7 @@ public class NamesDatabaseController extends BaseController {
 			Alert confirmation = new Alert(AlertType.WARNING,
 					"Delete \"" + current.getName() + "\" from the Database?",
 					ButtonType.CANCEL, ButtonType.OK);
+			confirmation.initOwner(primaryStage);
 			confirmation.showAndWait();
 
 			// Only remove the file if the OK Button is pressed

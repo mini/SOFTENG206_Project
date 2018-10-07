@@ -3,7 +3,6 @@ package assignment4.ui;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
@@ -16,8 +15,18 @@ import assignment4.model.Combination;
 import assignment4.model.Name;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 
 public class SelectorController extends BaseController {
 	private static final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
@@ -35,7 +44,6 @@ public class SelectorController extends BaseController {
 	@FXML private Button loadButton;
 	@FXML private Button saveButton;
 
-	
 	@FXML private Button helpButton;
 	//@formatter:on
 
@@ -44,18 +52,32 @@ public class SelectorController extends BaseController {
 
         Tooltip tooltip = new Tooltip();
         tooltip.setText("Selection Menu:  \n\n" +
-                "* Select your list of names to practice." +
-                "* Add each name that you would like to practice in the text area above. \n" +
+                "* Insert each name that you would like to practice in the text area above. \n" +
+                "\t* You can double click names from to list to add them instead.\n" +
+                "\t* Pushing enter moves down a line.\n" +
                 "* Multiple names on one line will be concatenated into one merged name. \n" +
                 "* To practise multiple separate names, type each full name on separate lines. \n" +
                 "* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
-                "* Click the MAIN MENU button to go back to the main screen.");
+                "* Click the BACK button to go back to the main screen.");
         helpButton.setTooltip(tooltip);
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});
+		
+		namesList.setOnKeyPressed(event -> {
+			if(event.getCode() == KeyCode.ENTER) {
+				textInput.appendText("\n");
+			}
+		});
 
+		namesList.setOnMouseClicked(event -> {
+			if(event.getClickCount() == 2) {
+				Name selected = namesList.getSelectionModel().getSelectedItem();
+				textInput.appendText(selected.getName() + " ");
+			}
+		});
+		
 		namesList.setCellFactory(value -> new ListCell<Name>() {
 			@Override
 			protected void updateItem(Name item, boolean empty) {
@@ -70,6 +92,10 @@ public class SelectorController extends BaseController {
 		});
 		namesList.getItems().addAll(namesDB.getAllNames());
 
+		textInput.textProperty().addListener((obs, oldVal, newVal) -> {
+			playButton.setDisable(newVal.trim().isEmpty());
+		});
+		
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
@@ -145,7 +171,8 @@ public class SelectorController extends BaseController {
 		}
 
 		if (!invalid.isEmpty()) {
-			System.out.println(invalid + " does not exist"); // TODO Error popup
+			Alert alert = new Alert(AlertType.WARNING,"The name(s) " + invalid + " do not exist.", ButtonType.OK);
+			alert.showAndWait();
 			return;
 		}
 
@@ -156,12 +183,8 @@ public class SelectorController extends BaseController {
 		showScene("/resources/ComboPlayer.fxml", true, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
+			controller.primaryStage.initModality(Modality.NONE);
 		});
 
-	}
-
-	@FXML
-	private void helpPressed() {
-		// TODO show help popup
 	}
 }

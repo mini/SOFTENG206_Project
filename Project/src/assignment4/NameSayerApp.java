@@ -45,7 +45,6 @@ public class NameSayerApp extends Application {
 		new File(ROOT_DIR + "temp/silenced/").mkdirs();
 		new File(ROOT_DIR + "temp/equalised/").mkdirs();
 		new File(ROOT_DIR + "temp/merged/").mkdirs();
-		// new File(ROOT_DIR + "temp/").deleteOnExit();
 		
 		if (!new File(ROOT_DIR + "names/").exists()) {
 			try {
@@ -57,6 +56,8 @@ public class NameSayerApp extends Application {
 
 		// Starts the application
 		launch(args);
+
+		new File(ROOT_DIR + "temp/").delete();
 	}
 
 	/**

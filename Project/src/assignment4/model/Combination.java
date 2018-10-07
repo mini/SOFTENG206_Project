@@ -1,10 +1,7 @@
 package assignment4.model;
 
-
-
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
-
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -14,7 +11,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -54,14 +50,13 @@ public class Combination {
 	public boolean isBadQuality() {
 		return badQuality;
 	}
-	
+
 	public void toggleBadQuality() {
 		badQuality = !badQuality;
 		try {
 			if (badQuality) {
 				// Append to file
 				Files.write(Paths.get(NamesDB.BQ_FILE), ("Combo-" + mergedName + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
-
 			} else {
 				// Makes a new file with all entries except this one
 				File bqFile = new File(NamesDB.BQ_FILE);
@@ -91,7 +86,7 @@ public class Combination {
 		this.mergedName = mergedName;
 
 		badQuality = db.checkBadCombo(this);
-		
+
 		Thread thread = new Thread(() -> {
 			try {
 				// Create the text file to concatenate all the names in the string
@@ -105,7 +100,7 @@ public class Combination {
 				Process pro = merge.start();
 				if (pro.waitFor() == 0) {
 					path = new File(NameSayerApp.ROOT_DIR + "temp/merged/" + mergedName + ".wav").toURI().toString();
-				}
+				} 
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -123,13 +118,13 @@ public class Combination {
 	 * @throws IOException
 	 */
 	public void createCombinedNameFile() throws IOException, InterruptedException {
-		Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NameSayerApp.ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NameSayerApp.ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
 		for (Name name : names) {
 			String fileName = name.getBestVersion().getAudioFileName();
 			removeSilence(fileName);
 			equaliseVolume(fileName);
 			writer.write("file './equalised/" + fileName + "'");
-			((BufferedWriter) writer).newLine();
+			writer.newLine();
 		}
 
 		writer.close();
@@ -141,8 +136,7 @@ public class Combination {
 	 * @throws InterruptedException
 	 */
 	public void removeSilence(String fileName) throws IOException, InterruptedException {
-		String silence = ("ffmpeg -n -hide_banner -i " + fileName + " -af silenceremove=1:0:-35dB:1:5:-35dB:0:peak ../temp/silenced/" + fileName);
-
+		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=0:0:0:-1:1:-50dB:1 ../temp/silenced/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "names/");
 
 		// Use a process to perform the silence removing
@@ -159,7 +153,7 @@ public class Combination {
 	 * @throws InterruptedException
 	 */
 	public void equaliseVolume(String fileName) throws IOException, InterruptedException {
-		String eq = ("ffmpeg -n -i " + fileName + " -filter:a loudnorm ../equalised/" + fileName);
+		String eq = ("ffmpeg -y -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");
 
 		// Use a process to perform the volume equalising
@@ -168,5 +162,4 @@ public class Combination {
 		Process pro = volume.start();
 		pro.waitFor();
 	}
-
 }

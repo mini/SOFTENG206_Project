@@ -30,7 +30,7 @@
             </placeholder>
               <columns>
                 <TableColumn fx:id="selectColumn" editable="false" prefWidth="28" resizable="false" sortable="false" text="selected" />
-                <TableColumn fx:id="nameColumn" editable="false" prefWidth="210.0" resizable="false" text="name" />
+                <TableColumn fx:id="nameColumn" editable="false" prefWidth="210.0" resizable="false" sortable="false" text="name" />
                 <TableColumn fx:id="playingColumn" editable="false" prefWidth="34.0" resizable="false" sortable="false" text="playing" />
               </columns>
             </TableView>
@@ -42,14 +42,14 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="playButton" disable="true" layoutX="14.0" layoutY="90.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Play" />
-                  <Button fx:id="badQualityButton" disable="true" layoutX="150.0" layoutY="90.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Bad Quality" />
+                  <Button fx:id="playButton" disable="true" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Play" />
+                  <Button fx:id="badQualityButton" disable="true" layoutX="150.0" layoutY="80.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Bad Quality" />
                   <Label fx:id="currentLabel" alignment="CENTER" layoutX="24.0" layoutY="35.0" prefHeight="23.0" prefWidth="242.0" text="Select and Play" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="130.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                  <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
                </children>
             </AnchorPane>
             <Separator prefWidth="200.0" />
@@ -77,6 +77,9 @@
                   <Button fx:id="nextButton" disable="true" layoutX="227.0" layoutY="2.0" mnemonicParsing="false" onAction="#nextPressed" stylesheets="@stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
                   <Button fx:id="mainMenuButton" layoutY="2.0" mnemonicParsing="false" onAction="#mainMenuPressed" stylesheets="@stylesheets/Button.css" text="Main Menu" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" top="7.0" />
+               </padding>
             </AnchorPane>
          </children>
          <BorderPane.margin>
@@ -100,7 +103,7 @@
                   <Label text="No saved attempts" />
                </placeholder>
               <columns>
-                <TableColumn fx:id="attemptsColumn" editable="false" prefWidth="264.0" resizable="false" text="attempt" />
+                <TableColumn fx:id="attemptsColumn" editable="false" prefWidth="264.0" resizable="false" sortable="false" text="attempt" />
               </columns>
             </TableView>
          </children>

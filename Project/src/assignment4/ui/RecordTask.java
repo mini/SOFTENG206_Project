@@ -21,19 +21,19 @@ import javafx.concurrent.Task;
 public class RecordTask extends Task<Void> {
 	// 44100Hz 16bit 1 channel signed le
 	private static final AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
-
-	TargetDataLine line;
+	private static final int MAX_TIME_MILI = 10*1000;
+	
+	private TargetDataLine line;
 
 	private File file;
+	private Timer timer;
 	private Thread thread;
-	private int timeMili;
 	private OnEnd onEnd;
 
-	public RecordTask(File file, int timeMili, OnEnd onEnd) {
+	public RecordTask(File file, OnEnd onEnd) {
 		this.file = file;
-		this.timeMili = timeMili;
 		this.onEnd = onEnd;
-		
+		timer = new Timer(true);
 		file.getParentFile().mkdirs();
 		thread = new Thread(this);
 		thread.setDaemon(true);
@@ -41,12 +41,12 @@ public class RecordTask extends Task<Void> {
 	
 	public void start() {
 		thread.start();
-		new Timer().schedule(new TimerTask() {
+		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {
 				stop();
 			}
-		}, timeMili);
+		}, MAX_TIME_MILI);
 	}
 
 	@Override
@@ -74,9 +74,12 @@ public class RecordTask extends Task<Void> {
 	public void stop() {
 		line.stop();
 		line.close();
+		timer.cancel();
 		if(onEnd != null){
 			onEnd.call();
 		}
+
+		RewardsController.records++;
 	}
 	
 	public interface OnEnd{

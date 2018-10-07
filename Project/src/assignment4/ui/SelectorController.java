@@ -93,7 +93,9 @@ public class SelectorController extends BaseController {
 		namesList.getItems().addAll(namesDB.getAllNames());
 
 		textInput.textProperty().addListener((obs, oldVal, newVal) -> {
-			playButton.setDisable(newVal.trim().isEmpty());
+			boolean hasNoText = newVal.trim().isEmpty();
+			playButton.setDisable(hasNoText);
+			saveButton.setDisable(hasNoText);
 		});
 		
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
@@ -185,6 +187,5 @@ public class SelectorController extends BaseController {
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
 			controller.primaryStage.initModality(Modality.NONE);
 		});
-
 	}
 }

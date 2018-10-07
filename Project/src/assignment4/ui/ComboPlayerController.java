@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Random;
 
 import assignment4.model.Combination;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.media.Media;
@@ -34,6 +35,7 @@ public class ComboPlayerController extends BaseController {
 
 	Combination[] playlist;
 	private int current = 0;
+	private RecordTask recordTask;
 
 	@Override
 	public void init() {
@@ -99,15 +101,25 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void recordPressed() {
-		File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav");
-
-		RecordTask recordTask = new RecordTask(file, 5000, () -> {
-			listenButton.setDisable(false);
-			compareButton.setDisable(false);
-		});
-		recordTask.start();
-
-		RewardsController.records++;
+		if(recordButton.getText().equals("Record")) {
+			File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav");
+			recordButton.setText("Stop");
+			
+			listenButton.setDisable(true);
+			compareButton.setDisable(true);
+			
+			recordTask = new RecordTask(file, () -> {
+				Platform.runLater(() -> {
+					recordButton.setText("Record");
+					listenButton.setDisable(false);
+					compareButton.setDisable(false);
+				});
+			});
+						
+			recordTask.start();
+		} else {
+			recordTask.stop();
+		}
 	}
 
 	@FXML

@@ -49,35 +49,34 @@ public class SelectorController extends BaseController {
 
 	@Override
 	public void init() {
-
-        Tooltip tooltip = new Tooltip();
-        tooltip.setText("Selection Menu:  \n\n" +
-                "* Insert each name that you would like to practice in the text area above. \n" +
-                "\t* You can double click names from to list to add them instead.\n" +
-                "\t* Pushing enter moves down a line.\n" +
-                "* Multiple names on one line will be concatenated into one merged name. \n" +
-                "* To practise multiple separate names, type each full name on separate lines. \n" +
-                "* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
-                "* Click the BACK button to go back to the main screen.");
-        helpButton.setTooltip(tooltip);
+		Tooltip tooltip = new Tooltip();
+		tooltip.setText("Selection Menu:  \n\n" +
+				"* Insert each name that you would like to practice in the text area above. \n" +
+				"\t* You can double click names from to list to add them instead.\n" +
+				"\t* Pushing enter moves down a line.\n" +
+				"* Multiple names on one line will be concatenated into one merged name. \n" +
+				"* To practise multiple separate names, type each full name on separate lines. \n" +
+				"* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
+				"* Click the BACK button to go back to the main screen.");
+		helpButton.setTooltip(tooltip);
 
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));
 		});
-		
+
 		namesList.setOnKeyPressed(event -> {
-			if(event.getCode() == KeyCode.ENTER) {
+			if (event.getCode() == KeyCode.ENTER) {
 				textInput.appendText("\n");
 			}
 		});
 
 		namesList.setOnMouseClicked(event -> {
-			if(event.getClickCount() == 2) {
+			if (event.getClickCount() == 2) {
 				Name selected = namesList.getSelectionModel().getSelectedItem();
 				textInput.appendText(selected.getName() + " ");
 			}
 		});
-		
+
 		namesList.setCellFactory(value -> new ListCell<Name>() {
 			@Override
 			protected void updateItem(Name item, boolean empty) {
@@ -97,7 +96,7 @@ public class SelectorController extends BaseController {
 			playButton.setDisable(hasNoText);
 			saveButton.setDisable(hasNoText);
 		});
-		
+
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
@@ -153,7 +152,7 @@ public class SelectorController extends BaseController {
 		input = input.replace("-", " ");
 		String[] lines = input.split("\n");
 
-		outer: for (String line : lines) {
+		for (String line : lines) {
 			line = line.trim();
 			if (line.isEmpty()) {
 				continue;
@@ -165,7 +164,6 @@ public class SelectorController extends BaseController {
 				Name existing = namesDB.getName(name);
 				if (existing == null) {
 					invalid.add(name);
-					break outer;
 				}
 				combination.addName(existing);
 			}
@@ -173,7 +171,11 @@ public class SelectorController extends BaseController {
 		}
 
 		if (!invalid.isEmpty()) {
-			Alert alert = new Alert(AlertType.WARNING,"The name(s) " + invalid + " do not exist.", ButtonType.OK);
+			boolean plural = invalid.size() != 1;
+			String errorText = String.format("The name%s %s do%s not exist.", plural ? "s" : "", invalid, plural ? "" : "es");
+			errorText = errorText.replaceAll("\\[|\\]", "\"").replaceAll(", ", "\", \"");
+			Alert alert = new Alert(AlertType.WARNING, errorText, ButtonType.OK);
+			alert.initOwner(primaryStage);
 			alert.showAndWait();
 			return;
 		}

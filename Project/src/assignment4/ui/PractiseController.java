@@ -425,6 +425,7 @@ public class PractiseController extends BaseController {
 			Alert confirmation = new Alert(AlertType.WARNING,
 					"Delete " + attempt.getLabel() + " from " + current.getName(),
 					ButtonType.CANCEL, ButtonType.OK);
+			confirmation.initOwner(primaryStage);
 			confirmation.showAndWait();
 
 			// Only remove the file if the OK Button is pressed

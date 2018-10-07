@@ -16,14 +16,8 @@ public class RewardsController extends BaseController  {
     private static boolean specialCheck = false;
     public static boolean special = false;
 
-
-
-    @FXML
-    private ImageView prize1, prize2, prize3;
-
-    @FXML
-    private Text rewardCount;
-
+    @FXML private ImageView prize1, prize2, prize3;
+    @FXML private Text rewardCount;
 
     public void init() {
 

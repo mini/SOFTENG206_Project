@@ -40,7 +40,7 @@ public class NameSayerApp extends Application {
 	 */
 	public static void main(String[] args) {
 
-		// Create the required directorys
+		// Create the required directories
 		new File(ROOT_DIR + "attempts/").mkdirs();
 		new File(ROOT_DIR + "temp/silenced/").mkdirs();
 		new File(ROOT_DIR + "temp/equalised/").mkdirs();
@@ -54,8 +54,7 @@ public class NameSayerApp extends Application {
 			}
 		}
 
-		// Starts the application
-		launch(args);
+		launch(args); // Blocks until exited
 
 		new File(ROOT_DIR + "temp/").delete();
 	}
@@ -67,28 +66,24 @@ public class NameSayerApp extends Application {
 		NamesDB namesDB = new NamesDB();
 
 		primaryStage.setTitle("NameSayer");
-		// Prevent the stage from being resized by the user
 		primaryStage.setResizable(false);
 
 		// Load the scene of the Player fxml file
-		// Microphone icon was made by https://www.flaticon.com/authors/prosymbols from
-		// www.flaticon.com
 		FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/resources/fxmls/MainMenu.fxml"));
 		Parent menuPane = menuLoader.load();
 		BaseController controller = menuLoader.getController();
 
-		// Passes in the current stage to be used as the main stage for all following
-		// windows
+		// Passes required data to controllers
 		controller.setup(primaryStage, namesDB);
 		controller.init();
 
-		// Add the scene of the main menu
 		Scene menuScene = new Scene(menuPane);
 		primaryStage.setScene(menuScene);
 		primaryStage.show();
 
 	}
 
+	/* Taken from https://www.codejava.net/java-se/file-io/programmatically-extract-a-zip-file-using-java */
 	private static void unzip(String zipFilePath, String destDirectory) throws IOException {
 		File destDir = new File(destDirectory);
 		if (!destDir.exists()) {
@@ -97,7 +92,6 @@ public class NameSayerApp extends Application {
 		ZipInputStream zipIn = new ZipInputStream(NameSayerApp.class.getResourceAsStream(zipFilePath));
 
 		ZipEntry entry = zipIn.getNextEntry();
-		// iterates over entries in the zip file
 		while (entry != null) {
 			String filePath = destDirectory + entry.getName();
 			if (!entry.isDirectory()) {

@@ -18,11 +18,8 @@ import javafx.scene.shape.Line;
  */
 public class TestMicrophoneController extends BaseController {
 
-	@FXML
-	Button backButton, helpButton;
-
-	@FXML
-	Line soundAmp, leftAmp1, leftAmp2, rightAmp1, rightAmp2;
+	@FXML private Button backButton, helpButton;
+	@FXML private Line soundAmp, leftAmp1, leftAmp2, rightAmp1, rightAmp2;
 
 	public void init() {
 
@@ -36,7 +33,6 @@ public class TestMicrophoneController extends BaseController {
 				"* Click the MAIN MENU button to go back");
 		helpButton.setTooltip(tooltip);
 	}
-	
 	
 	/**
 	 * Switches scene back to the main menu
@@ -61,6 +57,5 @@ public class TestMicrophoneController extends BaseController {
 		rightAmp1.setEndY(-Math.min(RMS, 90));
 		leftAmp2.setEndY(-Math.min(RMS / 2, 90));
 		rightAmp2.setEndY(-Math.min(RMS / 2, 90));
-
 	}
 }

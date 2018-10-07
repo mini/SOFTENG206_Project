@@ -41,11 +41,19 @@ public class NamesDB {
 		}
 	}
 
+	/**
+	 * Adds the name to the database
+	 * @param name
+	 */
 	public void addName(Name name) {
 		names.add(name);
 		Collections.sort(names);
 	}
 
+	/**
+	 * Removes the name form the database and deletes related files
+	 * @param name
+	 */
 	public void deleteName(Name name) {
 		name.deleteAll();
 		names.remove(name);
@@ -74,6 +82,11 @@ public class NamesDB {
 		return filtered;
 	}
 
+	/**
+	 * Return the name object with the specified name.
+	 * @param name 
+	 * @return the name if found, null otherwise
+	 */
 	public Name getName(String name) {
 		for (Name n : names) {
 			if (n.getName().equalsIgnoreCase(name)) {
@@ -138,18 +151,33 @@ public class NamesDB {
 		return count;
 	}
 
+	/**
+	 * Sets the selected property of all names in the database
+	 * @param selected
+	 */
 	public void setSelectedAll(boolean selected) {
 		for (Name name : names) {
 			name.setSelected(selected);
 		}
 	}
 
+	/**
+	 * Adds or Removes the combo from the bad quality combo list.
+	 * This isn't handled in Combination as they're created on the fly
+	 * and we'd need to read the whole bad_quality file again
+	 * @param combo
+	 */
 	public void toggleBadCombo(Combination combo) {
 		if (!badCombos.remove(combo.getMergedName())) {
 			badCombos.add(combo.getMergedName());
 		}
 	}
 
+	/**
+	 * Used to check if a combo has been reported bad quality
+	 * @param combo
+	 * @return if its bad quality
+	 */
 	public boolean checkBadCombo(Combination combo) {
 		return badCombos.contains(combo.getMergedName());
 	}
@@ -158,23 +186,25 @@ public class NamesDB {
 	 * Loads all the pre-made names, marks any bad files and load any existing user attempts of a name.
 	 */
 	private void populateDB() throws IOException {
+		// Read entries from bad_quality file
 		List<String> badQualityFiles = null;
 		try {
 			badQualityFiles = Files.readAllLines(Paths.get(BQ_FILE), Charset.forName("UTF8"));
+			// Bad Combos
 			for (String bad : badQualityFiles) {
 				if (bad.startsWith("Combo-")) {
 					badCombos.add(bad.split("-")[1]);
 				}
 			}
 		} catch (IOException e) {
-			System.out.println("BQ file does not exist");
+			//BQ file does not exist
 		}
 
 		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles(new WavFileFilter());
 		Map<String, Name> names = new HashMap<String, Name>();
 
 		for (File file : files) {
-			// Check if any versions are bad
+			// Check if any name versions are bad
 			String filename = file.getName();
 			boolean badQuality = false;
 

@@ -62,7 +62,11 @@ public class Name implements Comparable<Name> {
 		return lastVersion;
 	}
 
-	public Version getLastVersion() {
+	/**
+	 * Gets the best version that was previously returned
+	 * @see #getBestVersion()
+	 */
+	public Version getLastVersion() { //TODO remove this, it was a hack to fix a bug
 		if(lastVersion == null) {
 			getBestVersion();
 		}
@@ -120,6 +124,9 @@ public class Name implements Comparable<Name> {
 		}
 	}
 	
+	/**
+	 * Deletes all files related to the name.
+	 */
 	public void deleteAll() {
 		new File(NameSayerApp.ROOT_DIR + "attempts/" + name).delete();
 		for(Version version: versions) {

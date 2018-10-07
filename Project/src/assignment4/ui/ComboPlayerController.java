@@ -64,6 +64,7 @@ public class ComboPlayerController extends BaseController {
 			}
 		});
 
+		// Switch to selected combos on the list
 		namesList.getSelectionModel().selectedIndexProperty().addListener((observer, oldVal, newVal) -> {
 			if (oldVal != newVal) {
 				current = (int) newVal;
@@ -77,9 +78,6 @@ public class ComboPlayerController extends BaseController {
 		if (playlist.length == 1) {
 			nextButton.setDisable(true);
 			prevButton.setDisable(true);
-		} else {
-			nextButton.setDisable(false);
-			prevButton.setDisable(false);
 		}
 
 		nextCombination();
@@ -105,7 +103,7 @@ public class ComboPlayerController extends BaseController {
 			File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav");
 			recordButton.setText("Stop");
 
-			listenButton.setDisable(true);
+			listenButton.setDisable(true); // Disable until file has stopped being written to
 			compareButton.setDisable(true);
 
 			recordTask = new RecordTask(file, () -> {
@@ -142,7 +140,7 @@ public class ComboPlayerController extends BaseController {
 	private void previousPressed() {
 		current--;
 		if (current < 0) {
-			current = playlist.length - 1;
+			current = playlist.length - 1; // Wrap to bottom
 		}
 		nextCombination();
 	}
@@ -152,22 +150,23 @@ public class ComboPlayerController extends BaseController {
 		if (shuffleCheckBox.isSelected()) {
 			current = random.nextInt(playlist.length);
 		} else {
-			current = (current + 1) % playlist.length;
+			current = (current + 1) % playlist.length; // Wrap to top
 		}
 		nextCombination();
 	}
 
 	@FXML
 	private void backPressed() {
-		showScene("NameSelector.fxml", false, true);
+		showScene("NameSelector.fxml", false, true); //TODO pass original data back
 	}
 
 	private void nextCombination() {
 		Combination currentCombo = playlist[current];
 		currentLabel.setText(currentCombo.getDisplayName());
 		badQualityButton.setText(currentCombo.isBadQuality() ? "Good Quality" : "Bad Quality");
-		badQualityButton.setDisable(!currentCombo.isBadQuality());
+		badQualityButton.setDisable(!currentCombo.isBadQuality()); // Require combo to be played first
 
+		// Check for existing recording
 		if (new File(ROOT_DIR + "attempts/" + currentCombo.getMergedName() + "/latest.wav").exists()) {
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);

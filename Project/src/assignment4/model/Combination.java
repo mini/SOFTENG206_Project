@@ -18,6 +18,10 @@ import java.util.List;
 
 import assignment4.NameSayerApp;
 
+/**
+ * Holds multiple Name objects and concatenates them 
+ *
+ */
 public class Combination {
 
 	private List<Name> names;
@@ -26,11 +30,18 @@ public class Combination {
 	private String path;
 	private boolean badQuality;
 
+	/**
+	 * @param displayName what to show on the listview
+	 */
 	public Combination(String displayName) {
 		this.names = new ArrayList<Name>();
 		this.displayName = displayName;
 	}
 
+	/**
+	 * Adds a name to the combination
+	 * @param name the name to add
+	 */
 	public void addName(Name name) {
 		names.add(name);
 	}
@@ -51,6 +62,9 @@ public class Combination {
 		return badQuality;
 	}
 
+	/**
+	 * Toggles the quality indicator for this combo, saves to a text file.
+	 */
 	public void toggleBadQuality() {
 		badQuality = !badQuality;
 		try {
@@ -81,6 +95,10 @@ public class Combination {
 		}
 	}
 
+	/**
+	 * To be called when all desired names have been added.
+	 * Generates the final audio file.
+	 */
 	public void process(NamesDB db) {
 		final String mergedName = displayName.replaceAll("\\s|-", "").toLowerCase();
 		this.mergedName = mergedName;
@@ -89,10 +107,8 @@ public class Combination {
 
 		Thread thread = new Thread(() -> {
 			try {
-				// Create the text file to concatenate all the names in the string
-				createCombinedNameFile();
+				processIndividual();
 
-				// Use a process to concatenate the separate wav files into one file
 				String concat = ("ffmpeg -y -f concat -safe 0 -i " + mergedName + ".txt -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
 				File directory = new File(NameSayerApp.ROOT_DIR + "temp/");
 				ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);
@@ -111,15 +127,10 @@ public class Combination {
 	}
 
 	/**
-	 * Separates the line of the text file to obtain the separate name files to
-	 * concatenate by creating a new text file with the correct format to
-	 * concatenate the wav files
-	 * 
-	 * @param disjointName
-	 * @throws InterruptedException
-	 * @throws IOException
+	 * Processes individual name files.
+	 * Adds the path to a text file which is used later
 	 */
-	public void createCombinedNameFile() throws IOException, InterruptedException {
+	public void processIndividual() throws IOException, InterruptedException {
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NameSayerApp.ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
 		for (Name name : names) {
 			String fileName = name.getBestVersion().getAudioFileName();
@@ -128,10 +139,13 @@ public class Combination {
 			writer.write("file './equalised/" + fileName + "'");
 			writer.newLine();
 		}
-
 		writer.close();
 	}
 
+	/**
+	 * Removes any silences from the start and end of the specified file
+	 * @param fileName
+	 */
 	public void removeSilence(String fileName) throws IOException, InterruptedException {
 		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=0:0:0:-1:1:-50dB:1 ../temp/silenced/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "names/");
@@ -141,6 +155,10 @@ public class Combination {
 		pro.waitFor();
 	}
 
+	/**
+	 * Normalises the volume of the specified file so that they all have the same levels when concatenated. 
+	 * @param fileName
+	 */
 	public void equaliseVolume(String fileName) throws IOException, InterruptedException {
 		String eq = ("ffmpeg -y -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");

@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -25,6 +27,15 @@
                             </font>
                         </Label>
                         <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="130.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                  <Button fx:id="helpButton" layoutX="221.0" layoutY="8.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/TransparentButton.css">
+                     <graphic>
+                        <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons/info.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                     </children>
                 </AnchorPane>
                 <Separator prefWidth="200.0" />
@@ -38,8 +49,8 @@
                 </AnchorPane>
                 <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="310.0">
                     <children>
-                        <Button layoutX="165.0" layoutY="20.0" mnemonicParsing="false" onAction="#nextPressed" prefHeight="41.0" prefWidth="89.0" stylesheets="@stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  		<Button layoutX="35.0" layoutY="2.0" mnemonicParsing="false" onAction="#previousPressed" stylesheets="@stylesheets/Button.css" text="Previous" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="nextButton" layoutX="165.0" layoutY="20.0" mnemonicParsing="false" onAction="#nextPressed" prefHeight="41.0" prefWidth="89.0" stylesheets="@stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  		<Button fx:id="prevButton" layoutX="35.0" layoutY="2.0" mnemonicParsing="false" onAction="#previousPressed" stylesheets="@stylesheets/Button.css" text="Previous" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                <VBox.margin>
                   <Insets />

@@ -7,11 +7,7 @@ import java.util.Random;
 
 import assignment4.model.Combination;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
@@ -32,6 +28,8 @@ public class ComboPlayerController extends BaseController {
 	
 	@FXML private Button prevButton;
 	@FXML private Button nextButton;
+	@FXML private Button helpButton;
+
 	//@formatter:on
 
 	Combination[] playlist;
@@ -39,6 +37,22 @@ public class ComboPlayerController extends BaseController {
 
 	@Override
 	public void init() {
+
+        Tooltip tooltip = new Tooltip();
+        tooltip.setText("Player: \n\n" +
+                "* Select name(s) to practise and click play. \n" +
+                "* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT or PREVIOUS. \n" +
+                "* The names database is shown on the left list. \n" +
+                "* For each name: \n" +
+                "-- PLAY to listen to the pronunciation from the database \n" +
+                "-- BAD QUALITY to mark the recording as bad quality \n" +
+                "-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
+                "-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
+                "-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
+                "* Exit this screen to go back to the main menu");
+        helpButton.setTooltip(tooltip);
+
+
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
 			@Override
 			protected void updateItem(Combination item, boolean empty) {
@@ -59,6 +73,15 @@ public class ComboPlayerController extends BaseController {
 		});
 
 		namesList.getItems().addAll(playlist);
+
+		// Disable next/previous buttons if only one name is selected
+		if (playlist.length == 1) {
+			nextButton.setDisable(true);
+			prevButton.setDisable(true);
+		} else {
+			nextButton.setDisable(false);
+			prevButton.setDisable(false);
+		}
 
 		nextCombination();
 	}

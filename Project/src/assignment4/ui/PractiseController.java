@@ -90,7 +90,7 @@ public class PractiseController extends BaseController {
                 "* For each name: \n" +
                 "-- PLAY to listen to the pronunciation from the database \n" +
                 "-- BAD QUALITY to mark the recording as bad quality \n" +
-                "-- RECORD to record your own pronunciation (up to 5 seconds) " +
+                "-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
                 "-- SAVE to permanently save your latest attempt \n" +
                 "-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
                 "-- DELETE to delete your selected recording \n" +

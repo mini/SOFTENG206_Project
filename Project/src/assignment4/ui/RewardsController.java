@@ -19,10 +19,10 @@ public class RewardsController extends BaseController  {
 
 
     @FXML
-    ImageView prize1, prize2, prize3;
+    private ImageView prize1, prize2, prize3;
 
     @FXML
-    Text rewardCount;
+    private Text rewardCount;
 
 
     public void init() {
@@ -55,14 +55,6 @@ public class RewardsController extends BaseController  {
 
     @FXML
     private void backPressed() {
-        showScene("/resources/MainMenu.fxml", false, false);
+        showScene("MainMenu.fxml", false, false);
     }
-
-
-
-
-
-
-
-
 }

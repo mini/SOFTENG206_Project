@@ -255,7 +255,7 @@ public class PractiseController extends BaseController {
 		if(current != null) {
 			current.getPlayingProperty().set(" ");
 		}
-		showScene("/resources/MainMenu.fxml", false, false);
+		showScene("MainMenu.fxml", false, false);
 	}
 
 	/**

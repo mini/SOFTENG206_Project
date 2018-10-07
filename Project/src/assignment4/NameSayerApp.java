@@ -72,7 +72,7 @@ public class NameSayerApp extends Application {
 		// Load the scene of the Player fxml file
 		// Microphone icon was made by https://www.flaticon.com/authors/prosymbols from
 		// www.flaticon.com
-		FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/resources/MainMenu.fxml"));
+		FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/resources/fxmls/MainMenu.fxml"));
 		Parent menuPane = menuLoader.load();
 		BaseController controller = menuLoader.getController();
 

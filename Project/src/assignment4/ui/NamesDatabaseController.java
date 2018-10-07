@@ -98,7 +98,7 @@ public class NamesDatabaseController extends BaseController {
 
 	@FXML
 	private void mainMenuPressed() {
-		showScene("/resources/MainMenu.fxml", false, false);
+		showScene("MainMenu.fxml", false, false);
 	}
 
 	@FXML

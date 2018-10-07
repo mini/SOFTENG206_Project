@@ -21,7 +21,7 @@
                </font>
             </Text>
             <Separator layoutX="158.0" layoutY="78.0" prefHeight="3.0" prefWidth="287.0" />
-            <Button fx:id="backButton" layoutX="28.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleBack" stylesheets="@stylesheets/Button.css" text="Back" />
+            <Button fx:id="backButton" layoutX="28.0" layoutY="343.0" mnemonicParsing="false" onAction="#handleBack" stylesheets="@../stylesheets/Button.css" text="Back" />
             <Circle fill="#1f93ff00" layoutX="301.0" layoutY="230.0" radius="133.0" stroke="#ccecff" strokeType="INSIDE" strokeWidth="20.0" />
             <Line fx:id="soundAmp" endX="100.0" fill="BLACK" layoutX="202.0" layoutY="264.0" startX="100.0" stroke="#ccecff" strokeLineCap="ROUND" strokeWidth="30.0" />
             <Line fx:id="rightAmp1" endX="100.0" fill="BLACK" layoutX="240.0" layoutY="264.0" startX="100.0" stroke="#ccecff" strokeLineCap="ROUND" strokeWidth="30.0" />
@@ -30,11 +30,11 @@
             <Line fx:id="rightAmp2" endX="100.0" fill="BLACK" layoutX="277.0" layoutY="264.0" startX="100.0" stroke="#ccecff" strokeLineCap="ROUND" strokeWidth="30.0" />
             <Circle fill="#1f93ff00" layoutX="301.0" layoutY="230.0" radius="114.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="5.0" />
             <Circle fill="#1f93ff00" layoutX="301.0" layoutY="230.0" radius="133.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="5.0" />
-            <Button fx:id="helpButton" layoutX="530.0" layoutY="336.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="68.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/TransparentButton.css">
+            <Button fx:id="helpButton" layoutX="530.0" layoutY="336.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="68.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css">
                <graphic>
                   <ImageView fitHeight="36.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@icons/info.png" />
+                        <Image url="@../icons/info.png" />
                      </image>
                   </ImageView>
                </graphic>

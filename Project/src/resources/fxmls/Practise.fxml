@@ -23,7 +23,7 @@
          </BorderPane.margin>
          <children>
             <TextField fx:id="searchTextField" prefHeight="27.0" prefWidth="186.0" promptText="Search..." AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <Button fx:id="selectAllButton" mnemonicParsing="false" onAction="#selectAllPressed" prefHeight="27.0" prefWidth="103.0" stylesheets="@stylesheets/SmallButton.css" text="Select All" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <Button fx:id="selectAllButton" mnemonicParsing="false" onAction="#selectAllPressed" prefHeight="27.0" prefWidth="103.0" stylesheets="@../stylesheets/SmallButton.css" text="Select All" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <TableView fx:id="namesTable" layoutY="35.0" prefHeight="344.0" prefWidth="290.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
             <placeholder>
                <Label text="No names in database" />
@@ -42,29 +42,29 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="playButton" disable="true" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Play" />
-                  <Button fx:id="badQualityButton" disable="true" layoutX="150.0" layoutY="80.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@stylesheets/SmallButton.css" text="Bad Quality" />
+                  <Button fx:id="playButton" disable="true" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Play" />
+                  <Button fx:id="badQualityButton" disable="true" layoutX="150.0" layoutY="80.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Bad Quality" />
                   <Label fx:id="currentLabel" alignment="CENTER" layoutX="24.0" layoutY="35.0" prefHeight="23.0" prefWidth="242.0" text="Select and Play" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                  <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="122.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@../stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
                </children>
             </AnchorPane>
             <Separator prefWidth="200.0" />
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="recordButton" disable="true" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Record" />
-                  <Button fx:id="saveButton" disable="true" layoutX="148.0" layoutY="14.0" mnemonicParsing="false" onAction="#savePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Save" />
-                  <Button fx:id="listenButton" disable="true" layoutX="40.0" layoutY="65.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Listen" />
-                  <Button fx:id="compareButton" disable="true" layoutX="95.0" layoutY="115.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Compare" />
-                  <Button fx:id="deleteButton" disable="true" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@stylesheets/SmallButton.css" text="Delete" />
-                  <Button fx:id="helpButton" layoutX="233.0" layoutY="105.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="68.0" style="-fx-background-radius: 100;" stylesheets="@stylesheets/TransparentButton.css">
+                  <Button fx:id="recordButton" disable="true" layoutX="40.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Record" />
+                  <Button fx:id="saveButton" disable="true" layoutX="148.0" layoutY="14.0" mnemonicParsing="false" onAction="#savePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Save" />
+                  <Button fx:id="listenButton" disable="true" layoutX="40.0" layoutY="65.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Listen" />
+                  <Button fx:id="compareButton" disable="true" layoutX="95.0" layoutY="115.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Compare" />
+                  <Button fx:id="deleteButton" disable="true" layoutX="148.0" layoutY="65.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Delete" />
+                  <Button fx:id="helpButton" layoutX="233.0" layoutY="105.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="68.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css">
                      <graphic>
                         <ImageView fitHeight="28.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@icons/info.png" />
+                              <Image url="@../icons/info.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -74,8 +74,8 @@
             <Separator prefWidth="200.0" />
             <AnchorPane maxHeight="-Infinity" prefHeight="71.0" prefWidth="216.0">
                <children>
-                  <Button fx:id="nextButton" disable="true" layoutX="227.0" layoutY="2.0" mnemonicParsing="false" onAction="#nextPressed" stylesheets="@stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
-                  <Button fx:id="mainMenuButton" layoutY="2.0" mnemonicParsing="false" onAction="#mainMenuPressed" stylesheets="@stylesheets/Button.css" text="Main Menu" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="nextButton" disable="true" layoutX="227.0" layoutY="2.0" mnemonicParsing="false" onAction="#nextPressed" stylesheets="@../stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="5.0" />
+                  <Button fx:id="mainMenuButton" layoutY="2.0" mnemonicParsing="false" onAction="#mainMenuPressed" stylesheets="@../stylesheets/Button.css" text="Main Menu" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="5.0" />
                </children>
                <padding>
                   <Insets left="10.0" right="10.0" top="7.0" />

@@ -104,7 +104,7 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		showScene("/resources/MainMenu.fxml", false, false);
+		showScene("MainMenu.fxml", false, false);
 	}
 
 	@FXML
@@ -182,7 +182,7 @@ public class SelectorController extends BaseController {
 			combination.process(namesDB);
 		}
 
-		showScene("/resources/ComboPlayer.fxml", false, true, c -> {
+		showScene("ComboPlayer.fxml", false, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
 		});

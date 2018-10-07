@@ -159,7 +159,7 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		showScene("/resources/NameSelector.fxml", false, true);
+		showScene("NameSelector.fxml", false, true);
 	}
 
 	private void nextCombination() {

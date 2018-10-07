@@ -24,15 +24,15 @@ public abstract class BaseController {
 		// Empty
 	}
 
-	protected void showScene(String path, boolean asPopUp, boolean resizeable) {
-		showScene(path, asPopUp, resizeable, null);
+	protected void showScene(String filename, boolean asPopUp, boolean resizeable) {
+		showScene(filename, asPopUp, resizeable, null);
 	}
 
-	protected void showScene(String path, boolean asPopUp, boolean resizeable, ExtraSetup extra) {
+	protected void showScene(String filename, boolean asPopUp, boolean resizeable, ExtraSetup extra) {
 		Stage nextStage = primaryStage;
 		try {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/" + filename));
 			Scene scene = new Scene(loader.load());
 
 			BaseController controller = loader.getController();

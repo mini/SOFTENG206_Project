@@ -4,10 +4,15 @@ import java.io.File;
 import java.util.Random;
 
 import assignment4.model.Combination;
+import assignment4.model.PermanentTooltip;
 import com.sun.javafx.scene.control.skin.Utils;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Font;
@@ -48,7 +53,7 @@ public class ComboPlayerController extends BaseController {
             currentLabel.setTextOverrun(OverrunStyle.CLIP);
             currentLabel.setWrapText(true);
 
-		Tooltip tooltip = new Tooltip();
+		final Tooltip tooltip = new Tooltip();
 		tooltip.setText("Player: \n\n" +
 				"* Select name(s) to practise and click play. \n" +
 				"* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT or PREVIOUS. \n" +
@@ -60,9 +65,10 @@ public class ComboPlayerController extends BaseController {
 				"-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
 				"-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
 				"* Exit this screen to go back to the main menu");
-		helpButton.setTooltip(tooltip);
 
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
 
+		Tooltip.install(helpButton, tooltip);
 
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
 			@Override

@@ -1,5 +1,6 @@
 package assignment4.ui;
 
+import assignment4.model.PermanentTooltip;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
@@ -31,7 +32,10 @@ public class TestMicrophoneController extends BaseController {
 				"* As you speak, the levels should rise up and down according to your microphone levels. \n" +
 				"* Flat levels or no movement mean your microphone is not working/disconnected. \n" +
 				"* Click the MAIN MENU button to go back");
-		helpButton.setTooltip(tooltip);
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
+
+		Tooltip.install(helpButton, tooltip);
+
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package assignment4.ui;
 import java.io.File;
 
 import assignment4.model.Name;
+import assignment4.model.PermanentTooltip;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -54,6 +55,9 @@ public class NamesDatabaseController extends BaseController {
 				"\t* Otherwise, click SAVE to add the new recording into the database for practice.\n\n" +
 				"* Click the MAIN MENU button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
+
+		Tooltip.install(helpButton, tooltip);
 
 		// Name filtering
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {

@@ -1,8 +1,12 @@
 package assignment4.ui;
 
+import assignment4.model.PermanentTooltip;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 
 /**
  * -- MainMenuController Class --
@@ -26,7 +30,9 @@ public class MainMenuController extends BaseController{
 				"* PRACTISE to practise any name on the database without needing to select a list.\n" +
 				"* TEST MICROPHONE to measure your microphone levels.\n" +
 				"* The Trophy icon to show your current achievements.");
-		helpButton.setTooltip(tooltip);
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
+
+		Tooltip.install(helpButton, tooltip);
 	}
 
 	@FXML

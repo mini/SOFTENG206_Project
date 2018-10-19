@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import assignment4.model.Name;
+import assignment4.model.PermanentTooltip;
 import assignment4.model.Version;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -99,7 +100,9 @@ public class PractiseController extends BaseController {
 				"-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
 				"* Click the MAIN MENU button to go back");
 		helpButton.setTooltip(tooltip);
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
 
+		Tooltip.install(helpButton, tooltip);
 		// Left names table
 
 		// Refresh visible names as search string changes

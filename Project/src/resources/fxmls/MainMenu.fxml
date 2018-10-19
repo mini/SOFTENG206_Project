@@ -54,6 +54,11 @@
                   <Font name="System Font" size="17.0" />
                </font>
             </Button>
+            <Text fill="#ffffff92" layoutX="22.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HELP" textAlignment="CENTER" wrappingWidth="59.21875">
+               <font>
+                  <Font name="System Bold Italic" size="9.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
    </children>

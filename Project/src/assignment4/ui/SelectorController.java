@@ -13,6 +13,7 @@ import java.util.Scanner;
 
 import assignment4.model.Combination;
 import assignment4.model.Name;
+import assignment4.model.PermanentTooltip;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -58,7 +59,9 @@ public class SelectorController extends BaseController {
 				"* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
 				"* Click the BACK button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
+		PermanentTooltip.setTooltipTimers(0, 99999,0);
 
+		Tooltip.install(helpButton, tooltip);
 		// Name filtering on listview
 		searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
 			namesList.setItems(FXCollections.observableArrayList(namesDB.getNames(newValue)));

@@ -110,24 +110,39 @@ public class NamesDatabaseController extends BaseController {
 
 	@FXML
 	private void recordPressed() {
-		if (recordButton.getText().equals("Record")) {
-			recordButton.setText("Stop");
 
-			listenButton.setDisable(true);
-			saveButton.setDisable(true);
+		String checkName = "^[a-zA-Z0-9]*$";
 
-			recordTask = new RecordTask(TEMP_RECORDING, () -> {
-				Platform.runLater(() -> { // OnStop
-					recordButton.setText("Record");
-					listenButton.setDisable(false);
-					hasRecording = true;
-					updateSaveButton();
+		if (textInput.getText().matches(checkName)){
+
+			if (recordButton.getText().equals("Record")) {
+				recordButton.setText("Stop");
+
+				listenButton.setDisable(true);
+				saveButton.setDisable(true);
+
+				recordTask = new RecordTask(TEMP_RECORDING, () -> {
+					Platform.runLater(() -> { // OnStop
+						recordButton.setText("Record");
+						listenButton.setDisable(false);
+						hasRecording = true;
+						updateSaveButton();
+					});
 				});
-			});
-			recordTask.start();
+				recordTask.start();
+			} else {
+				recordTask.stop();
+			}
+
 		} else {
-			recordTask.stop();
+			Alert error = new Alert(AlertType.WARNING);
+			error.setTitle("Invalid Name");
+			error.setHeaderText("Name cannot include special characters.");
+			error.setContentText("Only letters and numbers are allowed. Please enter a valid file name to add to the database.");
+			error.showAndWait();
 		}
+
+
 	}
 
 	private void updateSaveButton() {

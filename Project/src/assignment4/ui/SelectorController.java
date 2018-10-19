@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import assignment4.model.Combination;
@@ -156,8 +156,8 @@ public class SelectorController extends BaseController {
 	 */
 	@FXML
 	private void playPressed() {
-		List<Combination> playlist = new ArrayList<Combination>();
-		List<String> invalid = new ArrayList<String>();
+		HashMap<String, Combination> playlist = new HashMap<String, Combination>();
+		ArrayList<String> invalid = new ArrayList<String>();
 
 		// Parsing
 		String input = textInput.getText();
@@ -165,7 +165,7 @@ public class SelectorController extends BaseController {
 
 		for (String line : lines) {
 			line = line.trim();
-			if (line.isEmpty()) { // Skip empty lines
+			if (line.isEmpty() || playlist.containsKey(line)) { // Skip empty or duplicate lines
 				continue;
 			}
 
@@ -178,7 +178,7 @@ public class SelectorController extends BaseController {
 				}
 				combination.addName(existing);
 			}
-			playlist.add(combination);
+			playlist.put(line, combination);
 		}
 
 		// Error message
@@ -193,13 +193,13 @@ public class SelectorController extends BaseController {
 			return;
 		}
 
-		for (Combination combination : playlist) {
+		for (Combination combination : playlist.values()) {
 			combination.process(namesDB);
 		}
 
 		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
-			controller.playlist = playlist.toArray(new Combination[playlist.size()]);
+			controller.playlist = playlist.values().toArray(new Combination[playlist.size()]);
 		});
 	}
 }

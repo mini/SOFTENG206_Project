@@ -24,7 +24,6 @@
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <Button fx:id="helpButton" layoutX="221.0" layoutY="8.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css" />
                   <Button fx:id="deleteButton" disable="true" layoutX="161.0" layoutY="89.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Delete" />
                       <Separator layoutY="141.0" prefHeight="3.0" prefWidth="310.0" />
                   <Label alignment="CENTER" layoutX="23.0" layoutY="152.0" prefHeight="23.0" prefWidth="242.0" text="Create New Name" textAlignment="CENTER" textFill="#fffffff1">
@@ -37,6 +36,7 @@
                                   <Image url="@../icons/info.png" />
                               </image>
                           </ImageView>
+                        <Button fx:id="helpButton" layoutX="272.0" layoutY="4.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css" />
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="191.0" prefWidth="310.0">

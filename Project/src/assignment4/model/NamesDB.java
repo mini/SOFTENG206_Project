@@ -126,7 +126,7 @@ public class NamesDB {
 	/**
 	 * Loads all the pre-made names, marks any bad files and load any existing user attempts of a name.
 	 */
-	private void populateDB() throws IOException {
+	public void populateDB() throws IOException {
 		// Read entries from bad_quality file
 		List<String> badQualityFiles = null;
 		try {

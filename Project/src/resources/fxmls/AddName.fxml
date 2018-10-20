@@ -24,15 +24,7 @@
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <Button fx:id="helpButton" layoutX="221.0" layoutY="8.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css">
-                            <graphic>
-                                <ImageView fitHeight="27.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../icons/info.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
+                        <Button fx:id="helpButton" layoutX="221.0" layoutY="8.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="69.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css" />
                   <Button fx:id="deleteButton" disable="true" layoutX="161.0" layoutY="89.0" mnemonicParsing="false" onAction="#deletePressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Delete" />
                       <Separator layoutY="141.0" prefHeight="3.0" prefWidth="310.0" />
                   <Label alignment="CENTER" layoutX="23.0" layoutY="152.0" prefHeight="23.0" prefWidth="242.0" text="Create New Name" textAlignment="CENTER" textFill="#fffffff1">
@@ -40,6 +32,11 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
+                          <ImageView fitHeight="27.0" fitWidth="30.0" layoutX="277.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+                              <image>
+                                  <Image url="@../icons/info.png" />
+                              </image>
+                          </ImageView>
                     </children>
                 </AnchorPane>
                 <AnchorPane prefHeight="191.0" prefWidth="310.0">
@@ -58,7 +55,8 @@
                 </AnchorPane>
                 <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="mainMenuButton" layoutX="35.0" layoutY="2.0" mnemonicParsing="false" onAction="#mainMenuPressed" stylesheets="@../stylesheets/Button.css" text="Main Menu" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="mainMenuButton" layoutX="27.0" layoutY="27.0" mnemonicParsing="false" onAction="#mainMenuPressed" prefHeight="35.0" prefWidth="69.0" stylesheets="@../stylesheets/SmallButton.css" text="Back" AnchorPane.leftAnchor="17.0" AnchorPane.topAnchor="0.0" />
+                  <Button layoutX="150.0" layoutY="13.0" mnemonicParsing="false" onAction="#restorePressed" prefHeight="35.0" prefWidth="146.0" stylesheets="@../stylesheets/SmallButton.css" text="Restore Defaults" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                     <VBox.margin>
                         <Insets />
@@ -69,7 +67,7 @@
                 </AnchorPane>
             </children>
         </VBox>
-      <AnchorPane layoutX="14.0" layoutY="18.0" prefHeight="412.0" prefWidth="281.0">
+      <AnchorPane layoutX="14.0" layoutY="18.0" prefHeight="412.0" prefWidth="281.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <padding>
             <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
          </padding>

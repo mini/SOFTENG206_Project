@@ -13,6 +13,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
+import assignment4.NameSayerApp;
 import javafx.concurrent.Task;
 
 /**
@@ -20,25 +21,26 @@ import javafx.concurrent.Task;
  */
 public class RecordTask extends Task<Void> {
 	// 44100Hz 16bit 1 channel signed le
-	private static final AudioFormat format = new AudioFormat(44100, 16, 1, true, false);
+	private static final AudioFormat FORMAT = new AudioFormat(44100, 16, 1, true, false);
 	private static final int MAX_TIME_MILI = 10_000;
+	private static final File TEMP = new File(NameSayerApp.ROOT_DIR + "temp/recording.wav");
 	
 	private TargetDataLine line;
 
-	private File file;
+	private String dest;
 	private Timer timer;
 	private Thread thread;
 	private OnEnd onEnd;
 
 	/**
-	 * @param file where to save recording
+	 * @param dest where to save recording
 	 * @param onEnd optional callback when recording stoped
 	 */
-	public RecordTask(File file, OnEnd onEnd) {
-		this.file = file;
+	public RecordTask(File dest, OnEnd onEnd) {
+		this.dest = dest.getPath();
 		this.onEnd = onEnd;
 		timer = new Timer(true);
-		file.getParentFile().mkdirs();
+		dest.getParentFile().mkdirs();
 		thread = new Thread(this);
 		thread.setDaemon(true);
 	}
@@ -56,18 +58,18 @@ public class RecordTask extends Task<Void> {
 	@Override
 	protected Void call() throws Exception {
 		try {
-			DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
+			DataLine.Info info = new DataLine.Info(TargetDataLine.class, FORMAT);
 
 			if (!AudioSystem.isLineSupported(info)) {
 				System.out.println("Line not supported");
 				return null;
 			}
 			line = (TargetDataLine) AudioSystem.getLine(info);
-			line.open(format);
+			line.open(FORMAT);
 			line.start();
 
 			AudioInputStream input = new AudioInputStream(line);
-			AudioSystem.write(input, AudioFileFormat.Type.WAVE, file);
+			AudioSystem.write(input, AudioFileFormat.Type.WAVE, TEMP);
 
 		} catch (LineUnavailableException | IOException ex) {
 			ex.printStackTrace();
@@ -79,6 +81,7 @@ public class RecordTask extends Task<Void> {
 		line.stop();
 		line.close();
 		timer.cancel();
+		AudioUtils.equaliseVolume(TEMP.getPath(), dest);
 		if(onEnd != null){
 			onEnd.call();
 		}

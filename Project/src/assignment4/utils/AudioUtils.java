@@ -40,10 +40,33 @@ public class AudioUtils {
 	/**
 	 * Normalises the volume of the specified file so that they all have the same levels when concatenated.
 	 * 
-	 * @param fileName
+	 * @param src input file path
+	 * @param dest output file path
 	 * @return was successful
 	 */
-	public static boolean equaliseVolume(String fileName) {
+	public static boolean equaliseVolume(String src, String dest) {
+		if (new File(ROOT_DIR + "temp/" + dest).exists()) {
+			return true;
+		}
+
+		String eq = ("ffmpeg -y -hide_banner -i " + src + " -af dynaudnorm " + dest);
+		File directory = new File(ROOT_DIR + "temp/");
+
+		// Use a process to perform the volume equalising
+		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);
+		volume.redirectErrorStream(true);
+		volume.directory(directory);
+		try {
+			Process pro = volume.start();
+			output(pro);
+			return pro.waitFor() == 0;
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
+	}
+
+	
+	public static boolean equasliseVolume(String fileName) {
 		if (new File(ROOT_DIR + "temp/equalised/" + fileName).exists()) {
 			return true;
 		}
@@ -63,7 +86,7 @@ public class AudioUtils {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * Concatenate the files defined in inputData.
 	 * 

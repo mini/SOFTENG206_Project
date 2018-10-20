@@ -70,7 +70,7 @@ public class Combination {
 			String fileName = null;
 			for (Name name : names) {
 				fileName = name.getBestVersion().getAudioFileName();
-				if (!removeSilence(fileName) || !equaliseVolume(fileName)) { // Use short circuits to prevent propagating errors
+				if (!removeSilence(fileName) || !equaliseVolume("silenced/" + fileName, "equalised/" + fileName)) { // Use short circuits to prevent propagating errors
 					success = false;
 					break;
 				}
@@ -107,7 +107,7 @@ public class Combination {
 	public String toString() {
 		return displayName;
 	}
-	
+
 	public HashSet<Name> getNameSet() {
 		return new HashSet<Name>(names);
 	}

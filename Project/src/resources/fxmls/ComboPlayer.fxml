@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -26,7 +27,8 @@
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="130.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@../stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                        <CheckBox fx:id="shuffleCheckBox" layoutX="35.0" layoutY="130.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@../stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                  <Slider fx:id="volSlider" layoutX="142.0" layoutY="132.0" max="200.0" minorTickCount="25" showTickMarks="true" value="100.0" />
                     </children>
                 </AnchorPane>
                 <Separator prefWidth="200.0" />

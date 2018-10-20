@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -32,6 +33,7 @@ public class ComboPlayerController extends BaseController {
 	@FXML private Button badQualityButton;
 	@FXML private Label currentLabel;
 	@FXML private CheckBox shuffleCheckBox;
+	@FXML private Slider volSlider;
 	
 	@FXML private Button recordButton;
 	@FXML private Button listenButton;
@@ -48,9 +50,10 @@ public class ComboPlayerController extends BaseController {
 	private Stack<Combination> history;
 	private Combination current;
 	private RecordTask recordTask;
-
+	
 	private boolean pauseHistory = false;
 
+	private MediaPlayer player;
 
 	@Override
 	public void init() {
@@ -115,6 +118,12 @@ public class ComboPlayerController extends BaseController {
 				newPass();
 			}
 		});
+		
+		volSlider.valueProperty().addListener((observer, oldVal, newVal) -> {
+			if(player != null) {
+				player.setVolume((double) newVal / 100.0);
+			}
+		});
 
 		nextCombination();
 	}
@@ -126,8 +135,7 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void playPressed() {
-		MediaPlayer player = new MediaPlayer(new Media(current.getPath()));
-		player.setAutoPlay(true);
+		play(current.getPath());
 		badQualityButton.setDisable(false);
 	}
 
@@ -163,28 +171,34 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void listenPressed() {
-		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()));
-		player.setAutoPlay(true);
+		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString());
 	}
 
 	@FXML
 	private void comparePressed() {
-		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()));
-		player.setAutoPlay(true);
-
-		player.setOnEndOfMedia(() -> {
+		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
 			playPressed();
 		});
+	}
+	
+	private MediaPlayer play(String path) {
+		if(player != null) {
+			player.stop();
+			player.dispose();
+		}
+		player = new MediaPlayer(new Media(path));
+		player.setVolume(volSlider.getValue() / 100.0);
+		player.setAutoPlay(true);
+		
+		return player;
 	}
 
 	@FXML
 	private void previousPressed() {
 		if (history.empty()) {
-			System.out.println("Emp");
 			int index = playlist.indexOf(current) - 1 + playlist.size();
 			current = playlist.get(index % playlist.size());
 		} else {
-			System.out.println("pop");
 			current = history.pop();
 		}
 		pauseHistory = true;
@@ -194,7 +208,6 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void nextPressed() {
-		// history.push(current);
 		if (shuffleCheckBox.isSelected()) {
 			current = notPlayedInPass.remove(random.nextInt(notPlayedInPass.size()));
 			if (notPlayedInPass.isEmpty()) {
@@ -208,6 +221,9 @@ public class ComboPlayerController extends BaseController {
 		nextCombination();
 	}
 	
+	/**
+	 * Resets available names to choose from if shuffling
+	 */
 	private void newPass() {
 		notPlayedInPass = new ArrayList<Combination>(playlist);
 		notPlayedInPass.remove(current);

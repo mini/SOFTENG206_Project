@@ -203,6 +203,13 @@ public class SelectorController extends BaseController {
 		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.setPlaylist(new ArrayList<Combination>(playlist.values()));
+			controller.setInputString(textInput.getText());
 		});
+	}
+	
+	void setTextContent(String content) {
+		textInput.setText(content);	// Doesn't trigger listener
+		playButton.setDisable(false);
+		saveButton.setDisable(false);
 	}
 }

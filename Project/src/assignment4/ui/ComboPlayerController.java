@@ -168,10 +168,6 @@ public class ComboPlayerController extends BaseController {
 				if (combosProcessed.get() == target) {
 					Platform.runLater(() -> {
 						playlist.removeIf(c -> c == LOADING);
-						if (playlist.size() > 1) {
-							nextButton.setDisable(false);
-							prevButton.setDisable(false);
-						}
 					});
 				}
 				return null;
@@ -334,9 +330,13 @@ public class ComboPlayerController extends BaseController {
 		if (current == LOADING) {
 			playButton.setDisable(true);
 			recordButton.setDisable(true);
+			nextButton.setDisable(true);
+			prevButton.setDisable(true);
 		} else {
 			playButton.setDisable(false);
 			recordButton.setDisable(false);
+			nextButton.setDisable(playlist.size() <= 1);
+			prevButton.setDisable(playlist.size() <= 1);
 
 			// Check for existing recording
 			if (new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").exists()) {

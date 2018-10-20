@@ -110,7 +110,18 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		showScene("MainMenu.fxml", false, false);
+
+		// Create a confirmation box to pop up to make sure that the user would like to return to the main
+		// menu to prevent lost saves
+		Alert confirm = new Alert(AlertType.CONFIRMATION);
+		confirm.setTitle("Back to Main Menu");
+		confirm.setHeaderText("Are you sure you would like to go back to the Main Menu?");
+		confirm.setContentText("Any unsaved playlists and its contents will be lost.");
+		confirm.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+			showScene("MainMenu.fxml", false, false);
+		});
+
+
 	}
 
 	/**

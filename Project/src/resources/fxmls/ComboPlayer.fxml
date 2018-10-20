@@ -19,22 +19,22 @@
             <children>
                 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="playButton" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Play" />
-                        <Button fx:id="badQualityButton" disable="true" layoutX="145.0" layoutY="82.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Bad Quality" />
-                        <Label fx:id="currentLabel" alignment="CENTER" layoutX="16.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="237.0" text="Select and Play" textAlignment="CENTER" textFill="WHITE">
+                        <Button fx:id="playButton" layoutX="22.0" layoutY="82.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Play" />
+                        <Button fx:id="badQualityButton" disable="true" layoutX="162.0" layoutY="82.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Bad Quality" />
+                        <Label fx:id="currentLabel" alignment="CENTER" layoutX="37.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="237.0" text="Select and Play" textAlignment="CENTER" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="18.0" />
                             </font>
                         </Label>
-                        <CheckBox fx:id="shuffleCheckBox" layoutX="103.0" layoutY="130.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@../stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
+                        <CheckBox fx:id="shuffleCheckBox" layoutX="116.0" layoutY="135.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="78.0" stylesheets="@../stylesheets/CheckBox.css" text="Shuffle" textFill="#d0d0d0" />
                     </children>
                 </AnchorPane>
                 <Separator prefWidth="200.0" />
                 <AnchorPane prefHeight="191.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="recordButton" layoutX="88.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Record" />
-                        <Button fx:id="listenButton" disable="true" layoutX="40.0" layoutY="57.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Listen" />
-                        <Button fx:id="compareButton" disable="true" layoutX="149.0" layoutY="57.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Compare" />
+                        <Button fx:id="recordButton" layoutX="108.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Record" />
+                        <Button fx:id="listenButton" disable="true" layoutX="53.0" layoutY="57.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Listen" />
+                        <Button fx:id="compareButton" disable="true" layoutX="166.0" layoutY="57.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Compare" />
                       <Separator layoutY="104.0" prefHeight="3.0" prefWidth="310.0" />
                   <Button fx:id="helpButton" layoutX="133.0" layoutY="135.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="30.0" style="-fx-background-radius: 100;" stylesheets="@../stylesheets/TransparentButton.css">
                      <graphic>

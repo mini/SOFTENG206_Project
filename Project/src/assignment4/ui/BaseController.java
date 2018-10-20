@@ -3,6 +3,7 @@ package assignment4.ui;
 import java.io.IOException;
 
 import assignment4.NameSayerApp;
+import assignment4.model.AchievementStats;
 import assignment4.model.NamesDB;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -17,10 +18,12 @@ public abstract class BaseController {
 	
 	protected Stage primaryStage;
 	protected NamesDB namesDB;
+	protected AchievementStats stats;
 
-	public final void setup(Stage primaryStage, NamesDB namesDB) {
+	public final void setup(Stage primaryStage, NamesDB namesDB, AchievementStats stats) {
 		this.primaryStage = primaryStage;
 		this.namesDB = namesDB;
+		this.stats = stats;
 	}
 
 	/**
@@ -56,6 +59,7 @@ public abstract class BaseController {
 			// Pass data to child controllers
 			controller.primaryStage = nextStage;
 			controller.namesDB = namesDB;
+			controller.stats = stats;
 			nextStage.setScene(scene);
 			nextStage.setResizable(resizeable);
 			if (extra != null) {

@@ -13,7 +13,6 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
-import assignment4.ui.RewardsController;
 import javafx.concurrent.Task;
 
 /**
@@ -83,8 +82,6 @@ public class RecordTask extends Task<Void> {
 		if(onEnd != null){
 			onEnd.call();
 		}
-
-		RewardsController.records++;
 	}
 	
 	public interface OnEnd{

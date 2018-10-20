@@ -158,6 +158,7 @@ public class ComboPlayerController extends BaseController {
 
 			recordTask = new RecordTask(file, () -> {
 				Platform.runLater(() -> {
+					stats.incrementRecords();
 					recordButton.setText("Record");
 					listenButton.setDisable(false);
 					compareButton.setDisable(false);
@@ -182,9 +183,8 @@ public class ComboPlayerController extends BaseController {
 	private void comparePressed() {
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
 			playPressed();
-		});
-
-		RewardsController.compares++;
+			stats.incrementCompares();
+		});	
 	}
 	
 	private MediaPlayer play(String path) {

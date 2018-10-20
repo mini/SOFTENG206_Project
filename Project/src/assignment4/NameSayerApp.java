@@ -1,27 +1,17 @@
 package assignment4;
 
-import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.io.File;
+import java.io.IOException;
 
-import assignment4.model.Achievements;
+import assignment4.model.AchievementStats;
 import assignment4.model.NamesDB;
 import assignment4.ui.BaseController;
-import assignment4.ui.RewardsController;
 import assignment4.utils.FileUtils;
 import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 
 /**
  * -- NameSayerApp Class --
@@ -54,7 +44,7 @@ public class NameSayerApp extends Application {
 		new File(ROOT_DIR + "temp/silenced/").mkdirs();
 		new File(ROOT_DIR + "temp/equalised/").mkdirs();
 		new File(ROOT_DIR + "temp/merged/").mkdirs();
-		
+
 		if (!new File(ROOT_DIR + "names/").exists()) {
 			try {
 				FileUtils.unzip("/resources/nameFiles.zip", ROOT_DIR);
@@ -71,11 +61,10 @@ public class NameSayerApp extends Application {
 	 */
 	public void start(Stage primaryStage) throws IOException {
 		NamesDB namesDB = new NamesDB();
+		AchievementStats stats = new AchievementStats();
 
 		primaryStage.setTitle("NameSayer");
 		primaryStage.setResizable(false);
-
-		Achievements achievements = new Achievements(primaryStage);
 
 		// Load the scene of the Player fxml file
 		FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/resources/fxmls/MainMenu.fxml"));
@@ -83,7 +72,7 @@ public class NameSayerApp extends Application {
 		BaseController controller = menuLoader.getController();
 
 		// Passes required data to controllers
-		controller.setup(primaryStage, namesDB);
+		controller.setup(primaryStage, namesDB, stats);
 		controller.init();
 
 		Scene menuScene = new Scene(menuPane);
@@ -92,10 +81,4 @@ public class NameSayerApp extends Application {
 
 	}
 
-
-
-
 }
-
-
-

@@ -69,7 +69,7 @@ public class MainMenuController extends BaseController {
 		showScene("TestMicrophone.fxml", false, false);
 
 		// SPECIAL FEATURE!!!
-		RewardsController.special++;
+		stats.incrementSpecial();
 	}
 
 	/**

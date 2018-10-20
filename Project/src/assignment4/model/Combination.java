@@ -13,6 +13,8 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import javafx.util.Callback;
 
@@ -21,7 +23,13 @@ import javafx.util.Callback;
  *
  */
 public class Combination {
-
+	private static ThreadPoolExecutor executor;
+	
+	static {
+		int threads = Math.max(2, Runtime.getRuntime().availableProcessors() - 2);
+		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threads);
+	}
+	
 	private List<Name> names;
 	private String displayName;
 	private String mergedName;
@@ -62,8 +70,8 @@ public class Combination {
 	/**
 	 * To be called when all desired names have been added. Generates the final audio file.
 	 */
-	public void process(NamesDB db, Callback<Boolean, Void> callback) {
-		Thread thread = new Thread(() -> {
+	public void process(NamesDB db, Callback<Boolean, Void> callback) {	
+		executor.submit(() -> {
 			boolean success = true;
 
 			// Proccess individual files and add to txt file
@@ -95,12 +103,8 @@ public class Combination {
 					finalFile = new File(ROOT_DIR + "temp/equalised/" + fileName);
 				}
 			}
-
 			callback.call(success);
-
 		});
-		thread.setDaemon(true);
-		thread.start();
 	}
 
 	@Override

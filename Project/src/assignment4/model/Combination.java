@@ -66,7 +66,7 @@ public class Combination {
 	}
 
 	/**
-	 * Toggles the quality indicator for this combo, saves to a text file.
+	 * Toggles the quality indicator for this combo, compares to a text file.
 	 */
 	public void toggleBadQuality() {
 		badQuality = !badQuality;

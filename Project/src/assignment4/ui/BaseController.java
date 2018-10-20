@@ -73,28 +73,6 @@ public abstract class BaseController {
 		}
 	}
 
-//	public void showToolTip(Button helpButton, Tooltip tooltip) {
-//
-//		PermanentTooltip.setTooltipTimers(0, 99999,0);
-//
-//		helpButton.setOnMouseEntered(new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				Point2D p = helpButton.localToScreen(helpButton.getLayoutBounds().getMaxX(), helpButton.getLayoutBounds().getMaxY()); //I position the tooltip at bottom right of the node (see below for explanation)
-//				tooltip.show(helpButton, p.getX(), p.getY());
-//			}
-//		});
-//		helpButton.setOnMouseExited(new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				tooltip.hide();
-//			}
-//		});
-//
-//		helpButton.setTooltip(tooltip);
-//	}
 
 	interface ExtraSetup {
 		/**

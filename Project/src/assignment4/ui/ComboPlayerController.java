@@ -174,6 +174,8 @@ public class ComboPlayerController extends BaseController {
 		player.setOnEndOfMedia(() -> {
 			playPressed();
 		});
+
+		RewardsController.compares++;
 	}
 
 	@FXML

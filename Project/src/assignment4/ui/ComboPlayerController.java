@@ -128,6 +128,16 @@ public class ComboPlayerController extends BaseController {
 	@FXML
 	private void playPressed() {
 		MediaPlayer player = new MediaPlayer(new Media(current.getPath()));
+		backButton.setDisable(true);
+
+		// Disabled back button until audio has finished playing
+		player.setOnEndOfMedia(new Runnable() {
+			@Override
+			public void run() {
+				backButton.setDisable(false);
+			}
+		});
+
 		player.setAutoPlay(true);
 		badQualityButton.setDisable(false);
 	}

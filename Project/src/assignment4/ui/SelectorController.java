@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import assignment4.model.AchievementStats;
 import assignment4.model.Combination;
 import assignment4.model.Name;
 import assignment4.utils.PermanentTooltip;
@@ -191,6 +192,13 @@ public class SelectorController extends BaseController {
 					invalid.add(name);
 				}
 				combination.addName(existing);
+
+				// Special unique name of lecturer for last achievement. User must practice this particular name in order
+                // to obtain the achievement.
+				if (combination.getDisplayName().equals("Catherine Watson")) {
+					// Show notification and obtain trophy for special feature
+					stats.incrementSpecial(AchievementStats.SpecialFeature.CATHERINEWATSON);
+				}
 			}
 			playlist.put(line, combination);
 		}

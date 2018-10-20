@@ -188,7 +188,7 @@ public class NamesDatabaseController extends BaseController {
 		}
 
 		// Play the pronunciation from the database
-		MediaPlayer mp = current.getBestVersion().getMediaPlayer();
+		MediaPlayer mp = new MediaPlayer(new Media(current.getBestVersion().getPath()));
 		mp.setAutoPlay(true);
 	}
 

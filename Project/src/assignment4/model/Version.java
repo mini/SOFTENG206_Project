@@ -1,18 +1,20 @@
 package assignment4.model;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
+import static java.nio.file.StandardOpenOption.APPEND;
+import static java.nio.file.StandardOpenOption.CREATE;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import assignment4.NameSayerApp;
-
-import static java.nio.file.StandardOpenOption.APPEND;
-import static java.nio.file.StandardOpenOption.CREATE;
 
 /**
  * -- Version Class --
@@ -26,7 +28,6 @@ public class Version {
 	private String path;
 	private boolean badQuality;
 	private String label;
-	private MediaPlayer player;
 
 	/**
 	 * For existing names
@@ -65,7 +66,7 @@ public class Version {
 		try {
 			if(badQuality) {
 				// Append to file
-				Files.write(Paths.get(NamesDB.BQ_FILE), (audioFileName + " - bad quality" + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
+				Files.write(Paths.get(NamesDB.BQ_FILE), (audioFileName + System.lineSeparator()).getBytes("UTF8"), CREATE, APPEND);
 			} else {
 				// Makes a new file with all entries except this one
 				File bqFile = new File(NamesDB.BQ_FILE);
@@ -78,7 +79,7 @@ public class Version {
 					if(line.trim().contains(audioFileName)) {
 						continue;
 					}
-				    writer.write(line + System.getProperty("line.separator"));
+				    writer.write(line + System.lineSeparator());
 				}
 				tmpFile.renameTo(bqFile);
 				
@@ -89,31 +90,10 @@ public class Version {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		if (badQuality && player != null) {
-			player.dispose(); // Kills its thread
-			player = null;
-		}
 	}
 
 	public boolean isBadQuality() {
 		return badQuality;
-	}
-
-	/**
-	 * Gets this version's media player. Will always return the same player.
-	 * 
-	 * @return media player
-	 */
-	public MediaPlayer getMediaPlayer() {
-		if(player != null) {
-			player.dispose();
-			player = null;
-		}
-		if (player == null) {
-			player = new MediaPlayer(new Media(path));
-		}
-		return player;
 	}
 	
 	public String getPath() {

@@ -2,19 +2,24 @@ package assignment4.ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import assignment4.model.Combination;
+import assignment4.model.Name;
 import assignment4.utils.PermanentTooltip;
 import assignment4.utils.RecordTask;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
@@ -104,8 +109,8 @@ public class ComboPlayerController extends BaseController {
 
 		// Switch to selected combos on the list
 		namesList.getSelectionModel().selectedItemProperty().addListener((observer, oldVal, newVal) -> {
-			if (oldVal != newVal && newVal != LOADING) {
-				if (!pauseHistory && oldVal != null) {
+			if (oldVal != newVal) {
+				if (!pauseHistory && oldVal != null && newVal != LOADING) {
 					history.push(oldVal);
 				}
 				current = newVal;
@@ -182,8 +187,30 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void badQualityPressed() {
-		// TODO
-		// badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
+		Alert bqAlert = new Alert(AlertType.CONFIRMATION, "Choose which name is of bad qualilty. A different version will be used if found.", ButtonType.CANCEL);
+
+		LinkedHashMap<ButtonType, Name> buttons = new LinkedHashMap<ButtonType, Name>();
+		for (Name name : current.getNameSet()) {
+			ButtonType button = new ButtonType(name.getName());
+			buttons.put(button, name);
+			bqAlert.getButtonTypes().add(button);
+		}
+
+		bqAlert.showAndWait();
+
+		if (bqAlert.getResult() == ButtonType.CANCEL) {
+			return;
+		}
+
+		buttons.get(bqAlert.getResult()).getBestVersion().notifyBadQuality();
+		Combination c = namesList.getSelectionModel().getSelectedItem();
+		current = LOADING;
+		nextCombination();
+		c.process(namesDB, (success) -> {
+			current = c;
+			Platform.runLater(() -> nextCombination());
+			return null;
+		});
 	}
 
 	@FXML
@@ -304,21 +331,23 @@ public class ComboPlayerController extends BaseController {
 
 	private void nextCombination() {
 		currentLabel.setText(current.getDisplayName());
-		playButton.setDisable(false);
-		recordButton.setDisable(false);
-		// badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
-		// badQualityButton.setDisable(!current.isBadQuality()); // Require combo to be played first
-
-		// Check for existing recording
-		if (new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").exists()) {
-			listenButton.setDisable(false);
-			compareButton.setDisable(false);
+		if (current == LOADING) {
+			playButton.setDisable(true);
+			recordButton.setDisable(true);
 		} else {
-			listenButton.setDisable(true);
-			compareButton.setDisable(true);
-		}
+			playButton.setDisable(false);
+			recordButton.setDisable(false);
 
-		namesList.getSelectionModel().select(current);
+			// Check for existing recording
+			if (new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").exists()) {
+				listenButton.setDisable(false);
+				compareButton.setDisable(false);
+			} else {
+				listenButton.setDisable(true);
+				compareButton.setDisable(true);
+			}
+			namesList.getSelectionModel().select(current);
+		}
 	}
 
 	void setInputString(String inputString) {

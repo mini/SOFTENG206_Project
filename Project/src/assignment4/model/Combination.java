@@ -11,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javafx.util.Callback;
@@ -105,5 +106,9 @@ public class Combination {
 	@Override
 	public String toString() {
 		return displayName;
+	}
+	
+	public HashSet<Name> getNameSet() {
+		return new HashSet<Name>(names);
 	}
 }

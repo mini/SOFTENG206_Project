@@ -57,6 +57,7 @@ public class MainMenuController extends BaseController {
 		showScene("ComboPlayer.fxml", false, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.setPlaylist(combos);
+			controller.setAllNames();
 		});
 	}
 

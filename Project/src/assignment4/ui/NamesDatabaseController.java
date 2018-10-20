@@ -1,8 +1,10 @@
 package assignment4.ui;
 
 import java.io.File;
+import java.io.IOException;
 
 import assignment4.model.Name;
+import assignment4.utils.FileUtils;
 import assignment4.utils.PermanentTooltip;
 import assignment4.utils.RecordTask;
 import javafx.application.Platform;
@@ -41,12 +43,12 @@ public class NamesDatabaseController extends BaseController {
 	private RecordTask recordTask;
 
 	private boolean validName, hasRecording;
-	
+
 	@Override
 	public void init() {
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText("Names Database:  \n\n" +
-				"* Select a name from the database on the left to LISTEN or DELETE. \n" + 
+				"* Select a name from the database on the left to LISTEN or DELETE. \n" +
 				"* NOTE: To get deleted defualt names back, delete the name folder in the app's directory\n\n" +
 				"* To add a new name to the database: \n" +
 				"\t* Type the name being added and click RECORD to start the recording.\n" +
@@ -56,7 +58,7 @@ public class NamesDatabaseController extends BaseController {
 				"\t* Otherwise, click SAVE to add the new recording into the database for practice.\n\n" +
 				"* Click the MAIN MENU button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
-		PermanentTooltip.setTooltipTimers(0, 99999,0);
+		PermanentTooltip.setTooltipTimers(0, 99999, 0);
 
 		Tooltip.install(helpButton, tooltip);
 
@@ -91,7 +93,7 @@ public class NamesDatabaseController extends BaseController {
 	}
 
 	/**
-	 * Set the current name and configures UI elements 
+	 * Set the current name and configures UI elements
 	 */
 	private void switchCurrent(Name newVal) {
 		current = newVal;
@@ -114,7 +116,7 @@ public class NamesDatabaseController extends BaseController {
 
 		String checkName = "^[a-zA-Z0-9]*$";
 
-		if (textInput.getText().matches(checkName)){
+		if (textInput.getText().matches(checkName)) {
 
 			if (recordButton.getText().equals("Record")) {
 				recordButton.setText("Stop");
@@ -143,7 +145,6 @@ public class NamesDatabaseController extends BaseController {
 			error.showAndWait();
 		}
 
-
 	}
 
 	private void updateSaveButton() {
@@ -164,7 +165,7 @@ public class NamesDatabaseController extends BaseController {
 		namesDB.addName(new Name(name).addVersion(saved.getName(), false));
 		namesList.setItems(FXCollections.observableArrayList(namesDB.getAllNames()));
 		namesList.refresh();
-		
+
 		// Reset UI
 		saveButton.setDisable(true);
 		listenButton.setDisable(true);
@@ -175,7 +176,7 @@ public class NamesDatabaseController extends BaseController {
 	}
 
 	/**
-	 * Plays the selected attempt, if nothing is selected it will play the first one on the list 
+	 * Plays the selected attempt, if nothing is selected it will play the first one on the list
 	 */
 	@FXML
 	private void playPressed() {
@@ -222,6 +223,25 @@ public class NamesDatabaseController extends BaseController {
 				namesList.getSelectionModel().clearSelection();
 				namesList.setItems(FXCollections.observableArrayList(namesDB.getAllNames()));
 			}
+		}
+	}
+
+	@FXML
+	private void restorePressed() {
+		Alert confirmation = new Alert(AlertType.WARNING,
+				"This will restore any default deleted/modified names. Your files will not be changed.",
+				ButtonType.CANCEL, ButtonType.OK);
+		confirmation.initOwner(primaryStage);
+		confirmation.showAndWait();
+		try {
+			if (confirmation.getResult() == ButtonType.OK) {
+				FileUtils.unzip("/resources/nameFiles.zip", ROOT_DIR);
+				namesDB.populateDB();
+				namesList.setItems(FXCollections.observableArrayList(namesDB.getAllNames()));
+				namesList.refresh();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

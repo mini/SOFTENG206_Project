@@ -126,7 +126,7 @@ public class ComboPlayerController extends BaseController {
 
 		volSlider.valueProperty().addListener((observer, oldVal, newVal) -> {
 			if (player != null) {
-				player.setVolume((double) newVal / 100.0);
+				player.setVolume((double) newVal / volSlider.getMax());
 			}
 		});
 
@@ -243,7 +243,7 @@ public class ComboPlayerController extends BaseController {
 			player.dispose();
 		}
 		player = new MediaPlayer(new Media(path));
-		player.setVolume(volSlider.getValue() / 100.0);
+		player.setVolume(volSlider.getValue() / volSlider.getMax());
 		player.setAutoPlay(true);
 
 		return player;

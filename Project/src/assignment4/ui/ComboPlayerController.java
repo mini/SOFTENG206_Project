@@ -181,6 +181,7 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void comparePressed() {
+
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
 			playPressed();
 			stats.incrementCompares();

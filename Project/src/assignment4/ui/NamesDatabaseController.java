@@ -173,6 +173,8 @@ public class NamesDatabaseController extends BaseController {
 		hasRecording = false;
 		textInput.clear();
 		TEMP_RECORDING.delete();
+
+		RewardsController.special++;
 	}
 
 	/**

@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-import assignment4.NameSayerApp;
+import static assignment4.NameSayerApp.ROOT_DIR;
 
 public class AudioUtils {
 	private static final boolean DEBUG_OUTPUT = false;
@@ -16,17 +16,25 @@ public class AudioUtils {
 	 * @param fileName
 	 * @return was successful
 	 */
-	public static boolean removeSilence(String fileName) throws IOException, InterruptedException {
+	public static boolean removeSilence(String fileName) {
+		if (new File(ROOT_DIR + "temp/silenced/" + fileName).exists()) {
+			return true;
+		}
+
 		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=0:0:0:-1:1:-50dB:1 ../temp/silenced/" + fileName);
-		File directory = new File(NameSayerApp.ROOT_DIR + "names/");
+		File directory = new File(ROOT_DIR + "names/");
 
 		// Use a process to perform the silence removing
 		ProcessBuilder remove = new ProcessBuilder("bash", "-lc", silence);
 		remove.redirectErrorStream(true);
 		remove.directory(directory);
-		Process pro = remove.start();
-		output(pro);
-		return pro.waitFor() == 0;
+		try {
+			Process pro = remove.start();
+			output(pro);
+			return pro.waitFor() == 0;
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
 	}
 
 	/**
@@ -35,17 +43,25 @@ public class AudioUtils {
 	 * @param fileName
 	 * @return was successful
 	 */
-	public static boolean equaliseVolume(String fileName) throws IOException, InterruptedException {
+	public static boolean equaliseVolume(String fileName) {
+		if (new File(ROOT_DIR + "temp/equalised/" + fileName).exists()) {
+			return true;
+		}
+
 		String eq = ("ffmpeg -y -hide_banner -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
-		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");
+		File directory = new File(ROOT_DIR + "temp/silenced/");
 
 		// Use a process to perform the volume equalising
 		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);
 		volume.redirectErrorStream(true);
 		volume.directory(directory);
-		Process pro = volume.start();
-		output(pro);
-		return pro.waitFor() == 0;
+		try {
+			Process pro = volume.start();
+			output(pro);
+			return pro.waitFor() == 0;
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
 	}
 
 	/**
@@ -55,23 +71,27 @@ public class AudioUtils {
 	 * @param mergedName output name
 	 * @return was successful
 	 */
-	public static boolean concatFiles(String inputData, String mergedName) throws IOException, InterruptedException {
+	public static boolean concatFiles(String inputData, String mergedName) {
 		String concat = ("ffmpeg -y -hide_banner -f concat -safe 0 -i " + inputData + " -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
-		File directory = new File(NameSayerApp.ROOT_DIR + "temp/");
+		File directory = new File(ROOT_DIR + "temp/");
 
 		ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);
 		merge.redirectErrorStream(true);
 		merge.directory(directory);
-		Process pro = merge.start();
-		output(pro);
-		return pro.waitFor() == 0;
+		try {
+			Process pro = merge.start();
+			output(pro);
+			return pro.waitFor() == 0;
+		} catch (IOException | InterruptedException e) {
+			return false;
+		}
 	}
 
 	private static void output(Process p) {
-		if(!DEBUG_OUTPUT) {
+		if (!DEBUG_OUTPUT) {
 			return;
 		}
-		
+
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line;
 		int i = 0;

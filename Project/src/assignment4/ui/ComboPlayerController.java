@@ -36,7 +36,8 @@ public class ComboPlayerController extends BaseController {
 	@FXML private Button recordButton;
 	@FXML private Button listenButton;
 	@FXML private Button compareButton;
-	
+
+	@FXML private Button backButton;
 	@FXML private Button prevButton;
 	@FXML private Button nextButton;
 	@FXML private Button helpButton;
@@ -156,8 +157,11 @@ public class ComboPlayerController extends BaseController {
 			});
 
 			recordTask.start();
+			backButton.setDisable(true);
+
 		} else {
 			recordTask.stop();
+			backButton.setDisable(false);
 		}
 	}
 

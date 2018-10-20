@@ -54,11 +54,6 @@
                   <Image url="@../icons/lock.png" />
                </image>
             </ImageView>
-            <Text fx:id="rewardCount" fill="WHITE" layoutX="119.0" layoutY="388.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0/3" textAlignment="CENTER" wrappingWidth="355.21875">
-               <font>
-                  <Font name="System Font" size="23.0" />
-               </font>
-            </Text>
             <Text fx:id="recordText" fill="#ffffffcf" layoutX="46.0" layoutY="133.0" strokeType="INSIDE" strokeWidth="0.0" text="Record 10 Times" textAlignment="CENTER" wrappingWidth="130.0" />
             <Text fx:id="compareText" fill="#ffffffcf" layoutX="231.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compare 5 Names" textAlignment="CENTER" wrappingWidth="140.0" />
             <Text fx:id="specialText" fill="#ffffffcf" layoutX="423.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" textAlignment="CENTER" wrappingWidth="130.0" />

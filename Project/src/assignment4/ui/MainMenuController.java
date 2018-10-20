@@ -67,6 +67,9 @@ public class MainMenuController extends BaseController {
 	@FXML
 	private void testMic() {
 		showScene("TestMicrophone.fxml", false, false);
+
+		// SPECIAL FEATURE!!!
+		RewardsController.special++;
 	}
 
 	/**

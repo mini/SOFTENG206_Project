@@ -1,16 +1,27 @@
 package assignment4;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
+import assignment4.model.Achievements;
 import assignment4.model.NamesDB;
 import assignment4.ui.BaseController;
+import assignment4.ui.RewardsController;
 import assignment4.utils.FileUtils;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * -- NameSayerApp Class --
@@ -64,6 +75,8 @@ public class NameSayerApp extends Application {
 		primaryStage.setTitle("NameSayer");
 		primaryStage.setResizable(false);
 
+		Achievements achievements = new Achievements(primaryStage);
+
 		// Load the scene of the Player fxml file
 		FXMLLoader menuLoader = new FXMLLoader(getClass().getResource("/resources/fxmls/MainMenu.fxml"));
 		Parent menuPane = menuLoader.load();
@@ -78,4 +91,11 @@ public class NameSayerApp extends Application {
 		primaryStage.show();
 
 	}
+
+
+
+
 }
+
+
+

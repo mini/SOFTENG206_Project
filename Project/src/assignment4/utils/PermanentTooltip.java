@@ -9,7 +9,7 @@ import javafx.util.Duration;
 
 /**
  * Permanent Tooltip is a class that was referenced by an open-source code online on Github
- * by Dan Armbrust. The code is utility that changes the tooltip delays that can only be
+ * by Dan Armbrust. The code is a utility that changes the tooltip delays that can only be
  * achieved through Java10 - due to the project being based of Java8, this utility was necessary.
  *
  * The code can be found here: https://gist.github.com/darmbrust/9559744d1b1dada434a3

@@ -38,7 +38,8 @@ public class ComboPlayerController extends BaseController {
 	@FXML private Button recordButton;
 	@FXML private Button listenButton;
 	@FXML private Button compareButton;
-	
+
+	@FXML private Button backButton;
 	@FXML private Button prevButton;
 	@FXML private Button nextButton;
 	@FXML private Button helpButton;
@@ -164,8 +165,11 @@ public class ComboPlayerController extends BaseController {
 			});
 
 			recordTask.start();
+			backButton.setDisable(true);
+
 		} else {
 			recordTask.stop();
+			backButton.setDisable(false);
 		}
 	}
 
@@ -179,6 +183,8 @@ public class ComboPlayerController extends BaseController {
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
 			playPressed();
 		});
+
+		RewardsController.compares++;
 	}
 	
 	private MediaPlayer play(String path) {
@@ -231,6 +237,11 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void backPressed() {
+		if(player != null) {
+			player.stop();
+			player.dispose();
+		}
+		
 		if(all) {
 			showScene("MainMenu.fxml", false, false);
 		} else {

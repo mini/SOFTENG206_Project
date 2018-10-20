@@ -54,14 +54,18 @@
                   <Image url="@../icons/lock.png" />
                </image>
             </ImageView>
-            <Text fx:id="rewardCount" fill="WHITE" layoutX="122.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0/3" textAlignment="CENTER" wrappingWidth="355.21875">
-               <font>
-                  <Font name="System Font" size="23.0" />
-               </font>
-            </Text>
-            <Text fill="#ffffffcf" layoutX="60.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Record 10 Times" />
-            <Text fill="#ffffffcf" layoutX="252.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Save 5 Attempts" />
-            <Text fill="#ffffffcf" layoutX="478.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" />
+            <Text fx:id="recordText" fill="#ffffffcf" layoutX="46.0" layoutY="133.0" strokeType="INSIDE" strokeWidth="0.0" text="Record 10 Times" textAlignment="CENTER" wrappingWidth="130.0" />
+            <Text fx:id="compareText" fill="#ffffffcf" layoutX="231.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Compare 5 Names" textAlignment="CENTER" wrappingWidth="140.0" />
+            <Text fx:id="specialText" fill="#ffffffcf" layoutX="423.0" layoutY="133.0" strokeType="OUTSIDE" strokeWidth="0.0" text="???" textAlignment="CENTER" wrappingWidth="130.0" />
+            <Circle fx:id="record1" fill="WHITE" layoutX="70.0" layoutY="345.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="record3" fill="WHITE" layoutX="152.0" layoutY="345.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="record2" fill="WHITE" layoutX="112.0" layoutY="345.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="special1" fill="WHITE" layoutX="447.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="special3" fill="WHITE" layoutX="529.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="special2" fill="WHITE" layoutX="489.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="compare1" fill="WHITE" layoutX="259.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="compare3" fill="WHITE" layoutX="341.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
+            <Circle fx:id="compare2" fill="WHITE" layoutX="301.0" layoutY="341.0" radius="14.0" stroke="#ffb71b" strokeType="INSIDE" strokeWidth="3.0" />
             </children>
         </Pane>
     </children>

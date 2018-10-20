@@ -44,8 +44,9 @@ public class Combination {
 	 * Adds a name to the combination
 	 * @param name the name to add
 	 */
-	public void addName(Name name) {
+	public Combination addName(Name name) {
 		names.add(name);
+		return this;
 	}
 
 	public String getDisplayName() {

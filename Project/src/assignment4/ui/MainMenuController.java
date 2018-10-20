@@ -1,5 +1,9 @@
 package assignment4.ui;
 
+import java.util.ArrayList;
+
+import assignment4.model.Combination;
+import assignment4.model.Name;
 import assignment4.utils.PermanentTooltip;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -14,7 +18,7 @@ import javafx.scene.control.Tooltip;
  * to its appropriate scene.
  *
  */
-public class MainMenuController extends BaseController{
+public class MainMenuController extends BaseController {
 
 	@FXML
 	private Button helpButton;
@@ -27,7 +31,7 @@ public class MainMenuController extends BaseController{
 				"* PRACTISE to practise any name on the database without needing to select a list.\n" +
 				"* TEST MICROPHONE to measure your microphone levels.\n" +
 				"* The Trophy icon to show your current achievements.");
-		PermanentTooltip.setTooltipTimers(0, 99999,0);
+		PermanentTooltip.setTooltipTimers(0, 99999, 0);
 
 		Tooltip.install(helpButton, tooltip);
 	}
@@ -42,7 +46,18 @@ public class MainMenuController extends BaseController{
 	 */
 	@FXML
 	private void practisePressed() {
-		showScene("Practise.fxml", false, true);
+		ArrayList<Name> all = namesDB.getAllNames();
+		Combination[] combos = new Combination[all.size()];
+		for (int i = 0; i < combos.length; i++) {
+			Name name = all.get(i);
+			combos[i] = new Combination(name.getName()).addName(name);
+			combos[i].process(namesDB);
+		}
+		
+		showScene("ComboPlayer.fxml", false, true, c -> {
+			ComboPlayerController controller = (ComboPlayerController) c;
+			controller.playlist = combos;
+		});
 	}
 
 	/**

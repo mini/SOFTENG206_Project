@@ -122,7 +122,7 @@ public class SelectorController extends BaseController {
 		File file = fileChooser.showOpenDialog(primaryStage);
 		if (file != null) {
 			try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) { // Reads whole file
-				textInput.setText(scanner.next());
+				textInput.setText(scanner.next().trim() + " ");
 				lastSelected = file;
 				fileChooser.setInitialDirectory(lastSelected.getParentFile());
 			} catch (FileNotFoundException e) {
@@ -202,7 +202,7 @@ public class SelectorController extends BaseController {
 
 		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
-			controller.playlist = playlist.values().toArray(new Combination[playlist.size()]);
+			controller.setPlaylist(new ArrayList<Combination>(playlist.values()));
 		});
 	}
 }

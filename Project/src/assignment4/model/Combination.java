@@ -140,4 +140,9 @@ public class Combination {
 		thread.setDaemon(true);
 		thread.start();
 	}
+	
+	@Override
+	public String toString() {
+		return displayName;
+	}
 }

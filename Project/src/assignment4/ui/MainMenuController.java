@@ -47,16 +47,16 @@ public class MainMenuController extends BaseController {
 	@FXML
 	private void practisePressed() {
 		ArrayList<Name> all = namesDB.getAllNames();
-		Combination[] combos = new Combination[all.size()];
-		for (int i = 0; i < combos.length; i++) {
-			Name name = all.get(i);
-			combos[i] = new Combination(name.getName()).addName(name);
-			combos[i].process(namesDB);
+		ArrayList<Combination> combos = new ArrayList<Combination>(all.size());
+		for (Name name: all) {
+			Combination combo = new Combination(name.getName()).addName(name);
+			combo.process(namesDB);
+			combos.add(combo);
 		}
 		
 		showScene("ComboPlayer.fxml", false, true, c -> {
 			ComboPlayerController controller = (ComboPlayerController) c;
-			controller.playlist = combos;
+			controller.setPlaylist(combos);
 		});
 	}
 

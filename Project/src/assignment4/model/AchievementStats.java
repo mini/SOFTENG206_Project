@@ -74,7 +74,7 @@ public class AchievementStats {
 			save();
 		}
 
-		if (feature == SpecialFeature.CATHERINEWATSON && catherineCheck) {
+		if (feature == SpecialFeature.CATHERINEWATSON && !catherineCheck) {
 			notification();
 			special++;
 			catherineCheck = true;

@@ -2,6 +2,7 @@ package assignment4.ui;
 
 import java.util.ArrayList;
 
+import assignment4.model.AchievementStats;
 import assignment4.model.Combination;
 import assignment4.model.Name;
 import assignment4.utils.PermanentTooltip;
@@ -68,7 +69,7 @@ public class MainMenuController extends BaseController {
 		showScene("TestMicrophone.fxml", false, false);
 
 		// SPECIAL FEATURE!!!
-		stats.incrementSpecial();
+		stats.incrementSpecial(AchievementStats.SpecialFeature.MICROPHONE);
 	}
 
 	/**

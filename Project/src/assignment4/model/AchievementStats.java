@@ -28,6 +28,15 @@ public class AchievementStats {
 		load();
 	}
 
+	public enum SpecialFeature {
+		MICROPHONE, ADDNAMES, CATHERINEWATSON;
+	}
+
+	private boolean microphoneCheck = false;
+	private boolean namesCheck = false;
+	private boolean catherineCheck = false;
+
+
 	public void incrementRecords() {
 		records++;
 		save();
@@ -46,10 +55,31 @@ public class AchievementStats {
 		}
 	}
 
-	public void incrementSpecial() {
-		special++;
-		save();
-		notification();
+	public void incrementSpecial(SpecialFeature feature) {
+		disableSpecial(feature);
+	}
+
+	private void disableSpecial(SpecialFeature feature) {
+		if (feature == SpecialFeature.MICROPHONE && !microphoneCheck) {
+			notification();
+			special++;
+			microphoneCheck = true;
+			save();
+		}
+
+		if (feature == SpecialFeature.ADDNAMES && !namesCheck) {
+			notification();
+			special++;
+			namesCheck = true;
+			save();
+		}
+
+		if (feature == SpecialFeature.CATHERINEWATSON && catherineCheck) {
+			notification();
+			special++;
+			catherineCheck = true;
+			save();
+		}
 	}
 
 	public int getRecords() {

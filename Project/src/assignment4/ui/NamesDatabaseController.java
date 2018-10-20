@@ -3,6 +3,7 @@ package assignment4.ui;
 import java.io.File;
 import java.io.IOException;
 
+import assignment4.model.AchievementStats;
 import assignment4.model.Name;
 import assignment4.utils.FileUtils;
 import assignment4.utils.PermanentTooltip;
@@ -173,6 +174,9 @@ public class NamesDatabaseController extends BaseController {
 		hasRecording = false;
 		textInput.clear();
 		TEMP_RECORDING.delete();
+
+		// SPECIAL FEATURE!!!
+		stats.incrementSpecial(AchievementStats.SpecialFeature.ADDNAMES);
 
 	}
 

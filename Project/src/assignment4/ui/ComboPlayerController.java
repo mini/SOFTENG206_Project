@@ -77,12 +77,13 @@ public class ComboPlayerController extends BaseController {
 				"* Select name(s) to practise and click play. \n" +
 				"* The screen will iterate through your selection one by one, where you can go to the next name by clicking NEXT or PREVIOUS. \n" +
 				"* The names database is shown on the left list. \n" +
+				"* Change the volume of playback recordings by using the slider below. \n" +
 				"* For each name: \n" +
 				"-- PLAY to listen to the pronunciation from the database \n" +
 				"-- BAD QUALITY to mark the recording as bad quality \n" +
 				"-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
 				"-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
-				"-- COMPARE to subsequently play your attempt with the database pronunciation straight after \n" +
+				"-- COMPARE to subsequently play your attempts three times with the database pronunciation straight after each attempt \n" +
 				"* Exit this screen to go back to the main menu");
 
 		PermanentTooltip.setTooltipTimers(0, 99999, 0);

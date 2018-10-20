@@ -22,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class ComboPlayerController extends BaseController {
 	private static final Random random = new Random();
+	private boolean all;
 	private String inputString;
 
 	//@formatter:off
@@ -48,7 +49,7 @@ public class ComboPlayerController extends BaseController {
 	private Combination current;
 	private RecordTask recordTask;
 
-	boolean pauseHistory = false;
+	private boolean pauseHistory = false;
 
 
 	@Override
@@ -214,9 +215,13 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		showScene("NameSelector.fxml", false, true, c -> {
-			((SelectorController)c).setTextContent(inputString);
-		});
+		if(all) {
+			showScene("MainMenu.fxml", false, false);
+		} else {
+			showScene("NameSelector.fxml", false, true, c -> {
+				((SelectorController)c).setTextContent(inputString);
+			});
+		}
 	}
 
 	private void nextCombination() {
@@ -238,5 +243,9 @@ public class ComboPlayerController extends BaseController {
 
 	void setInputString(String inputString) {
 		this.inputString = inputString;
+	}
+	
+	void setAllNames() {
+		all = true;
 	}
 }

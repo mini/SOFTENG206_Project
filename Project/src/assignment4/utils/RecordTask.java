@@ -1,4 +1,4 @@
-package assignment4.ui;
+package assignment4.utils;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.TargetDataLine;
 
+import assignment4.ui.RewardsController;
 import javafx.concurrent.Task;
 
 /**

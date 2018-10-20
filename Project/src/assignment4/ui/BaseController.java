@@ -4,14 +4,8 @@ import java.io.IOException;
 
 import assignment4.NameSayerApp;
 import assignment4.model.NamesDB;
-import assignment4.model.PermanentTooltip;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Point2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 

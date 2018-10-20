@@ -4,27 +4,26 @@ import java.io.File;
 import java.util.Random;
 
 import assignment4.model.Combination;
-import assignment4.model.PermanentTooltip;
-import com.sun.javafx.scene.control.skin.Utils;
+import assignment4.utils.PermanentTooltip;
+import assignment4.utils.RecordTask;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
-import javafx.scene.Node;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.Tooltip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import javafx.scene.text.Font;
-
-import javax.rmi.CORBA.Util;
 
 public class ComboPlayerController extends BaseController {
 	private static final Random random = new Random();
 
 	//@formatter:off
 	@FXML private ListView<Combination> namesList;
-	
+
 	@FXML private Button playButton;
 	@FXML private Button badQualityButton;
 	@FXML private Label currentLabel;

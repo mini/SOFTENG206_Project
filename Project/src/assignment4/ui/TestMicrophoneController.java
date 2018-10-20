@@ -1,6 +1,6 @@
 package assignment4.ui;
 
-import assignment4.model.PermanentTooltip;
+import assignment4.utils.PermanentTooltip;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;

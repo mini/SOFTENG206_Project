@@ -1,12 +1,9 @@
 package assignment4.ui;
 
-import assignment4.model.PermanentTooltip;
-import javafx.event.EventHandler;
+import assignment4.utils.PermanentTooltip;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
-import javafx.scene.input.MouseEvent;
 
 /**
  * -- MainMenuController Class --

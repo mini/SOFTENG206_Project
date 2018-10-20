@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 import assignment4.model.Combination;
 import assignment4.model.Name;
-import assignment4.model.PermanentTooltip;
+import assignment4.utils.PermanentTooltip;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

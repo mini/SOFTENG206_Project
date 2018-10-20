@@ -2,6 +2,8 @@ package assignment4.model;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static assignment4.utils.AudioUtils.*;
+
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -107,16 +109,28 @@ public class Combination {
 
 		Thread thread = new Thread(() -> {
 			try {
-				processIndividual();
-
-				String concat = ("ffmpeg -y -f concat -safe 0 -i " + mergedName + ".txt -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
-				File directory = new File(NameSayerApp.ROOT_DIR + "temp/");
-				ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);
-				merge.directory(directory);
-				Process pro = merge.start();
-				if (pro.waitFor() == 0) {
+				boolean success = true;
+				
+				// Proccess individual files and add to txt file
+				BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NameSayerApp.ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
+				for (Name name : names) {
+					String fileName = name.getBestVersion().getAudioFileName();
+					
+					if(!removeSilence(fileName) || !equaliseVolume(fileName)) { // Use short circuits to prevent propagating errors
+						success = false;
+						break;
+					}
+					
+					writer.write("file './equalised/" + fileName + "'");
+					writer.newLine();
+				}
+				writer.close();
+				
+				if(success && concatFiles(mergedName + ".txt", mergedName)) {
 					path = new File(NameSayerApp.ROOT_DIR + "temp/merged/" + mergedName + ".wav").toURI().toString();
-				} 
+				} else {
+					//TODO
+				}
 			} catch (IOException | InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -124,51 +138,5 @@ public class Combination {
 		});
 		thread.setDaemon(true);
 		thread.start();
-	}
-
-	/**
-	 * Processes individual name files.
-	 * Adds the path to a text file which is used later
-	 */
-	public void processIndividual() throws IOException, InterruptedException {
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(NameSayerApp.ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
-		for (Name name : names) {
-			String fileName = name.getBestVersion().getAudioFileName();
-			removeSilence(fileName);
-			equaliseVolume(fileName);
-			writer.write("file './equalised/" + fileName + "'");
-			writer.newLine();
-		}
-		writer.close();
-	}
-
-	/**
-	 * Removes any silences from the start and end of the specified file
-	 * @param fileName
-	 */
-	public void removeSilence(String fileName) throws IOException, InterruptedException {
-		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=0:0:0:-1:1:-50dB:1 ../temp/silenced/" + fileName);
-		File directory = new File(NameSayerApp.ROOT_DIR + "names/");
-
-		// Use a process to perform the silence removing
-		ProcessBuilder remove = new ProcessBuilder("bash", "-lc", silence);
-		remove.directory(directory);
-		Process pro = remove.start();
-		pro.waitFor();
-	}
-
-	/**
-	 * Normalises the volume of the specified file so that they all have the same levels when concatenated. 
-	 * @param fileName
-	 */
-	public void equaliseVolume(String fileName) throws IOException, InterruptedException {
-		String eq = ("ffmpeg -y -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
-		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");
-
-		// Use a process to perform the volume equalising
-		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);
-		volume.directory(directory);
-		Process pro = volume.start();
-		pro.waitFor();
 	}
 }

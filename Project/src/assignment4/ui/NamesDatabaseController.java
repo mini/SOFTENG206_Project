@@ -3,7 +3,8 @@ package assignment4.ui;
 import java.io.File;
 
 import assignment4.model.Name;
-import assignment4.model.PermanentTooltip;
+import assignment4.utils.PermanentTooltip;
+import assignment4.utils.RecordTask;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

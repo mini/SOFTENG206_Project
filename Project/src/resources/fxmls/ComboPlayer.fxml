@@ -15,12 +15,16 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="447.0" prefWidth="639.0" style="-fx-background-color: #4d5d75;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="assignment4.ui.ComboPlayerController">
    <children>
-      <ListView fx:id="namesList" layoutX="20.0" layoutY="20.0" minWidth="-Infinity" prefHeight="427.0" prefWidth="290.0" stylesheets="@../stylesheets/Lists.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ListView fx:id="namesList" layoutX="20.0" layoutY="20.0" minWidth="-Infinity" prefHeight="427.0" prefWidth="290.0" stylesheets="@../stylesheets/Lists.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <placeholder>
+           	<Label text="No names available" />
+       	</placeholder>
+     </ListView>
         <VBox layoutX="361.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" prefHeight="400.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="177.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="playButton" layoutX="22.0" layoutY="82.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Play" />
+                        <Button fx:id="playButton" disable="true" layoutX="22.0" layoutY="82.0" mnemonicParsing="false" onAction="#playPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Play" />
                         <Button fx:id="badQualityButton" disable="true" layoutX="162.0" layoutY="82.0" mnemonicParsing="false" onAction="#badQualityPressed" prefHeight="35.0" prefWidth="120.0" stylesheets="@../stylesheets/SmallButton.css" text="Bad Quality" />
                         <Label fx:id="currentLabel" alignment="CENTER" layoutX="37.0" layoutY="14.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="70.0" prefWidth="237.0" text="Select and Play" textAlignment="CENTER" textFill="WHITE">
                             <font>
@@ -39,7 +43,7 @@
                 <Separator prefWidth="200.0" />
                 <AnchorPane prefHeight="191.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="recordButton" layoutX="108.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Record" />
+                        <Button fx:id="recordButton" disable="true" layoutX="108.0" layoutY="14.0" mnemonicParsing="false" onAction="#recordPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Record" />
                         <Button fx:id="listenButton" disable="true" layoutX="53.0" layoutY="57.0" mnemonicParsing="false" onAction="#listenPressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Listen" />
                         <Button fx:id="compareButton" disable="true" layoutX="166.0" layoutY="57.0" mnemonicParsing="false" onAction="#comparePressed" prefHeight="35.0" prefWidth="95.0" stylesheets="@../stylesheets/SmallButton.css" text="Compare" />
                       <Separator layoutY="104.0" prefHeight="3.0" prefWidth="310.0" />
@@ -53,8 +57,8 @@
                 </AnchorPane>
                 <AnchorPane maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="61.0" prefWidth="310.0">
                     <children>
-                        <Button fx:id="nextButton" layoutX="165.0" layoutY="20.0" mnemonicParsing="false" onAction="#nextPressed" prefHeight="41.0" prefWidth="89.0" stylesheets="@../stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                  		<Button fx:id="prevButton" layoutX="111.0" layoutY="10.0" mnemonicParsing="false" onAction="#previousPressed" stylesheets="@../stylesheets/Button.css" text="Previous" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0" />
+                        <Button fx:id="nextButton" disable="true" layoutX="165.0" layoutY="20.0" mnemonicParsing="false" onAction="#nextPressed" prefHeight="41.0" prefWidth="89.0" stylesheets="@../stylesheets/Button.css" text="Next" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  		<Button fx:id="prevButton" disable="true" layoutX="111.0" layoutY="10.0" mnemonicParsing="false" onAction="#previousPressed" stylesheets="@../stylesheets/Button.css" text="Previous" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0" />
                   <Button fx:id="backButton" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#backPressed" stylesheets="@../stylesheets/Button.css" text="Back" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                <VBox.margin>

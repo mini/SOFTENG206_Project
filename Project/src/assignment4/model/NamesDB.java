@@ -28,13 +28,11 @@ public class NamesDB {
 	public static final URI TEMP_BQ_FILE = new File(ROOT_DIR + "bad_quality.tmp.txt").toURI();
 
 	private ArrayList<Name> names;
-	private ArrayList<String> badCombos;
 
 	/**
 	 * Create a new database, will automatically load existing names
 	 */
 	public NamesDB() {
-		badCombos = new ArrayList<String>();
 		try {
 			populateDB();
 		} catch (IOException e) {
@@ -102,41 +100,13 @@ public class NamesDB {
 	}
 
 	/**
-	 * Adds or Removes the combo from the bad quality combo list. This isn't handled in Combination as they're created on
-	 * the fly and we'd need to read the whole bad_quality file again
-	 * 
-	 * @param combo
-	 */
-	public void toggleBadCombo(Combination combo) {
-		if (!badCombos.remove(combo.getMergedName())) {
-			badCombos.add(combo.getMergedName());
-		}
-	}
-
-	/**
-	 * Used to check if a combo has been reported bad quality
-	 * 
-	 * @param combo
-	 * @return if its bad quality
-	 */
-	public boolean checkBadCombo(Combination combo) {
-		return badCombos.contains(combo.getMergedName());
-	}
-
-	/**
 	 * Loads all the pre-made names, marks any bad files and load any existing user attempts of a name.
 	 */
 	public void populateDB() throws IOException {
 		// Read entries from bad_quality file
-		List<String> badQualityFiles = null;
+		List<String> badQualityFiles = new ArrayList<String>();
 		try {
 			badQualityFiles = Files.readAllLines(Paths.get(BQ_FILE), Charset.forName("UTF8"));
-			// Bad Combos
-			for (String bad : badQualityFiles) {
-				if (bad.startsWith("Combo-")) {
-					badCombos.add(bad.split("-")[1]);
-				}
-			}
 		} catch (IOException e) {
 			// BQ file does not exist
 		}
@@ -151,12 +121,10 @@ public class NamesDB {
 			String filename = file.getName();
 			boolean badQuality = false;
 
-			if (badQualityFiles != null) {
-				for (String badFilename : badQualityFiles) {
-					if (badFilename.contains(filename)) {
-						badQuality = true;
-						break;
-					}
+			for (String badFilename : badQualityFiles) {
+				if (badFilename.contains(filename)) {
+					badQuality = true;
+					break;
 				}
 			}
 

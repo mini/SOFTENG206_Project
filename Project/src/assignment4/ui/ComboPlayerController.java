@@ -2,13 +2,17 @@ package assignment4.ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import assignment4.model.Combination;
 import assignment4.utils.PermanentTooltip;
 import assignment4.utils.RecordTask;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -23,6 +27,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class ComboPlayerController extends BaseController {
 	private static final Random random = new Random();
+	private static final Combination LOADING = new Combination("Loading...");
 	private boolean all;
 	private String inputString;
 
@@ -46,16 +51,15 @@ public class ComboPlayerController extends BaseController {
 
 	//@formatter:on
 
-	private ArrayList<Combination> playlist;
+	private ObservableList<Combination> playlist;
 	private ArrayList<Combination> notPlayedInPass;
 	private Stack<Combination> history;
 	private Combination current;
 	private RecordTask recordTask;
-	
+
 	private boolean pauseHistory = false;
-
 	private int loopCount = 0;
-
+	private AtomicInteger combosProcessed = new AtomicInteger(0);
 	private MediaPlayer player;
 
 	@Override
@@ -99,7 +103,7 @@ public class ComboPlayerController extends BaseController {
 
 		// Switch to selected combos on the list
 		namesList.getSelectionModel().selectedItemProperty().addListener((observer, oldVal, newVal) -> {
-			if (oldVal != newVal) {
+			if (oldVal != newVal && newVal != LOADING) {
 				if (!pauseHistory && oldVal != null) {
 					history.push(oldVal);
 				}
@@ -107,8 +111,6 @@ public class ComboPlayerController extends BaseController {
 				nextCombination();
 			}
 		});
-
-		namesList.getItems().addAll(playlist);
 
 		// Disable next/previous buttons if only one name is selected
 		if (playlist.size() == 1) {
@@ -121,22 +123,54 @@ public class ComboPlayerController extends BaseController {
 				newPass();
 			}
 		});
-		
+
 		volSlider.valueProperty().addListener((observer, oldVal, newVal) -> {
-			if(player != null) {
+			if (player != null) {
 				player.setVolume((double) newVal / 100.0);
 			}
 		});
-
-		nextCombination();
 
 		listenButton.setDisable(true);
 		compareButton.setDisable(true);
 	}
 
-	public void setPlaylist(ArrayList<Combination> playlist) {
-		this.playlist = playlist;
-		current = playlist.get(0);
+	public void setPlaylist(List<Combination> newPlaylist) {
+		int target = newPlaylist.size();
+
+		playlist = FXCollections.<Combination>synchronizedObservableList(FXCollections.<Combination>observableArrayList());
+		for (int i = 0; i < target; i++) {
+			playlist.add(LOADING);
+		}
+		namesList.setItems(playlist);
+
+		for (int i = 0; i < target; i++) {
+			int index = i;
+			Combination combo = newPlaylist.get(i);
+			combo.process(namesDB, (success) -> {
+
+				combosProcessed.incrementAndGet();
+				if (success) {
+					Platform.runLater(() -> {
+						playlist.set(index, combo);
+
+						if (current == null) {
+							current = combo;
+							nextCombination();
+						}
+					});
+				}
+				if (combosProcessed.get() == target) {
+					Platform.runLater(() -> {
+						playlist.removeIf(c -> c == LOADING);
+						if (playlist.size() > 1) {
+							nextButton.setDisable(false);
+							prevButton.setDisable(false);
+						}
+					});
+				}
+				return null;
+			});
+		}
 	}
 
 	@FXML
@@ -147,9 +181,8 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void badQualityPressed() {
-		namesDB.toggleBadCombo(current);
-		current.toggleBadQuality();
-		badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
+		// TODO
+		// badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
 	}
 
 	@FXML
@@ -203,16 +236,16 @@ public class ComboPlayerController extends BaseController {
 			});
 		});
 	}
-	
+
 	private MediaPlayer play(String path) {
-		if(player != null) {
+		if (player != null) {
 			player.stop();
 			player.dispose();
 		}
 		player = new MediaPlayer(new Media(path));
 		player.setVolume(volSlider.getValue() / 100.0);
 		player.setAutoPlay(true);
-		
+
 		return player;
 	}
 
@@ -243,7 +276,7 @@ public class ComboPlayerController extends BaseController {
 
 		nextCombination();
 	}
-	
+
 	/**
 	 * Resets available names to choose from if shuffling
 	 */
@@ -254,24 +287,26 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		if(player != null) {
+		if (player != null) {
 			player.stop();
 			player.dispose();
 		}
-		
-		if(all) {
+
+		if (all) {
 			showScene("MainMenu.fxml", false, false);
 		} else {
 			showScene("NameSelector.fxml", false, true, c -> {
-				((SelectorController)c).setTextContent(inputString);
+				((SelectorController) c).setTextContent(inputString);
 			});
 		}
 	}
 
 	private void nextCombination() {
 		currentLabel.setText(current.getDisplayName());
-		badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
-		badQualityButton.setDisable(!current.isBadQuality()); // Require combo to be played first
+		playButton.setDisable(false);
+		recordButton.setDisable(false);
+		// badQualityButton.setText(current.isBadQuality() ? "Good Quality" : "Bad Quality");
+		// badQualityButton.setDisable(!current.isBadQuality()); // Require combo to be played first
 
 		// Check for existing recording
 		if (new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").exists()) {
@@ -288,7 +323,7 @@ public class ComboPlayerController extends BaseController {
 	void setInputString(String inputString) {
 		this.inputString = inputString;
 	}
-	
+
 	void setAllNames() {
 		all = true;
 	}

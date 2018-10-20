@@ -207,10 +207,6 @@ public class SelectorController extends BaseController {
 			return;
 		}
 
-		for (Combination combination : playlist.values()) {
-			combination.process(namesDB);
-		}
-
 		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.setPlaylist(new ArrayList<Combination>(playlist.values()));

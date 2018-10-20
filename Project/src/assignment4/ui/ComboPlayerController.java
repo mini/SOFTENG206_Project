@@ -54,6 +54,8 @@ public class ComboPlayerController extends BaseController {
 	
 	private boolean pauseHistory = false;
 
+	private int loopCount = 0;
+
 	private MediaPlayer player;
 
 	@Override
@@ -186,26 +188,20 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void comparePressed() {
+		compareLoop();
+		stats.incrementCompares();
+		loopCount = 0;
+	}
 
-		// Repeat both files 3 times to compare
+	// Repeat the user attempt as well as the database pronunciation 3 times each
+	private void compareLoop() {
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
-			play(current.getPath()).setOnEndOfMedia(()-> {
-				play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
-					play(current.getPath()).setOnEndOfMedia(()-> {
-						play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
-							play(current.getPath());
-						});
-					});
-				});
+			play(current.getPath()).setOnEndOfMedia(() -> {
+				if (++loopCount < 3) {
+					compareLoop();
+				}
 			});
 		});
-
-		stats.incrementCompares();
-
-//		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
-//			playPressed();
-//			stats.incrementCompares();
-//		});
 	}
 	
 	private MediaPlayer play(String path) {

@@ -127,6 +127,9 @@ public class ComboPlayerController extends BaseController {
 		});
 
 		nextCombination();
+
+		listenButton.setDisable(true);
+		compareButton.setDisable(true);
 	}
 
 	public void setPlaylist(ArrayList<Combination> playlist) {
@@ -171,6 +174,8 @@ public class ComboPlayerController extends BaseController {
 		} else {
 			recordTask.stop();
 			backButton.setDisable(false);
+			listenButton.setDisable(false);
+			compareButton.setDisable(false);
 		}
 	}
 
@@ -182,10 +187,25 @@ public class ComboPlayerController extends BaseController {
 	@FXML
 	private void comparePressed() {
 
+		// Repeat both files 3 times to compare
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
-			playPressed();
-			stats.incrementCompares();
-		});	
+			play(current.getPath()).setOnEndOfMedia(()-> {
+				play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
+					play(current.getPath()).setOnEndOfMedia(()-> {
+						play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
+							play(current.getPath());
+						});
+					});
+				});
+			});
+		});
+
+		stats.incrementCompares();
+
+//		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
+//			playPressed();
+//			stats.incrementCompares();
+//		});
 	}
 	
 	private MediaPlayer play(String path) {

@@ -174,7 +174,6 @@ public class NamesDatabaseController extends BaseController {
 		textInput.clear();
 		TEMP_RECORDING.delete();
 
-		RewardsController.special++;
 	}
 
 	/**

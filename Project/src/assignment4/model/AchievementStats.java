@@ -14,7 +14,7 @@ import java.util.Scanner;
 import assignment4.NameSayerApp;
 
 public class AchievementStats {
-	private static final File ACHIEVEMET_FILE = new File(NameSayerApp.ROOT_DIR + "achievements.txt");
+	private static final File ACHIEVEMENT_FILE = new File(NameSayerApp.ROOT_DIR + "achievements.txt");
 
 	private int records, compares, special;
 
@@ -55,7 +55,7 @@ public class AchievementStats {
 	public void save() {
 		String output = String.format("%d\n%d\n%d\n", records, compares, special);
 		try {
-			Files.write(Paths.get(ACHIEVEMET_FILE.toURI()), output.getBytes("UTF8"), CREATE, TRUNCATE_EXISTING);
+			Files.write(Paths.get(ACHIEVEMENT_FILE.toURI()), output.getBytes("UTF8"), CREATE, TRUNCATE_EXISTING);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -67,9 +67,9 @@ public class AchievementStats {
 	 */
 	private void load() {
 		// If there has been a previous score, apply the scores to continue progress. Otherwise, start fresh.
-		if (ACHIEVEMET_FILE.exists()) {
+		if (ACHIEVEMENT_FILE.exists()) {
 			try {
-				Scanner scanner = new Scanner(ACHIEVEMET_FILE);
+				Scanner scanner = new Scanner(ACHIEVEMENT_FILE);
 
 				records = scanner.nextInt();
 				compares = scanner.nextInt();

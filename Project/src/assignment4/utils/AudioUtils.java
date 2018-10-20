@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import assignment4.NameSayerApp;
 
 public class AudioUtils {
-	private static final boolean DEBUG_OUTPUT = true;
+	private static final boolean DEBUG_OUTPUT = false;
 
 	/**
 	 * Removes any silences from the start and end of the specified file
@@ -36,7 +36,7 @@ public class AudioUtils {
 	 * @return was successful
 	 */
 	public static boolean equaliseVolume(String fileName) throws IOException, InterruptedException {
-		String eq = ("ffmpeg -y -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
+		String eq = ("ffmpeg -y -hide_banner -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
 		File directory = new File(NameSayerApp.ROOT_DIR + "temp/silenced/");
 
 		// Use a process to perform the volume equalising
@@ -56,7 +56,7 @@ public class AudioUtils {
 	 * @return was successful
 	 */
 	public static boolean concatFiles(String inputData, String mergedName) throws IOException, InterruptedException {
-		String concat = ("ffmpeg -y -f concat -safe 0 -i " + inputData + " -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
+		String concat = ("ffmpeg -y -hide_banner -f concat -safe 0 -i " + inputData + " -c copy -acodec pcm_s16le -ar 16000 -ac 1 ./merged/" + mergedName + ".wav");
 		File directory = new File(NameSayerApp.ROOT_DIR + "temp/");
 
 		ProcessBuilder merge = new ProcessBuilder("bash", "-lc", concat);

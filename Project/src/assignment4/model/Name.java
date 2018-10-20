@@ -1,15 +1,13 @@
 package assignment4.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import assignment4.NameSayerApp;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  * -- Name Class --
@@ -21,22 +19,16 @@ import assignment4.NameSayerApp;
  */
 public class Name implements Comparable<Name> {
 	private static final Random random = new Random();
-
-	private Version lastVersion;
 	
 	private final String name;
 	private final List<Version> versions;
 	private final ObservableList<Version> attempts;
-
-	private boolean selected;
-	private SimpleStringProperty playing;
 
 	/**
 	 * @param name
 	 *            the name
 	 */
 	public Name(String name) {
-		playing = new SimpleStringProperty(" ");
 		versions = new ArrayList<Version>();
 		attempts = FXCollections.observableArrayList();
 		this.name = name;
@@ -48,29 +40,13 @@ public class Name implements Comparable<Name> {
 	 * @return the best version
 	 */
 	public Version getBestVersion() {
-		lastVersion = null;
 		for (Version version : versions) {
 			if (!version.isBadQuality()) {
-				lastVersion = version;
+				return version;
 			}
 		}
-		
-		if(lastVersion == null) {
-			lastVersion = versions.get(random.nextInt(versions.size()));
-		}
 				
-		return lastVersion;
-	}
-
-	/**
-	 * Gets the best version that was previously returned
-	 * @see #getBestVersion()
-	 */
-	public Version getLastVersion() { //TODO remove this, it was a hack to fix a bug
-		if(lastVersion == null) {
-			getBestVersion();
-		}
-		return lastVersion;
+		return versions.get(random.nextInt(versions.size()));
 	}
 	
 	/**
@@ -139,20 +115,9 @@ public class Name implements Comparable<Name> {
 		return name;
 	}
 
-	public SimpleStringProperty getPlayingProperty() {
-		return playing;
-	}
 
 	public ObservableList<Version> getAttempts() {
 		return attempts;
-	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
 	}
 
 	/*

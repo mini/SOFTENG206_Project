@@ -1,15 +1,21 @@
 package assignment4.model;
 
-import java.io.*;
+import static assignment4.NameSayerApp.ROOT_DIR;
+
+import java.io.File;
+import java.io.FilenameFilter;
+import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import assignment4.NameSayerApp;
-
-import static assignment4.NameSayerApp.ROOT_DIR;
 
 /**
  * -- NamesDB Class --
@@ -22,8 +28,6 @@ public class NamesDB {
 	public static final URI BQ_FILE = new File(ROOT_DIR + "bad_quality.txt").toURI();
 	public static final URI TEMP_BQ_FILE = new File(ROOT_DIR + "bad_quality.tmp.txt").toURI();
 
-	private Random random;
-
 	private ArrayList<Name> names;
 	private ArrayList<String> badCombos;
 
@@ -31,7 +35,6 @@ public class NamesDB {
 	 * Create a new database, will automatically load existing names
 	 */
 	public NamesDB() {
-		random = new Random();
 		badCombos = new ArrayList<String>();
 		try {
 			populateDB();
@@ -94,71 +97,6 @@ public class NamesDB {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Grabs the next selected name in the list after the given name. Will loop back to the top if none were found below.
-	 * 
-	 * @param after the current name
-	 * @return chosen name
-	 */
-	public Name getNextSelected(Name after) {
-		boolean foundAfter = false;
-
-		if (after == null) {
-			foundAfter = true;
-		}
-
-		for (int i = 0; i < names.size() * 2; i++) {
-			Name name = names.get(i % names.size());
-
-			if (foundAfter && name.isSelected()) {
-				return name;
-			}
-
-			foundAfter |= name == after;
-		}
-		return null;
-	}
-
-	/**
-	 * Randomly grabs a selected name from the set
-	 * 
-	 * @return chosen name
-	 */
-	public Name getRandSelected() {
-		ArrayList<Name> selected = new ArrayList<Name>();
-		for (Name name : names) {
-			if (name.isSelected()) {
-				selected.add(name);
-			}
-		}
-		return selected.get(random.nextInt(selected.size()));
-	}
-
-	/**
-	 * Counts how many names have been selected.
-	 * 
-	 * @return count
-	 */
-	public int getNumSelected() {
-		int count = 0;
-		for (Name name : names) {
-			if (name.isSelected()) {
-				count++;
-			}
-		}
-		return count;
-	}
-
-	/**
-	 * Sets the selected property of all names in the database
-	 * @param selected
-	 */
-	public void setSelectedAll(boolean selected) {
-		for (Name name : names) {
-			name.setSelected(selected);
-		}
 	}
 
 	/**
@@ -261,6 +199,6 @@ public class NamesDB {
 class WavFileFilter implements FilenameFilter {
 	@Override
 	public boolean accept(File dir, String name) {
-		return name.endsWith(".wav") && !name.equals("temp.wav") && !name.equals("latest.wav");
+		return name.endsWith(".wav") && !name.equals("latest.wav");
 	}
 }

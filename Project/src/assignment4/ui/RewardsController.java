@@ -1,11 +1,15 @@
 package assignment4.ui;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
+
+import java.awt.*;
 
 /**
  * RewardsController is a class that handles all the processing and storing of information in terms of the users
@@ -20,6 +24,7 @@ public class RewardsController extends BaseController {
 	@FXML private ImageView prize1, prize2, prize3;
 	@FXML private Circle record1, record2, record3, compare1, compare2, compare3, special1, special2, special3;
 	@FXML private Text compareText, recordText, specialText;
+	@FXML private Button closeButton;
 	//@formatter:on
 
 	public void init() {
@@ -145,4 +150,10 @@ public class RewardsController extends BaseController {
 	private void backPressed() {
 		showScene("MainMenu.fxml", false, false);
 	}
+
+    @FXML
+    private void closePressed() {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+    }
 }

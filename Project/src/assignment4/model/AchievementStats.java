@@ -12,6 +12,12 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import assignment4.NameSayerApp;
+import assignment4.ui.BaseController;
+import assignment4.ui.PopUpAchievementController;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class AchievementStats {
 	private static final File ACHIEVEMENT_FILE = new File(NameSayerApp.ROOT_DIR + "achievements.txt");
@@ -25,16 +31,25 @@ public class AchievementStats {
 	public void incrementRecords() {
 		records++;
 		save();
+
+		if (records == 10 || records == 25 || records == 50) {
+			notification();
+		}
 	}
 
 	public void incrementCompares() {
 		compares++;
 		save();
+
+		if (compares == 5 || compares == 15 || compares == 30) {
+			notification();
+		}
 	}
 
 	public void incrementSpecial() {
 		special++;
 		save();
+		notification();
 	}
 
 	public int getRecords() {
@@ -47,6 +62,30 @@ public class AchievementStats {
 
 	public int getSpecial() {
 		return special;
+	}
+
+	public void notification() {
+		try {
+
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/PopUpAchievement.fxml"));
+			Scene scene = new Scene(loader.load());
+
+			BaseController controller = loader.getController();
+
+				Stage nextStage = new Stage();
+				nextStage.setAlwaysOnTop(true);
+				nextStage.initModality(Modality.APPLICATION_MODAL);
+
+			// Pass data to child controllers
+			nextStage.setScene(scene);
+			nextStage.setResizable(false);
+			controller.init();
+
+			nextStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

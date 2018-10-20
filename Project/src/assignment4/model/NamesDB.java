@@ -3,7 +3,6 @@ package assignment4.model;
 import static assignment4.NameSayerApp.ROOT_DIR;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -46,6 +45,7 @@ public class NamesDB {
 
 	/**
 	 * Adds the name to the database
+	 * 
 	 * @param name
 	 */
 	public void addName(Name name) {
@@ -55,6 +55,7 @@ public class NamesDB {
 
 	/**
 	 * Removes the name form the database and deletes related files
+	 * 
 	 * @param name
 	 */
 	public void deleteName(Name name) {
@@ -87,7 +88,8 @@ public class NamesDB {
 
 	/**
 	 * Return the name object with the specified name.
-	 * @param name 
+	 * 
+	 * @param name
 	 * @return the name if found, null otherwise
 	 */
 	public Name getName(String name) {
@@ -100,9 +102,9 @@ public class NamesDB {
 	}
 
 	/**
-	 * Adds or Removes the combo from the bad quality combo list.
-	 * This isn't handled in Combination as they're created on the fly
-	 * and we'd need to read the whole bad_quality file again
+	 * Adds or Removes the combo from the bad quality combo list. This isn't handled in Combination as they're created on
+	 * the fly and we'd need to read the whole bad_quality file again
+	 * 
 	 * @param combo
 	 */
 	public void toggleBadCombo(Combination combo) {
@@ -113,6 +115,7 @@ public class NamesDB {
 
 	/**
 	 * Used to check if a combo has been reported bad quality
+	 * 
 	 * @param combo
 	 * @return if its bad quality
 	 */
@@ -135,10 +138,12 @@ public class NamesDB {
 				}
 			}
 		} catch (IOException e) {
-			//BQ file does not exist
+			// BQ file does not exist
 		}
 
-		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles(new WavFileFilter());
+		File[] files = new File(NameSayerApp.ROOT_DIR + "names/").listFiles((dir, name) -> {
+			return name.endsWith(".wav");
+		});
 		Map<String, Name> names = new HashMap<String, Name>();
 
 		for (File file : files) {
@@ -170,35 +175,8 @@ public class NamesDB {
 				existing = new Name(name).addVersion(filename, badQuality);
 				names.put(name, existing);
 			}
-
-			// Add any user attempts to name object
-			File nameDir = new File(ROOT_DIR + "attempts/" + name);
-			if (nameDir.exists() && nameDir.isDirectory()) {
-				for (File attempt : nameDir.listFiles(new WavFileFilter())) {
-					String attemptName = attempt.getName();
-					// Get datetime from parsing the file
-					attemptName = attemptName.substring(0, attemptName.length() - name.length() - 5);
-					String[] halves = attemptName.split("_");
-					halves[0] = halves[0].replace("-", "/");
-					halves[1] = halves[1].replace("-", ":");
-					existing.addAttempt(attempt, halves[0] + " " + halves[1]);
-				}
-			}
 		}
 		this.names = new ArrayList<Name>(names.values());
 		Collections.sort(this.names);
-	}
-}
-
-/**
- * -- WavFileFilter Class --
- *
- * WavFileFilter filters the wav file directory listings for iteration of file names.
- *
- */
-class WavFileFilter implements FilenameFilter {
-	@Override
-	public boolean accept(File dir, String name) {
-		return name.endsWith(".wav") && !name.equals("latest.wav");
 	}
 }

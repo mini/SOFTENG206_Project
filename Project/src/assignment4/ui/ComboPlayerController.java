@@ -118,7 +118,7 @@ public class ComboPlayerController extends BaseController {
 	@FXML
 	private void recordPressed() {
 		if (recordButton.getText().equals("Record")) {
-			File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav");
+			File file = new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + ".wav");
 			recordButton.setText("Stop");
 
 			listenButton.setDisable(true); // Disable until file has stopped being written to
@@ -140,13 +140,13 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void listenPressed() {
-		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav").toURI().toString()));
+		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + ".wav").toURI().toString()));
 		player.setAutoPlay(true);
 	}
 
 	@FXML
 	private void comparePressed() {
-		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + "/latest.wav").toURI().toString()));
+		MediaPlayer player = new MediaPlayer(new Media(new File(ROOT_DIR + "attempts/" + playlist[current].getMergedName() + ".wav").toURI().toString()));
 		player.setAutoPlay(true);
 
 		player.setOnEndOfMedia(() -> {
@@ -186,7 +186,7 @@ public class ComboPlayerController extends BaseController {
 		badQualityButton.setDisable(!currentCombo.isBadQuality()); // Require combo to be played first
 
 		// Check for existing recording
-		if (new File(ROOT_DIR + "attempts/" + currentCombo.getMergedName() + "/latest.wav").exists()) {
+		if (new File(ROOT_DIR + "attempts/" + currentCombo.getMergedName() + ".wav").exists()) {
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
 		} else {

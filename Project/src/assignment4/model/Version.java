@@ -15,8 +15,7 @@ import assignment4.NameSayerApp;
 /**
  * -- Version Class --
  *
- * Version holds data about single media files to check for bad quality files and returns corresponding good quality
- * sound recordings when necessary.
+ * Holds file information about specific versions of Names
  *
  */
 public class Version {
@@ -68,7 +67,7 @@ public class Version {
 	}
 
 	/**
-	 * Deletes the versions media file from disk
+	 * Deletes the version's media file from disk
 	 */
 	public void deleteFile() {
 		try {

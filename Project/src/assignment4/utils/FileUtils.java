@@ -9,6 +9,9 @@ import java.util.zip.ZipInputStream;
 
 import assignment4.NameSayerApp;
 
+/**
+ * Static functions concerning files 
+ */
 public class FileUtils {
 	/* Inspired by https://www.codejava.net/java-se/file-io/programmatically-extract-a-zip-file-using-java */
 	public static void unzip(String zipFilePath, String destDirectory) throws IOException {

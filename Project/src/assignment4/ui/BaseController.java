@@ -11,7 +11,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * BaseController for all other controllers to inherit that require access to the name database 
+ * BaseController for all other controllers to inherit that require access to the name database
+ * and other application wide objects
  */
 public abstract class BaseController {
 	public static final String ROOT_DIR = NameSayerApp.ROOT_DIR;
@@ -27,11 +28,11 @@ public abstract class BaseController {
 	}
 
 	/**
-	 * Called before new scene is visible.
+	 * Called before new scene is visible and after FXML fields are initialised.
 	 * Equivalent to Initializable interface.
 	 */
 	public void init() {
-		// Empty
+		// Empty by default
 	}
 
 	/**
@@ -41,6 +42,13 @@ public abstract class BaseController {
 		showScene(filename, asPopUp, resizeable, null);
 	}
 
+	/**
+	 * Handles loading the specified GUI and ensures data is passed between the controllers.
+	 * @param filename path to the fxml file
+	 * @param asPopUp if the next scene opens in a new window
+	 * @param resizeable if the next window should be resizeable
+	 * @param extra a callback to pass controller specific data
+	 */
 	protected void showScene(String filename, boolean asPopUp, boolean resizeable, ExtraSetup extra) {
 		Stage nextStage = primaryStage;
 		try {
@@ -60,6 +68,7 @@ public abstract class BaseController {
 			controller.primaryStage = nextStage;
 			controller.namesDB = namesDB;
 			controller.stats = stats;
+			
 			nextStage.setScene(scene);
 			nextStage.setResizable(resizeable);
 			if (extra != null) {

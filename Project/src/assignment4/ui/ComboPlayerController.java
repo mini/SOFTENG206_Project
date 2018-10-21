@@ -30,9 +30,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-public class ComboPlayerController extends BaseController {
+public class ComboPlayerController extends BaseController {	
 	private static final Random random = new Random();
 	private static final Combination LOADING = new Combination("Loading...");
+	private static final int COMPARE_LOOP_COUNT = 3;
+	
 	private boolean all;
 	private String inputString;
 
@@ -92,7 +94,6 @@ public class ComboPlayerController extends BaseController {
 				"* Exit this screen to go back to the main menu");
 
 		PermanentTooltip.setTooltipTimers(0, 99999, 0);
-
 		Tooltip.install(helpButton, tooltip);
 
 		namesList.setCellFactory(value -> new ListCell<Combination>() {
@@ -124,6 +125,7 @@ public class ComboPlayerController extends BaseController {
 			prevButton.setDisable(true);
 		}
 
+		// Reset names available to shuffle
 		shuffleCheckBox.selectedProperty().addListener((observer, oldVal, newVal) -> {
 			if (!oldVal && newVal) {
 				newPass();
@@ -135,23 +137,22 @@ public class ComboPlayerController extends BaseController {
 				player.setVolume((double) newVal / volSlider.getMax());
 			}
 		});
-
-		listenButton.setDisable(true);
-		compareButton.setDisable(true);
 	}
 
 	public void setPlaylist(List<Combination> newPlaylist) {
 		int target = newPlaylist.size();
 
+		// Need thread safe collection
 		playlist = FXCollections.<Combination>synchronizedObservableList(FXCollections.<Combination>observableArrayList());
-		for (int i = 0; i < target; i++) {
+		
+		for (int i = 0; i < target; i++) { //Insert placeholders
 			playlist.add(LOADING);
 		}
 		namesList.setItems(playlist);
 
 		for (int i = 0; i < target; i++) {
 			int index = i;
-			Combination combo = newPlaylist.get(i);
+			Combination combo = newPlaylist.get(i); // Not just adding to preserve order 
 			combo.process(namesDB, (success) -> {
 
 				combosProcessed.incrementAndGet();
@@ -159,13 +160,13 @@ public class ComboPlayerController extends BaseController {
 					Platform.runLater(() -> {
 						playlist.set(index, combo);
 
-						if (current == null) {
+						if (current == null) { // Auto-select the first processed combo
 							current = combo;
 							nextCombination();
 						}
 					});
 				}
-				if (combosProcessed.get() == target) {
+				if (combosProcessed.get() == target) { // Remove any failed combos
 					Platform.runLater(() -> {
 						playlist.removeIf(c -> c == LOADING);
 					});
@@ -186,7 +187,7 @@ public class ComboPlayerController extends BaseController {
 		Alert bqAlert = new Alert(AlertType.CONFIRMATION, "Choose which name is of bad qualilty. A different version will be used if found.", ButtonType.CANCEL);
 
 		LinkedHashMap<ButtonType, Name> buttons = new LinkedHashMap<ButtonType, Name>();
-		for (Name name : current.getNameSet()) {
+		for (Name name : current.getNameSet()) { // Generate named buttons and link to related Name object
 			ButtonType button = new ButtonType(name.getName());
 			buttons.put(button, name);
 			bqAlert.getButtonTypes().add(button);
@@ -198,6 +199,7 @@ public class ComboPlayerController extends BaseController {
 			return;
 		}
 
+		// Generate combo again with new versions if they exist
 		buttons.get(bqAlert.getResult()).getBestVersion().notifyBadQuality();
 		Combination c = namesList.getSelectionModel().getSelectedItem();
 		current = LOADING;
@@ -211,14 +213,14 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void recordPressed() {
-		if (recordButton.getText().equals("Record")) {
-			File file = new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav");
+		if (recordButton.getText().equals("Record")) { // Start
+			File dest = new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav");
 			recordButton.setText("Stop");
 
 			listenButton.setDisable(true); // Disable until file has stopped being written to
 			compareButton.setDisable(true);
 
-			recordTask = new RecordTask(file, () -> {
+			recordTask = new RecordTask(dest, () -> {
 				Platform.runLater(() -> {
 					stats.incrementRecords();
 					recordButton.setText("Record");
@@ -230,7 +232,7 @@ public class ComboPlayerController extends BaseController {
 			recordTask.start();
 			backButton.setDisable(true);
 
-		} else {
+		} else { // Stop
 			recordTask.stop();
 			backButton.setDisable(false);
 			listenButton.setDisable(false);
@@ -254,13 +256,18 @@ public class ComboPlayerController extends BaseController {
 	private void compareLoop() {
 		play(new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").toURI().toString()).setOnEndOfMedia(() -> {
 			play(current.getPath()).setOnEndOfMedia(() -> {
-				if (++loopCount < 3) {
+				if (++loopCount < COMPARE_LOOP_COUNT) {
 					compareLoop();
 				}
 			});
 		});
 	}
 
+	/**
+	 * Stops any currently playing clips and plays the specified one.
+	 * @param path to audio file
+	 * @return the MediaPlayer if any extra settings should be applied
+	 */
 	private MediaPlayer play(String path) {
 		if (player != null) {
 			player.stop();
@@ -275,25 +282,25 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void previousPressed() {
-		if (history.empty()) {
+		if (history.empty()) { // Go up the list if no history
 			int index = playlist.indexOf(current) - 1 + playlist.size();
-			current = playlist.get(index % playlist.size());
+			current = playlist.get(index % playlist.size()); // Wraps to bottom
 		} else {
 			current = history.pop();
 		}
-		pauseHistory = true;
-		nextCombination(); // As this will trigger select event and we dont want to add prev to history
+		pauseHistory = true; // This will trigger a select event and we don't want to add prev name to history
+		nextCombination(); 
 		pauseHistory = false;
 	}
 
 	@FXML
 	private void nextPressed() {
-		if (shuffleCheckBox.isSelected()) {
+		if (shuffleCheckBox.isSelected()) { // Ensure all are played before playing same one again
 			current = notPlayedInPass.remove(random.nextInt(notPlayedInPass.size()));
 			if (notPlayedInPass.isEmpty()) {
 				newPass();
 			}
-		} else {
+		} else { // Move down the list
 			int index = playlist.indexOf(current) + 1;
 			current = playlist.get(index % playlist.size());
 		}
@@ -311,13 +318,13 @@ public class ComboPlayerController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-		if (player != null) {
+		if (player != null) { // Stop any playing clips
 			player.stop();
 			player.dispose();
 		}
 
 		if (all) {
-			showScene("MainMenu.fxml", false, false);
+			showScene("MainMenu.fxml", false, false); // Return to where we came from
 		} else {
 			showScene("NameSelector.fxml", false, true, c -> {
 				((SelectorController) c).setTextContent(inputString);
@@ -328,7 +335,7 @@ public class ComboPlayerController extends BaseController {
 	private void nextCombination() {
 		currentLabel.setText(current.getDisplayName());
 		if (current == LOADING) {
-			playButton.setDisable(true);
+			playButton.setDisable(true); // Don't want user performing actions on dummy Combo
 			recordButton.setDisable(true);
 			nextButton.setDisable(true);
 			prevButton.setDisable(true);

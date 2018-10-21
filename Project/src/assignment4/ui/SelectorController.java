@@ -113,12 +113,12 @@ public class SelectorController extends BaseController {
 
 	@FXML
 	private void backPressed() {
-
+		// Shows a confirmation before returning to main menu if the user
+		// has any unsaved data
 		if (!edited || textInput.getText().trim().isEmpty()) {
 			showScene("MainMenu.fxml", false, false);
 		} else {
-			// Create a confirmation box to pop up to make sure that the user would like to return to the main
-			// menu to prevent lost saves
+			
 			Alert confirm = new Alert(AlertType.CONFIRMATION);
 			confirm.setTitle("Back to Main Menu");
 			confirm.setHeaderText("Are you sure you would like to go back to the Main Menu?");

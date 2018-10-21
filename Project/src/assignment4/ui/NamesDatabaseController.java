@@ -115,18 +115,18 @@ public class NamesDatabaseController extends BaseController {
 	@FXML
 	private void recordPressed() {
 
-		String checkName = "^[a-zA-Z0-9]*$";
+		String checkName = "^[a-zA-Z0-9]*$"; // Alphanumeric
 
 		if (textInput.getText().matches(checkName)) {
 
 			if (recordButton.getText().equals("Record")) {
 				recordButton.setText("Stop");
-
-				listenButton.setDisable(true);
+				
+				listenButton.setDisable(true); // Disable until finished
 				saveButton.setDisable(true);
 
 				recordTask = new RecordTask(TEMP_RECORDING, () -> {
-					Platform.runLater(() -> { // OnStop
+					Platform.runLater(() -> {
 						recordButton.setText("Record");
 						listenButton.setDisable(false);
 						hasRecording = true;

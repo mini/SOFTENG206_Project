@@ -88,10 +88,10 @@ public class ComboPlayerController extends BaseController {
 				"* For each name: \n" +
 				"-- PLAY to listen to the pronunciation from the database \n" +
 				"-- BAD QUALITY to mark the recording as bad quality \n" +
-				"-- RECORD to record your own pronunciation (up to 5 seconds) \n" +
-				"-- LISTEN to select and listen to an audio recording of your selected attempt \n" +
+				"-- RECORD to record your own pronunciation, and subsequently STOP to stop recording once you have finished \n" +
+				"-- LISTEN to hear your recorded attempt of the name \n" +
 				"-- COMPARE to subsequently play your attempts three times with the database pronunciation straight after each attempt \n" +
-				"* Exit this screen to go back to the main menu");
+				"* Press BACK to go back to the Selection Menu. ");
 
 		PermanentTooltip.setTooltipTimers(0, 99999, 0);
 		Tooltip.install(helpButton, tooltip);

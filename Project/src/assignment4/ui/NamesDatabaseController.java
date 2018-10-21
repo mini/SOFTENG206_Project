@@ -50,7 +50,7 @@ public class NamesDatabaseController extends BaseController {
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText("Names Database:  \n\n" +
 				"* Select a name from the database on the left to LISTEN or DELETE. \n" +
-				"* NOTE: To get deleted defualt names back, delete the name folder in the app's directory\n\n" +
+				"* NOTE: To get deleted default names back, press RESTORE DEFAULTS and the original database will be restored, in addition to your added names.\n\n" +
 				"* To add a new name to the database: \n" +
 				"\t* Type the name being added and click RECORD to start the recording.\n" +
 				"\t* Click STOP to end the recording.\n" +

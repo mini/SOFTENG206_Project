@@ -24,10 +24,10 @@ public class MainMenuController extends BaseController {
 	public void init() {
 		Tooltip tooltip = new Tooltip();
 		tooltip.setText("Welcome to NameSayer. In this main menu, you can click: \n\n" +
-				"* START to begin choosing your playlist to start learning your chosen names. \n" +
-				"* PRACTISE to practise any name on the database without needing to select a list.\n" +
+				"* PRACTICE CUSTOM to begin choosing your playlist to start learning your chosen customisable names. \n" +
+				"* PRACTISE ALL NAMES to practise any name on the database without needing to select a list.\n" +
 				"* TEST MICROPHONE to measure your microphone levels.\n" +
-				"* The Trophy icon to show your current achievements.");
+				"* The trophy icon to show your current achievements.");
 		PermanentTooltip.setTooltipTimers(0, 99999, 0);
 
 		Tooltip.install(helpButton, tooltip);

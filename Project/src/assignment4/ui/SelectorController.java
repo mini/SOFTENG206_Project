@@ -48,6 +48,8 @@ public class SelectorController extends BaseController {
 	@FXML private Button helpButton;
 	//@formatter:on
 
+	private boolean edited = false;
+	
 	@Override
 	public void init() {
 		Tooltip tooltip = new Tooltip();
@@ -60,7 +62,7 @@ public class SelectorController extends BaseController {
 				"* You can load a txt file or save your current input into a txt file with LOAD and SAVE respectively. \n" +
 				"* Click the BACK button to go back to the main screen.");
 		helpButton.setTooltip(tooltip);
-		PermanentTooltip.setTooltipTimers(0, 99999,0);
+		PermanentTooltip.setTooltipTimers(0, 99999, 0);
 
 		Tooltip.install(helpButton, tooltip);
 		// Name filtering on listview
@@ -75,7 +77,7 @@ public class SelectorController extends BaseController {
 				textInput.appendText(selected.getName() + " ");
 			}
 		});
-		
+
 		namesList.setOnKeyPressed(event -> {
 			if (event.getCode() == KeyCode.ENTER) {
 				textInput.appendText("\n");
@@ -100,29 +102,33 @@ public class SelectorController extends BaseController {
 			boolean hasNoText = newVal.trim().isEmpty();
 			playButton.setDisable(hasNoText);
 			saveButton.setDisable(hasNoText);
+			edited = true;
 		});
 
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
-				new FileChooser.ExtensionFilter("All", "*.*")
-		);
+				new FileChooser.ExtensionFilter("All", "*.*"));
 	}
 
 	@FXML
 	private void backPressed() {
 
-		// Create a confirmation box to pop up to make sure that the user would like to return to the main
-		// menu to prevent lost saves
-		Alert confirm = new Alert(AlertType.CONFIRMATION);
-		confirm.setTitle("Back to Main Menu");
-		confirm.setHeaderText("Are you sure you would like to go back to the Main Menu?");
-		confirm.setContentText("Any unsaved playlists and its contents will be lost.");
-		confirm.showAndWait().filter(ButtonType.OK::equals).ifPresent(b -> {
+		if (!edited || textInput.getText().trim().isEmpty()) {
 			showScene("MainMenu.fxml", false, false);
-		});
+		} else {
+			// Create a confirmation box to pop up to make sure that the user would like to return to the main
+			// menu to prevent lost saves
+			Alert confirm = new Alert(AlertType.CONFIRMATION);
+			confirm.setTitle("Back to Main Menu");
+			confirm.setHeaderText("Are you sure you would like to go back to the Main Menu?");
+			confirm.setContentText("Any unsaved playlists and its contents will be lost.");
+			confirm.showAndWait();
 
-
+			if (confirm.getResult() == ButtonType.OK) {
+				showScene("MainMenu.fxml", false, false);
+			}
+		}
 	}
 
 	/**
@@ -137,6 +143,7 @@ public class SelectorController extends BaseController {
 				textInput.setText(scanner.next().trim() + " ");
 				lastSelected = file;
 				fileChooser.setInitialDirectory(lastSelected.getParentFile());
+				edited = false;
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			}
@@ -160,6 +167,7 @@ public class SelectorController extends BaseController {
 			try {
 				Files.write(file.toPath(), textInput.getText().getBytes(), StandardOpenOption.CREATE);
 				lastSelected = file;
+				edited = false;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -194,7 +202,7 @@ public class SelectorController extends BaseController {
 				combination.addName(existing);
 
 				// Special unique name of lecturer for last achievement. User must practice this particular name in order
-                // to obtain the achievement.
+				// to obtain the achievement.
 				if (combination.getDisplayName().equals("Catherine Watson")) {
 					// Show notification and obtain trophy for special feature
 					stats.incrementSpecial(AchievementStats.SpecialFeature.CATHERINEWATSON);
@@ -208,7 +216,7 @@ public class SelectorController extends BaseController {
 			boolean plural = invalid.size() != 1;
 			String errorText = String.format("The name%s %s do%s not exist.", plural ? "s" : "", invalid, plural ? "" : "es");
 			errorText = errorText.replaceAll("\\[|\\]", "\"").replaceAll(", ", "\", \"");
-			
+
 			Alert alert = new Alert(AlertType.WARNING, errorText, ButtonType.OK);
 			alert.initOwner(primaryStage);
 			alert.showAndWait();
@@ -221,9 +229,9 @@ public class SelectorController extends BaseController {
 			controller.setInputString(textInput.getText());
 		});
 	}
-	
+
 	void setTextContent(String content) {
-		textInput.setText(content);	// Doesn't trigger listener
+		textInput.setText(content); // Doesn't trigger listener
 		playButton.setDisable(false);
 		saveButton.setDisable(false);
 	}

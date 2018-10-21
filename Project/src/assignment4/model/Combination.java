@@ -24,12 +24,16 @@ import javafx.util.Callback;
  */
 public class Combination {
 	private static ThreadPoolExecutor executor;
-	
+
 	static {
 		int threads = Math.max(2, Runtime.getRuntime().availableProcessors() - 2);
-		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threads);
+		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threads, runnable -> {
+			Thread thread = new Thread(runnable);
+			thread.setDaemon(true);
+			return thread;
+		});
 	}
-	
+
 	private List<Name> names;
 	private String displayName;
 	private String mergedName;
@@ -70,7 +74,7 @@ public class Combination {
 	/**
 	 * To be called when all desired names have been added. Generates the final audio file.
 	 */
-	public void process(NamesDB db, Callback<Boolean, Void> callback) {	
+	public void process(NamesDB db, Callback<Boolean, Void> callback) {
 		executor.submit(() -> {
 			boolean success = true;
 

@@ -1,7 +1,7 @@
 package assignment4.model;
 
-import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.nio.file.StandardOpenOption.CREATE;
+import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +13,6 @@ import java.util.Scanner;
 
 import assignment4.NameSayerApp;
 import assignment4.ui.BaseController;
-import assignment4.ui.PopUpAchievementController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
@@ -35,9 +34,6 @@ public class AchievementStats {
 	private int microphoneCheck = 0;
 	private int namesCheck = 0;
 	private int catherineCheck = 0;
-
-
-
 
 	public void incrementRecords() {
 		records++;
@@ -104,9 +100,9 @@ public class AchievementStats {
 
 			BaseController controller = loader.getController();
 
-				Stage nextStage = new Stage();
-				nextStage.setAlwaysOnTop(true);
-				nextStage.initModality(Modality.APPLICATION_MODAL);
+			Stage nextStage = new Stage();
+			nextStage.setAlwaysOnTop(true);
+			nextStage.initModality(Modality.APPLICATION_MODAL);
 
 			// Pass data to child controllers
 			nextStage.setScene(scene);
@@ -148,7 +144,6 @@ public class AchievementStats {
 				microphoneCheck = scanner.nextInt();
 				namesCheck = scanner.nextInt();
 				catherineCheck = scanner.nextInt();
-
 
 				scanner.close();
 			} catch (NoSuchElementException e) {

@@ -9,8 +9,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.awt.*;
-
 /**
  * RewardsController is a class that handles all the processing and storing of information in terms of the users
  * progress through tracking the number of recordings and comparisons of names. Special features have been randomly

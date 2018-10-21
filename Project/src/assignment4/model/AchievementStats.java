@@ -32,9 +32,11 @@ public class AchievementStats {
 		MICROPHONE, ADDNAMES, CATHERINEWATSON;
 	}
 
-	private boolean microphoneCheck = false;
-	private boolean namesCheck = false;
-	private boolean catherineCheck = false;
+	private int microphoneCheck = 0;
+	private int namesCheck = 0;
+	private int catherineCheck = 0;
+
+
 
 
 	public void incrementRecords() {
@@ -60,24 +62,24 @@ public class AchievementStats {
 	}
 
 	private void disableSpecial(SpecialFeature feature) {
-		if (feature == SpecialFeature.MICROPHONE && !microphoneCheck) {
+		if (feature == SpecialFeature.MICROPHONE && microphoneCheck == 0) {
 			notification();
 			special++;
-			microphoneCheck = true;
+			microphoneCheck = 1;
 			save();
 		}
 
-		if (feature == SpecialFeature.ADDNAMES && !namesCheck) {
+		if (feature == SpecialFeature.ADDNAMES && namesCheck == 0) {
 			notification();
 			special++;
-			namesCheck = true;
+			namesCheck = 1;
 			save();
 		}
 
-		if (feature == SpecialFeature.CATHERINEWATSON && !catherineCheck) {
+		if (feature == SpecialFeature.CATHERINEWATSON && catherineCheck == 0) {
 			notification();
 			special++;
-			catherineCheck = true;
+			catherineCheck = 1;
 			save();
 		}
 	}
@@ -122,7 +124,7 @@ public class AchievementStats {
 	 * Writes current progress to file
 	 */
 	public void save() {
-		String output = String.format("%d\n%d\n%d\n", records, compares, special);
+		String output = String.format("%d\n%d\n%d\n%d\n%d\n%d", records, compares, special, microphoneCheck, namesCheck, catherineCheck);
 		try {
 			Files.write(Paths.get(ACHIEVEMENT_FILE.toURI()), output.getBytes("UTF8"), CREATE, TRUNCATE_EXISTING);
 		} catch (IOException e) {
@@ -143,6 +145,10 @@ public class AchievementStats {
 				records = scanner.nextInt();
 				compares = scanner.nextInt();
 				special = scanner.nextInt();
+				microphoneCheck = scanner.nextInt();
+				namesCheck = scanner.nextInt();
+				catherineCheck = scanner.nextInt();
+
 
 				scanner.close();
 			} catch (NoSuchElementException e) {

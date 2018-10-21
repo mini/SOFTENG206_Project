@@ -34,7 +34,7 @@ public class MainMenuController extends BaseController {
 	}
 
 	@FXML
-	private void startPressed() {
+	private void customPressed() {
 		showScene("NameSelector.fxml", false, true);
 	}
 
@@ -42,7 +42,7 @@ public class MainMenuController extends BaseController {
 	 * Switches scene to the Player GUI
 	 */
 	@FXML
-	private void practisePressed() {
+	private void allPressed() {
 		ArrayList<Name> all = namesDB.getAllNames(); // Need to pass all names as combos
 		ArrayList<Combination> combos = new ArrayList<Combination>(all.size());
 		for (Name name : all) {

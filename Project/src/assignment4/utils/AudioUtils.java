@@ -21,7 +21,7 @@ public class AudioUtils {
 			return true;
 		}
 
-		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=0:0:0:-1:1:-50dB:1 ../temp/silenced/" + fileName);
+		String silence = ("ffmpeg -y -hide_banner -i " + fileName + " -af silenceremove=1:0:-35dB:-1:1:-35dB:1 ../temp/silenced/" + fileName);
 		File directory = new File(ROOT_DIR + "names/");
 
 		// Use a process to perform the silence removing

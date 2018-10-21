@@ -18,22 +18,22 @@ import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ * Data class to hold achivement progress 
+ */
 public class AchievementStats {
 	private static final File ACHIEVEMENT_FILE = new File(NameSayerApp.ROOT_DIR + "achievements.txt");
-
-	private int records, compares, special;
-
-	public AchievementStats() {
-		load();
-	}
 
 	public enum SpecialFeature {
 		MICROPHONE, ADDNAMES, CATHERINEWATSON;
 	}
 
-	private int microphoneCheck = 0;
-	private int namesCheck = 0;
-	private int catherineCheck = 0;
+	private int records, compares, special;
+	private int microphoneCheck, namesCheck, catherineCheck;
+	
+	public AchievementStats() {
+		load();
+	}
 
 	public void incrementRecords() {
 		records++;
@@ -94,22 +94,21 @@ public class AchievementStats {
 
 	public void notification() {
 		try {
-
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/resources/fxmls/PopUpAchievement.fxml"));
 			Scene scene = new Scene(loader.load());
 
 			BaseController controller = loader.getController();
 
-			Stage nextStage = new Stage();
-			nextStage.setAlwaysOnTop(true);
-			nextStage.initModality(Modality.APPLICATION_MODAL);
+			Stage stage = new Stage();
+			stage.setAlwaysOnTop(true);
+			stage.initModality(Modality.APPLICATION_MODAL);
 
 			// Pass data to child controllers
-			nextStage.setScene(scene);
-			nextStage.setResizable(false);
+			stage.setScene(scene);
+			stage.setResizable(false);
 			controller.init();
 
-			nextStage.showAndWait();
+			stage.showAndWait();
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -117,7 +116,7 @@ public class AchievementStats {
 	}
 
 	/**
-	 * Writes current progress to file
+	 * Writes current progress to file, each progress value is on its own line.
 	 */
 	public void save() {
 		String output = String.format("%d\n%d\n%d\n%d\n%d\n%d", records, compares, special, microphoneCheck, namesCheck, catherineCheck);
@@ -146,11 +145,7 @@ public class AchievementStats {
 				catherineCheck = scanner.nextInt();
 
 				scanner.close();
-			} catch (NoSuchElementException e) {
-				records = 0;
-				compares = 0;
-				special = 0;
-			} catch (FileNotFoundException e) {
+			} catch (NoSuchElementException | FileNotFoundException e) {
 				// Checked, should never occur
 			}
 		}

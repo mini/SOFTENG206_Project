@@ -13,11 +13,7 @@ import javafx.scene.control.Tooltip;
 /**
  * -- MainMenuController Class --
  *
- * MainMenuController acts as the controller for the MainMenu GUI, where events are listened and handled appropriately
- * with this class. It ensures that the two buttons link to its corresponding event handler methods startPressed() and
- * testMic(). Due to being a main menu, the function of the screen is to direct the user action of each button to switch
- * to its appropriate scene.
- *
+ * Used to switch scenes
  */
 public class MainMenuController extends BaseController {
 
@@ -47,7 +43,7 @@ public class MainMenuController extends BaseController {
 	 */
 	@FXML
 	private void practisePressed() {
-		ArrayList<Name> all = namesDB.getAllNames();
+		ArrayList<Name> all = namesDB.getAllNames(); // Need to pass all names as combos
 		ArrayList<Combination> combos = new ArrayList<Combination>(all.size());
 		for (Name name : all) {
 			Combination combo = new Combination(name.getName()).addName(name);

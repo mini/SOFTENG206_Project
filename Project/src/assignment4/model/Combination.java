@@ -67,6 +67,9 @@ public class Combination {
 		return mergedName;
 	}
 
+	/**
+	 * @return path the the final audio file
+	 */
 	public String getPath() {
 		return finalFile.toURI().toString();
 	}
@@ -91,6 +94,7 @@ public class Combination {
 			if (success) {
 				if (names.size() > 1) {
 					try {
+						// Generate input text file for batch ffmpeg call
 						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
 						for (Name name : names) {
 							fileName = name.getBestVersion().getAudioFileName();
@@ -104,6 +108,7 @@ public class Combination {
 					}
 					finalFile = new File(ROOT_DIR + "temp/merged/" + mergedName + ".wav");
 				} else {
+					// Don't need to concatenate a single name, so just use the normalised file
 					finalFile = new File(ROOT_DIR + "temp/equalised/" + fileName);
 				}
 			}
@@ -116,6 +121,9 @@ public class Combination {
 		return displayName;
 	}
 
+	/**
+	 * @return a set of all the unique names in this combo
+	 */
 	public HashSet<Name> getNameSet() {
 		return new HashSet<Name>(names);
 	}

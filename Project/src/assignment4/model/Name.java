@@ -10,9 +10,8 @@ import assignment4.NameSayerApp;
 /**
  * -- Name Class --
  *
- * Name handles all corresponding methods to deal with the names being practiced, and versions that are being created
- * due to several attempts of the same name. This allows encapsulated access to these methods throughout the entire
- * application.
+ * Name handles all corresponding methods to deal with the names in the 
+ * database and their corresponding versions.
  *
  */
 public class Name implements Comparable<Name> {
@@ -48,7 +47,7 @@ public class Name implements Comparable<Name> {
 	 * Adds a version to this name.
 	 * 
 	 * @param audioFileName source media file
-	 * @param badQuality    if version was already marked bad
+	 * @param badQuality if version was already marked bad
 	 * @return this for chaining
 	 */
 	public Name addVersion(String audioFileName, boolean badQuality) {
@@ -59,7 +58,7 @@ public class Name implements Comparable<Name> {
 	/**
 	 * Deletes all files related to the name.
 	 */
-	public void deleteAll() {
+	void deleteAll() {
 		new File(NameSayerApp.ROOT_DIR + "attempts/" + name).delete();
 		for (Version version : versions) {
 			version.deleteFile();

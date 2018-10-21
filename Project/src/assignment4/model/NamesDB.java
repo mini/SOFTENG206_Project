@@ -19,13 +19,11 @@ import assignment4.NameSayerApp;
 /**
  * -- NamesDB Class --
  *
- * NamesDB is a class to handle loading and fetching name objects that are populated within the lists of the NameSayer
- * application.
+ * A class to hold all names that the user can use. Can load existing names from file system.
  *
  */
 public class NamesDB {
 	public static final URI BQ_FILE = new File(ROOT_DIR + "bad_quality.txt").toURI();
-	public static final URI TEMP_BQ_FILE = new File(ROOT_DIR + "bad_quality.tmp.txt").toURI();
 
 	private ArrayList<Name> names;
 
@@ -36,8 +34,8 @@ public class NamesDB {
 		try {
 			populateDB();
 		} catch (IOException e) {
+			System.out.println("Could not load db");
 			e.printStackTrace();
-			System.exit(1);
 		}
 	}
 

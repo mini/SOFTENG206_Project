@@ -7,6 +7,9 @@ import java.io.InputStreamReader;
 
 import static assignment4.NameSayerApp.ROOT_DIR;
 
+/**
+ * Static functions that handle audio processing. 
+ */
 public class AudioUtils {
 	private static final boolean DEBUG_OUTPUT = false;
 
@@ -51,28 +54,6 @@ public class AudioUtils {
 
 		String eq = ("ffmpeg -y -hide_banner -i " + src + " -af dynaudnorm " + dest);
 		File directory = new File(ROOT_DIR + "temp/");
-
-		// Use a process to perform the volume equalising
-		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);
-		volume.redirectErrorStream(true);
-		volume.directory(directory);
-		try {
-			Process pro = volume.start();
-			output(pro);
-			return pro.waitFor() == 0;
-		} catch (IOException | InterruptedException e) {
-			return false;
-		}
-	}
-
-	
-	public static boolean equasliseVolume(String fileName) {
-		if (new File(ROOT_DIR + "temp/equalised/" + fileName).exists()) {
-			return true;
-		}
-
-		String eq = ("ffmpeg -y -hide_banner -i " + fileName + " -af dynaudnorm ../equalised/" + fileName);
-		File directory = new File(ROOT_DIR + "temp/silenced/");
 
 		// Use a process to perform the volume equalising
 		ProcessBuilder volume = new ProcessBuilder("bash", "-lc", eq);

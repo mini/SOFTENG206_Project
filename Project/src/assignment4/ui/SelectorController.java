@@ -232,6 +232,7 @@ public class SelectorController extends BaseController {
 
 	void setTextContent(String content) {
 		textInput.setText(content); // Doesn't trigger listener
+		edited = true;
 		playButton.setDisable(false);
 		saveButton.setDisable(false);
 	}

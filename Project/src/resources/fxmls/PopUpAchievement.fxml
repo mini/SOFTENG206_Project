@@ -32,7 +32,7 @@
                     </image>
                 </ImageView>
                 <Separator layoutX="87.0" layoutY="43.0" prefHeight="4.0" prefWidth="191.0" />
-                <Text fx:id="recordText" fill="#ffffffcf" layoutX="67.0" layoutY="60.0" strokeType="INSIDE" strokeWidth="0.0" text="You have unlocked an achievement!" textAlignment="CENTER" wrappingWidth="232.0" />
+                <Text fx:id="recordText" fill="#ffffffcf" layoutX="31.0" layoutY="60.0" strokeType="INSIDE" strokeWidth="0.0" text="You have unlocked an achievement!" textAlignment="CENTER" wrappingWidth="302.0" />
             </children>
         </Pane>
     </children>

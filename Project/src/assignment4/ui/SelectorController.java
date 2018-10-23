@@ -8,7 +8,7 @@ import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import assignment4.model.AchievementStats;
@@ -184,7 +184,7 @@ public class SelectorController extends BaseController {
 	 */
 	@FXML
 	private void playPressed() {
-		HashMap<String, Combination> playlist = new HashMap<String, Combination>();
+		LinkedHashMap<String, Combination> playlist = new LinkedHashMap<String, Combination>();
 		ArrayList<String> invalid = new ArrayList<String>();
 
 		// Parsing
@@ -208,7 +208,7 @@ public class SelectorController extends BaseController {
 
 				// Special unique name of lecturer for last achievement. User must practice this particular name in order
 				// to obtain the achievement.
-				if (combination.getDisplayName().equals("Catherine Watson")) {
+				if (combination.getMergedName().equals("catherinewatson")) {
 					// Show notification and obtain trophy for special feature
 					stats.incrementSpecial(AchievementStats.SpecialFeature.CATHERINEWATSON);
 				}

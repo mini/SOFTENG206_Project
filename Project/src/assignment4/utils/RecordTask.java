@@ -18,6 +18,10 @@ import javafx.concurrent.Task;
 
 /**
  * Task for capturing microphone and saving it to a wav file
+ * 
+ * Inspired by www.codejava.net/coding/capture-and-record-sound-into-wav-file-with-java-sound-api
+ * 
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class RecordTask extends Task<Void> {
 	// 44100Hz 16bit 1 channel signed le
@@ -34,7 +38,7 @@ public class RecordTask extends Task<Void> {
 
 	/**
 	 * @param dest where to save recording
-	 * @param onEnd optional callback when recording stoped
+	 * @param onEnd optional callback when recording stopped
 	 */
 	public RecordTask(File dest, OnEnd onEnd) {
 		this.dest = dest.getPath();

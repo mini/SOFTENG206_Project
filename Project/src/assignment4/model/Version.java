@@ -17,6 +17,7 @@ import assignment4.NameSayerApp;
  *
  * Holds file information about specific versions of Names
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class Version {
 	private String audioFileName;

@@ -13,6 +13,7 @@ import assignment4.NameSayerApp;
  * Name handles all corresponding methods to deal with the names in the 
  * database and their corresponding versions.
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class Name implements Comparable<Name> {
 	private static final Random random = new Random();

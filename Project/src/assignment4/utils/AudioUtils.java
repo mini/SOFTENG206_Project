@@ -8,7 +8,9 @@ import java.io.InputStreamReader;
 import static assignment4.NameSayerApp.ROOT_DIR;
 
 /**
- * Static functions that handle audio processing. 
+ * Helper functions that handle audio processing. 
+ * 
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class AudioUtils {
 	private static final boolean DEBUG_OUTPUT = false;

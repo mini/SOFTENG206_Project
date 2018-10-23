@@ -17,6 +17,7 @@ import javafx.scene.shape.Line;
  * The class further handles the byte and RMS information from the audio input to focus on SOUND VISUALISATION
  * as the main interface for the test microphone GUI.
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class TestMicrophoneController extends BaseController {
 

@@ -28,7 +28,8 @@ import javafx.stage.Stage;
  * the names. Furthermore, files in the database can be marked as 'Bad Quality' to allow a different version to play.
  * Other than the effective tool of practicing names, a microphone testing tool is also featured for convenient access
  * for the user.
- *
+ * 
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class NameSayerApp extends Application {
 	public static final String ROOT_DIR = System.getProperty("user.home") + File.separator + "NameSayer/";

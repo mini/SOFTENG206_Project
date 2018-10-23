@@ -19,7 +19,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Data class to hold achivement progress 
+ * Data class to hold achievement progress.
+ *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class AchievementStats {
 	private static final File ACHIEVEMENT_FILE = new File(NameSayerApp.ROOT_DIR + "achievements.txt");

@@ -14,6 +14,8 @@ import javafx.scene.control.Tooltip;
  * -- MainMenuController Class --
  *
  * Used to switch scenes
+ * 
+ *  @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class MainMenuController extends BaseController {
 

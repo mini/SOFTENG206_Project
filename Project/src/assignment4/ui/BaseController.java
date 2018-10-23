@@ -13,6 +13,8 @@ import javafx.stage.Stage;
 /**
  * BaseController for all other controllers to inherit that require access to the name database
  * and other application wide objects
+ * 
+ *  @author Dhruv Phadnis, Vanessa Ciputra
  */
 public abstract class BaseController {
 	public static final String ROOT_DIR = NameSayerApp.ROOT_DIR;

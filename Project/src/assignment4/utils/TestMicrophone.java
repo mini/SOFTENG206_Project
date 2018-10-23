@@ -13,12 +13,13 @@ import assignment4.ui.TestMicrophoneController;
  * for further output. The class also handles the calculations of RMS values to be passed into the controller
  * for visualisation.
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class TestMicrophone {
 
 	private volatile boolean activate = true;
-	Thread audioThread;
-	TestMicrophoneController controller;
+	private Thread audioThread;
+	private TestMicrophoneController controller;
 
 	/**
 	 * When the TestMicrophone constructor is called, audio input is assigned and sampled at a fixed rate for further

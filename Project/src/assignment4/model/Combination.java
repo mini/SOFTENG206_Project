@@ -11,7 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -27,6 +27,7 @@ public class Combination {
 	private static ThreadPoolExecutor executor;
 
 	static {
+		//Using a thread pool so we don't need to worry about using ALL system resources and scheduling subsequent tasks
 		int threads = Math.max(2, Runtime.getRuntime().availableProcessors() - 2);
 		executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(threads, runnable -> {
 			Thread thread = new Thread(runnable);
@@ -45,9 +46,8 @@ public class Combination {
 	 */
 	public Combination(String displayName) {
 		this.names = new ArrayList<Name>();
-		final String mergedName = displayName.replaceAll("\\s|-", "").toLowerCase();
-		this.mergedName = mergedName;
 		this.displayName = displayName;
+		this.mergedName = displayName.replaceAll("\\s|-", "").toLowerCase();
 	}
 
 	/**
@@ -76,9 +76,10 @@ public class Combination {
 	}
 
 	/**
-	 * To be called when all desired names have been added. Generates the final audio file.
+	 * Generates this combo's final audio file.
+	 * @return callback callback for when finished, passed success bool
 	 */
-	public void process(NamesDB db, Callback<Boolean, Void> callback) {
+	public void process(Callback<Boolean, Void> callback) {
 		executor.submit(() -> {
 			boolean success = true;
 
@@ -125,7 +126,7 @@ public class Combination {
 	/**
 	 * @return a set of all the unique names in this combo
 	 */
-	public HashSet<Name> getNameSet() {
-		return new HashSet<Name>(names);
+	public LinkedHashSet<Name> getNameSet() {
+		return new LinkedHashSet<Name>(names);
 	}
 }

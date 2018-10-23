@@ -158,7 +158,7 @@ public class ComboPlayerController extends BaseController {
 		for (int i = 0; i < target; i++) {
 			int index = i;
 			Combination combo = newPlaylist.get(i); // Not just adding to preserve order 
-			combo.process(namesDB, (success) -> {
+			combo.process(success -> {
 
 				combosProcessed.incrementAndGet();
 				if (success) {
@@ -184,7 +184,6 @@ public class ComboPlayerController extends BaseController {
 	@FXML
 	private void playPressed() {
 		play(current.getPath());
-		badQualityButton.setDisable(false);
 	}
 
 	@FXML
@@ -209,7 +208,7 @@ public class ComboPlayerController extends BaseController {
 		Combination c = namesList.getSelectionModel().getSelectedItem();
 		current = LOADING;
 		nextCombination();
-		c.process(namesDB, (success) -> {
+		c.process(success -> {
 			current = c;
 			Platform.runLater(() -> nextCombination());
 			return null;
@@ -222,38 +221,33 @@ public class ComboPlayerController extends BaseController {
 			File dest = new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav");
 			recordButton.setText("Stop");
 
-			listenButton.setDisable(true); // Disable until file has stopped being written to
+			listenButton.setDisable(true); // Disable all until file has stopped being written to
 			compareButton.setDisable(true);
-
+			backButton.setDisable(true);
+			prevButton.setDisable(true);
+			nextButton.setDisable(true);
+			playButton.setDisable(true);
+			badQualityButton.setDisable(true);
+			namesList.setDisable(true);
+			
 			recordTask = new RecordTask(dest, () -> {
 				Platform.runLater(() -> {
 					stats.incrementRecords();
 					recordButton.setText("Record");
 					listenButton.setDisable(false);
 					compareButton.setDisable(false);
-					prevButton.setDisable(false);
 					backButton.setDisable(false);
-					nextButton.setDisable(false);
+					nextButton.setDisable(playlist.size() <= 1);
+					prevButton.setDisable(playlist.size() <= 1);
 					playButton.setDisable(false);
 					badQualityButton.setDisable(false);
+					namesList.setDisable(false);
 				});
 			});
 
 			recordTask.start();
-
-			// Disable all buttons
-			backButton.setDisable(true);
-			prevButton.setDisable(true);
-			nextButton.setDisable(true);
-			playButton.setDisable(true);
-			badQualityButton.setDisable(true);
-
-
 		} else { // Stop and enable all buttons
 			recordTask.stop();
-			backButton.setDisable(false);
-			listenButton.setDisable(false);
-			compareButton.setDisable(false);
 		}
 	}
 
@@ -359,9 +353,10 @@ public class ComboPlayerController extends BaseController {
 		} else {
 			playButton.setDisable(false);
 			recordButton.setDisable(false);
+			badQualityButton.setDisable(false);
 			nextButton.setDisable(playlist.size() <= 1);
 			prevButton.setDisable(playlist.size() <= 1);
-
+			
 			// Check for existing recording
 			if (new File(ROOT_DIR + "attempts/" + current.getMergedName() + ".wav").exists()) {
 				listenButton.setDisable(false);

@@ -130,31 +130,31 @@ public class NamesDatabaseController extends BaseController {
 				
 				listenButton.setDisable(true); // Disable until finished
 				saveButton.setDisable(true);
-
-				recordTask = new RecordTask(TEMP_RECORDING, () -> {
-					Platform.runLater(() -> {
-						recordButton.setText("Record");
-						listenButton.setDisable(false);
-						hasRecording = true;
-						updateSaveButton();
-
-						mainMenuButton.setDisable(false);
-						playButton.setDisable(false);
-						saveButton.setDisable(false);
-						listenButton.setDisable(false);
-						restoreButton.setDisable(false);
-					});
-				});
-				recordTask.start();
-
-				// Disable all buttons except for Stop button
 				mainMenuButton.setDisable(true);
 				playButton.setDisable(true);
 				saveButton.setDisable(true);
 				deleteButton.setDisable(true);
 				listenButton.setDisable(true);
 				restoreButton.setDisable(true);
+				namesList.setDisable(true);
+				searchTextField.setDisable(true);
 
+				recordTask = new RecordTask(TEMP_RECORDING, () -> {
+					Platform.runLater(() -> {
+						recordButton.setText("Record");
+						hasRecording = true;
+						updateSaveButton();
+
+						listenButton.setDisable(false);
+						mainMenuButton.setDisable(false);
+						playButton.setDisable(false);
+						listenButton.setDisable(false);
+						restoreButton.setDisable(false);
+						namesList.setDisable(false);
+						searchTextField.setDisable(false);
+					});
+				});
+				recordTask.start();
 			} else {
 				recordTask.stop();
 			}

@@ -15,6 +15,8 @@ import javafx.stage.Stage;
  * scattered throughout the application, and this class tracks the discovery of these applications when found.
  *
  * The layout is determined by 3 levels for each category: Records, Compares, and Special Features.
+ * 
+ *  @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class RewardsController extends BaseController {
 

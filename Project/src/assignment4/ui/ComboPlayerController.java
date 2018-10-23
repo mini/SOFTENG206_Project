@@ -30,6 +30,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * Player GUI controller
+ * 
+ *  @author Dhruv Phadnis, Vanessa Ciputra
+ */
 public class ComboPlayerController extends BaseController {	
 	private static final Random random = new Random();
 	private static final Combination LOADING = new Combination("Loading...");

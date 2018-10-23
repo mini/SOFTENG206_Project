@@ -21,6 +21,7 @@ import javafx.util.Callback;
 /**
  * Holds multiple Name objects and concatenates them
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class Combination {
 	private static ThreadPoolExecutor executor;

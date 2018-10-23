@@ -29,6 +29,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyCode;
 import javafx.stage.FileChooser;
 
+/**
+ * Playlist selector controller
+ *
+ * @author Dhruv Phadnis, Vanessa Ciputra
+ */
 public class SelectorController extends BaseController {
 	private static final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 
@@ -232,6 +237,7 @@ public class SelectorController extends BaseController {
 
 	void setTextContent(String content) {
 		textInput.setText(content); // Doesn't trigger listener
+		edited = true;
 		playButton.setDisable(false);
 		saveButton.setDisable(false);
 	}

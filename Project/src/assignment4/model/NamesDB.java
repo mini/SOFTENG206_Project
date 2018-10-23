@@ -21,6 +21,7 @@ import assignment4.NameSayerApp;
  *
  * A class to hold all names that the user can use. Can load existing names from file system.
  *
+ * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class NamesDB {
 	public static final URI BQ_FILE = new File(ROOT_DIR + "bad_quality.txt").toURI();

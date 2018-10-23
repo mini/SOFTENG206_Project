@@ -23,6 +23,11 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
+/**
+ * DB Manager controller
+ *  
+ * @author Dhruv Phadnis, Vanessa Ciputra
+ */
 public class NamesDatabaseController extends BaseController {
 	private static final File TEMP_RECORDING = new File(ROOT_DIR + "temp/new.wav");
 

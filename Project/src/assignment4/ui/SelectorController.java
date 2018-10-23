@@ -214,7 +214,7 @@ public class SelectorController extends BaseController {
 		// Error message
 		if (!invalid.isEmpty()) {
 			boolean plural = invalid.size() != 1;
-			String errorText = String.format("The name%s %s do%s not exist.", plural ? "s" : "", invalid, plural ? "" : "es");
+			String errorText = String.format("The name%s %s do%s not exist in the Database. Please remove these names from the playlist to advance.", plural ? "s" : "", invalid, plural ? "" : "es");
 			errorText = errorText.replaceAll("\\[|\\]", "\"").replaceAll(", ", "\", \"");
 
 			Alert alert = new Alert(AlertType.WARNING, errorText, ButtonType.OK);

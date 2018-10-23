@@ -1,4 +1,4 @@
-## NameSayer - Assignment 4 - SOFTENG 206
+## NameSayer - Final Project - SOFTENG 206
 
 **Group:** 11
 
@@ -14,10 +14,22 @@ To run this assignment programme of NameSayer:
 1) Open Terminal
 2) Change directory to where the jar file has been extracted to by typing this in command line:
 
-	*cd [directory to where the jar file is in]*
-3) **[Optional]** Execute this line onto the command line:
+	```bash
+	cd [directory to where the jar file is in]
+	```
+3) Execute this line onto the command line to ensure jar is executable:
 
-	*chmod +x NameSayer.jar*
-4) Execute this line onto the command line: 
+	```bash
+	chmod +x NameSayer.jar
+	```
+	
+4) **[Note]** If you’ve ran another distribution of NameSayer please ensure the folder
+“NameSayer” in your home directory does not exist .
 
-	*java -jar NameSayer.jar*
+5) Execute this line onto the command line: 
+
+	```bash
+	java -jar NameSayer.jar
+	```
+	
+

@@ -231,6 +231,11 @@ public class ComboPlayerController extends BaseController {
 					recordButton.setText("Record");
 					listenButton.setDisable(false);
 					compareButton.setDisable(false);
+					prevButton.setDisable(false);
+					backButton.setDisable(false);
+					nextButton.setDisable(false);
+					playButton.setDisable(false);
+					badQualityButton.setDisable(false);
 				});
 			});
 
@@ -243,16 +248,12 @@ public class ComboPlayerController extends BaseController {
 			playButton.setDisable(true);
 			badQualityButton.setDisable(true);
 
+
 		} else { // Stop and enable all buttons
 			recordTask.stop();
 			backButton.setDisable(false);
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
-			prevButton.setDisable(false);
-			backButton.setDisable(false);
-			nextButton.setDisable(false);
-			playButton.setDisable(false);
-			badQualityButton.setDisable(false);
 		}
 	}
 

@@ -137,6 +137,12 @@ public class NamesDatabaseController extends BaseController {
 						listenButton.setDisable(false);
 						hasRecording = true;
 						updateSaveButton();
+
+						mainMenuButton.setDisable(false);
+						playButton.setDisable(false);
+						saveButton.setDisable(false);
+						listenButton.setDisable(false);
+						restoreButton.setDisable(false);
 					});
 				});
 				recordTask.start();
@@ -151,12 +157,6 @@ public class NamesDatabaseController extends BaseController {
 
 			} else {
 				recordTask.stop();
-
-				mainMenuButton.setDisable(false);
-				playButton.setDisable(false);
-				saveButton.setDisable(false);
-				listenButton.setDisable(false);
-				restoreButton.setDisable(false);
 			}
 
 		} else {

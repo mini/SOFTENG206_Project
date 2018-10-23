@@ -43,6 +43,7 @@ public class NamesDatabaseController extends BaseController {
     @FXML private Button deleteButton;
     @FXML private Button recordButton;
     @FXML private Button helpButton;
+    @FXML private Button restoreButton;
     //@formatter:on
 
 	private Name current;
@@ -139,8 +140,23 @@ public class NamesDatabaseController extends BaseController {
 					});
 				});
 				recordTask.start();
+
+				// Disable all buttons except for Stop button
+				mainMenuButton.setDisable(true);
+				playButton.setDisable(true);
+				saveButton.setDisable(true);
+				deleteButton.setDisable(true);
+				listenButton.setDisable(true);
+				restoreButton.setDisable(true);
+
 			} else {
 				recordTask.stop();
+
+				mainMenuButton.setDisable(false);
+				playButton.setDisable(false);
+				saveButton.setDisable(false);
+				listenButton.setDisable(false);
+				restoreButton.setDisable(false);
 			}
 
 		} else {

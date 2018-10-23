@@ -235,13 +235,24 @@ public class ComboPlayerController extends BaseController {
 			});
 
 			recordTask.start();
-			backButton.setDisable(true);
 
-		} else { // Stop
+			// Disable all buttons
+			backButton.setDisable(true);
+			prevButton.setDisable(true);
+			nextButton.setDisable(true);
+			playButton.setDisable(true);
+			badQualityButton.setDisable(true);
+
+		} else { // Stop and enable all buttons
 			recordTask.stop();
 			backButton.setDisable(false);
 			listenButton.setDisable(false);
 			compareButton.setDisable(false);
+			prevButton.setDisable(false);
+			backButton.setDisable(false);
+			nextButton.setDisable(false);
+			playButton.setDisable(false);
+			badQualityButton.setDisable(false);
 		}
 	}
 

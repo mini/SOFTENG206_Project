@@ -1,7 +1,6 @@
 package assignment4.ui;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
@@ -9,11 +8,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Scanner;
 
 import assignment4.model.AchievementStats;
 import assignment4.model.Combination;
 import assignment4.model.Name;
+import assignment4.utils.FileUtils;
 import assignment4.utils.PermanentTooltip;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -36,7 +35,12 @@ import javafx.stage.FileChooser;
  */
 public class SelectorController extends BaseController {
 	private static final SimpleDateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
-
+	private static final File TEMP_PLAYLIST = new File(ROOT_DIR + "temp/temp_playlist.txt"); 
+	
+	static {
+		TEMP_PLAYLIST.deleteOnExit();
+	}
+	
 	private FileChooser fileChooser = new FileChooser();
 	private File lastSelected;
 	//@formatter:off
@@ -53,8 +57,6 @@ public class SelectorController extends BaseController {
 	@FXML private Button helpButton;
 	//@formatter:on
 
-	private boolean edited = false;
-	
 	@Override
 	public void init() {
 		Tooltip tooltip = new Tooltip();
@@ -107,33 +109,22 @@ public class SelectorController extends BaseController {
 			boolean hasNoText = newVal.trim().isEmpty();
 			playButton.setDisable(hasNoText);
 			saveButton.setDisable(hasNoText);
-			edited = true;
 		});
 
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
 				new FileChooser.ExtensionFilter("All", "*.*"));
+		
+		if(TEMP_PLAYLIST.exists()) {
+			textInput.setText(FileUtils.readFile(TEMP_PLAYLIST).trim() + " ");
+		}
 	}
 
 	@FXML
 	private void backPressed() {
-		// Shows a confirmation before returning to main menu if the user
-		// has any unsaved data
-		if (!edited || textInput.getText().trim().isEmpty()) {
-			showScene("MainMenu.fxml", false, false);
-		} else {
-			
-			Alert confirm = new Alert(AlertType.CONFIRMATION);
-			confirm.setTitle("Back to Main Menu");
-			confirm.setHeaderText("Are you sure you would like to go back to the Main Menu?");
-			confirm.setContentText("Any unsaved playlists and its contents will be lost.");
-			confirm.showAndWait();
-
-			if (confirm.getResult() == ButtonType.OK) {
-				showScene("MainMenu.fxml", false, false);
-			}
-		}
+		saveTemp();
+		showScene("MainMenu.fxml", false, false);
 	}
 
 	/**
@@ -144,14 +135,10 @@ public class SelectorController extends BaseController {
 		fileChooser.setTitle("Select playlist file");
 		File file = fileChooser.showOpenDialog(primaryStage);
 		if (file != null) {
-			try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) { // Reads whole file
-				textInput.setText(scanner.next().trim() + " ");
-				lastSelected = file;
-				fileChooser.setInitialDirectory(lastSelected.getParentFile());
-				edited = false;
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String content = FileUtils.readFile(file);
+			textInput.setText(content.trim() + " ");
+			lastSelected = file;
+			fileChooser.setInitialDirectory(lastSelected.getParentFile());
 		}
 	}
 
@@ -172,7 +159,6 @@ public class SelectorController extends BaseController {
 			try {
 				Files.write(file.toPath(), textInput.getText().getBytes(), StandardOpenOption.CREATE);
 				lastSelected = file;
-				edited = false;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -184,6 +170,7 @@ public class SelectorController extends BaseController {
 	 */
 	@FXML
 	private void playPressed() {
+		saveTemp();
 		LinkedHashMap<String, Combination> playlist = new LinkedHashMap<String, Combination>();
 		ArrayList<String> invalid = new ArrayList<String>();
 
@@ -231,14 +218,14 @@ public class SelectorController extends BaseController {
 		showScene("ComboPlayer.fxml", false, true, c -> { // Pass playlist to player
 			ComboPlayerController controller = (ComboPlayerController) c;
 			controller.setPlaylist(new ArrayList<Combination>(playlist.values()));
-			controller.setInputString(textInput.getText());
 		});
 	}
-
-	void setTextContent(String content) {
-		textInput.setText(content); // Doesn't trigger listener
-		edited = true;
-		playButton.setDisable(false);
-		saveButton.setDisable(false);
+	
+	private void saveTemp() {
+		try {
+			Files.write(TEMP_PLAYLIST.toPath(), textInput.getText().getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -41,7 +41,6 @@ public class ComboPlayerController extends BaseController {
 	private static final int COMPARE_LOOP_COUNT = 3;
 	
 	private boolean all;
-	private String inputString;
 
 	//@formatter:off
 	@FXML private ListView<Combination> namesList;
@@ -337,9 +336,7 @@ public class ComboPlayerController extends BaseController {
 		if (all) {
 			showScene("MainMenu.fxml", false, false); // Return to where we came from
 		} else {
-			showScene("NameSelector.fxml", false, true, c -> {
-				((SelectorController) c).setTextContent(inputString);
-			});
+			showScene("NameSelector.fxml", false, true);
 		}
 	}
 
@@ -367,10 +364,6 @@ public class ComboPlayerController extends BaseController {
 			}
 			namesList.getSelectionModel().select(current);
 		}
-	}
-
-	void setInputString(String inputString) {
-		this.inputString = inputString;
 	}
 
 	void setAllNames() {

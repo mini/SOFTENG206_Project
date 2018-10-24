@@ -2,20 +2,39 @@ package assignment4.utils;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 import assignment4.NameSayerApp;
 
 /**
- * Helper functions concerning files 
+ * Helper functions concerning files
  * 
- * Inspired by www.codejava.net/java-se/file-io/programmatically-extract-a-zip-file-using-java
  * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class FileUtils {
+	/**
+	 * Reads whole file as string
+	 * @param file to read
+	 * @return file contents
+	 */
+	@SuppressWarnings("resource")
+	public static String readFile(File file) {
+		try (Scanner scanner = new Scanner(file).useDelimiter("\\Z")) { // Reads whole file
+			return scanner.next();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Inspired by www.codejava.net/java-se/file-io/programmatically-extract-a-zip-file-using-java
+	 */
 	public static void unzip(String zipFilePath, String destDirectory) throws IOException {
 		File destDir = new File(destDirectory);
 		if (!destDir.exists()) {

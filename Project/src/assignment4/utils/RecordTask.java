@@ -24,8 +24,8 @@ import javafx.concurrent.Task;
  * @author Dhruv Phadnis, Vanessa Ciputra
  */
 public class RecordTask extends Task<Void> {
-	// 44100Hz 16bit 1 channel signed le
-	private static final AudioFormat FORMAT = new AudioFormat(44100, 16, 1, true, false);
+	// 16000Hz 16bit 1 channel signed le
+	private static final AudioFormat FORMAT = new AudioFormat(16000, 16, 1, true, false); // Chipmunks?
 	private static final int MAX_TIME_MILI = 10_000;
 	private static final File TEMP = new File(NameSayerApp.ROOT_DIR + "temp/recording.wav");
 	

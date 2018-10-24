@@ -114,7 +114,7 @@ public class SelectorController extends BaseController {
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().addAll(
 				new FileChooser.ExtensionFilter("Text", "*.txt"),
-				new FileChooser.ExtensionFilter("All", "*.*"));
+				new FileChooser.ExtensionFilter("All", "*"));
 		
 		if(TEMP_PLAYLIST.exists()) {
 			textInput.setText(FileUtils.readFile(TEMP_PLAYLIST).trim() + " ");

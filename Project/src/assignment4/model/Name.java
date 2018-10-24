@@ -20,6 +20,7 @@ public class Name implements Comparable<Name> {
 
 	private final String name;
 	private final List<Version> versions;
+	private Version lastReturned;
 
 	/**
 	 * @param name the name
@@ -30,18 +31,26 @@ public class Name implements Comparable<Name> {
 	}
 
 	/**
-	 * Returns the first version of good quality, if there are none then the latest version.
+	 * Returns the first version of good quality, if there are none then a random version.
 	 * 
 	 * @return the best version
 	 */
 	public Version getBestVersion() {
 		for (Version version : versions) {
 			if (!version.isBadQuality()) {
+				lastReturned = version;
 				return version;
 			}
 		}
-
-		return versions.get(random.nextInt(versions.size()));
+		lastReturned = versions.get(random.nextInt(versions.size()));
+		return lastReturned;
+	}
+	
+	/**
+	 * @return the last Version {@link #getBestVersion()} returned
+	 */
+	public Version getLastReturned() {
+		return lastReturned;
 	}
 
 	/**

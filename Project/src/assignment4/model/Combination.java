@@ -99,7 +99,7 @@ public class Combination {
 						// Generate input text file for batch ffmpeg call
 						BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(ROOT_DIR + "temp/" + mergedName + ".txt"), "utf-8"));
 						for (Name name : names) {
-							fileName = name.getBestVersion().getAudioFileName();
+							fileName = name.getLastReturned().getAudioFileName();
 							writer.write("file './equalised/" + fileName + "'");
 							writer.newLine();
 						}

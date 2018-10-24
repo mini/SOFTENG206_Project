@@ -255,8 +255,9 @@ public class NamesDatabaseController extends BaseController {
 	@FXML
 	private void restorePressed() {
 		Alert confirmation = new Alert(AlertType.WARNING,
-				"This will restore any default deleted/modified names. Your files will not be changed.",
+				"Your files will not be changed.",
 				ButtonType.CANCEL, ButtonType.OK);
+		confirmation.setHeaderText("This will restore any default deleted/modified names.");
 		confirmation.initOwner(primaryStage);
 		confirmation.showAndWait();
 		try {
